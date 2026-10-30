@@ -1,0 +1,2549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AlphaPulse | Pro Options Terminal</title>
+<style>
+:root {
+  --bg: #0b0f17;
+  --surface: #111723;
+  --surface-raised: #182234;
+  --border: #223048;
+  --border-focus: #3b82f6;
+  --tx-main: #f1f5f9;
+  --tx-muted: #8494ab;
+  --tx-faint: #4c5d77;
+  --green: #10b981;
+  --green-bg: rgba(16, 185, 129, 0.12);
+  --red: #ef4444;
+  --red-bg: rgba(239, 68, 68, 0.12);
+  --blue: #3b82f6;
+  --blue-bg: rgba(59, 130, 246, 0.14);
+  --amber: #f59e0b;
+  --amber-bg: rgba(245, 158, 11, 0.14);
+  --mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Menlo, Consolas, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f4f6fa;
+    --surface: #ffffff;
+    --surface-raised: #f8fafc;
+    --border: #dbe2ea;
+    --border-focus: #2563eb;
+    --tx-main: #0f172a;
+    --tx-muted: #64748b;
+    --tx-faint: #94a3b8;
+    --green: #059669;
+    --green-bg: #ecfdf5;
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+    --blue: #2563eb;
+    --blue-bg: #eff6ff;
+    --amber: #d97706;
+    --amber-bg: #fffbeb;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--tx-main);
+  font: 13px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+}
+.brand-badge {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+nav { display: flex; gap: 6px; }
+.btn {
+  background: var(--surface-raised);
+  color: var(--tx-main);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 12px;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:hover { background: var(--border); }
+.btn.on, .btn.pri {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
+.btn.sm { padding: 3px 8px; font-size: 11px; }
+.btn.danger { color: var(--red); border-color: rgba(239,68,68,0.3); }
+.btn.danger:hover { background: var(--red-bg); }
+.status-pill {
+  font-size: 11px;
+  color: var(--tx-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 8px var(--red);
+}
+.dot.online {
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+}
+main {
+  padding: 18px 20px;
+  max-width: 1400px;
+  margin: auto;
+}
+.kpi-deck {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+.kpi-label { font-size: 11px; color: var(--tx-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi-val { font-size: 20px; font-weight: 700; font-family: var(--mono); margin-top: 4px; }
+.wrap {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+th, td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+  white-space: nowrap;
+}
+th {
+  background: var(--surface-raised);
+  color: var(--tx-muted);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+th:first-child, td:first-child { text-align: left; }
+.tag {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--mono);
+}
+.tag.Strict { background: var(--green-bg); color: var(--green); border: 1px solid rgba(16,185,129,0.25); }
+.tag.Balanced { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(59,130,246,0.25); }
+.tag.Aggressive { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
+.tag.Buy { background: var(--green-bg); color: var(--green); border: 1px solid rgba(16,185,129,0.25); }
+.tag.Sell { background: var(--red-bg); color: var(--red); border: 1px solid rgba(239,68,68,0.25); }
+.sym-name { font-weight: 700; color: var(--tx-main); }
+.sym-sub { font-size: 11px; color: var(--tx-muted); }
+.g { color: var(--green); }
+.r { color: var(--red); }
+.mu { color: var(--tx-muted); }
+.mono { font-family: var(--mono); }
+input {
+  background: var(--surface-raised);
+  color: var(--tx-main);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 4px 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  width: 82px;
+  text-align: right;
+}
+input:focus { border-color: var(--border-focus); outline: none; }
+.set { background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border); }
+.set label { display: block; margin: 14px 0 4px; color: var(--tx-muted); font-size: 12px; font-weight: 600; }
+.set input { width: 100%; max-width: 500px; text-align: left; padding: 7px 10px; }
+.row { display: flex; gap: 8px; margin: 0 0 12px; flex-wrap: wrap; align-items: center; }
+.actions-cell { display: flex; gap: 4px; justify-content: flex-end; }
+
+.header-right { display:flex; align-items:center; justify-content:flex-end; gap:14px; margin-left:auto; }
+.market-clock { display:flex; align-items:center; gap:9px; padding:6px 10px; border:1px solid var(--border); border-radius:7px; background:var(--surface-raised); min-width:290px; }
+.market-led { width:8px; height:8px; border-radius:50%; background:var(--tx-faint); box-shadow:0 0 7px var(--tx-faint); flex:0 0 auto; }
+.market-led.open { background:var(--green); box-shadow:0 0 8px var(--green); }
+.market-led.extended { background:var(--amber); box-shadow:0 0 8px var(--amber); }
+.market-led.closed { background:var(--red); box-shadow:0 0 8px var(--red); }
+.market-main { min-width:0; }
+.market-state { font:700 11px/1.25 var(--mono); letter-spacing:.35px; }
+.market-meta { color:var(--tx-muted); font:10px/1.35 var(--mono); white-space:nowrap; }
+@media (max-width:760px) { .header-right { width:100%; justify-content:space-between; } .market-clock { min-width:0; flex:1; } }
+
+
+/* Paper Trading: traditional, no-horizontal-scroll responsive layout */
+.paper-view main#v { max-width:1200px; }
+.paper-view .paper-intro { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:16px; }
+.paper-view .paper-intro h2 { margin:0 0 4px; font-size:22px; }
+.paper-view .paper-toolbar { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; }
+.paper-view .paper-section { margin-top:18px; }
+.paper-view .paper-section-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 10px; }
+.paper-view .paper-section-title { font-size:14px; font-weight:800; letter-spacing:.4px; }
+.paper-view .wrap { overflow:visible; background:transparent; border:0; box-shadow:none; }
+.paper-view table, .paper-view tbody { display:block; width:100%; }
+.paper-view thead { display:none; }
+.paper-view tr { display:grid; grid-template-columns:minmax(230px,1.6fr) repeat(2,minmax(110px,.7fr)) minmax(90px,.5fr) minmax(140px,.8fr); gap:0; margin-bottom:12px; background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.08); }
+.paper-view td { min-width:0; padding:11px 13px; border:0; border-right:1px solid var(--border); border-bottom:1px solid var(--border); text-align:left; white-space:normal; overflow-wrap:anywhere; }
+.paper-view td:first-child { grid-row:span 2; }
+.paper-view td:last-child { border-right:0; }
+.paper-view td::before { content:attr(data-label); display:block; margin-bottom:5px; color:var(--tx-muted); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.45px; }
+.paper-view td:first-child::before { content:'Contract'; }
+.paper-view .actions-cell { justify-content:flex-start; flex-wrap:wrap; }
+.paper-view input { width:78px; max-width:100%; }
+.paper-view select { max-width:100%; }
+.paper-view .paper-empty { display:block; padding:30px; text-align:center; border:1px dashed var(--border); border-radius:10px; background:var(--surface); }
+.paper-view .quote-fresh { display:inline-block; margin-top:4px; font-size:10px; color:var(--tx-muted); }
+@media (max-width:900px) {
+  .paper-view tr { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .paper-view td:first-child { grid-column:1/-1; grid-row:auto; }
+  .paper-view .paper-intro { flex-direction:column; }
+  .paper-view .paper-toolbar { justify-content:flex-start; }
+}
+@media (max-width:560px) {
+  header { padding:10px 12px; }
+  nav { width:100%; overflow:visible; flex-wrap:wrap; }
+  nav .btn { flex:1 1 auto; justify-content:center; }
+  main { padding:14px 12px; }
+  .paper-view tr { display:block; }
+  .paper-view td { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; border-right:0; }
+  .paper-view td::before { flex:0 0 108px; margin:0; }
+  .paper-view td:first-child { display:block; }
+  .paper-view td:first-child::before { margin-bottom:5px; }
+  .paper-view .kpi-deck { grid-template-columns:1fr 1fr; }
+  .paper-view .kpi-card { padding:11px; }
+  .paper-view .kpi-val { font-size:16px; }
+}
+
+/* Paper open-position filters and optional compact desktop table */
+.paper-filters{display:flex;flex-wrap:wrap;align-items:end;gap:10px;padding:12px;margin-bottom:12px;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+.paper-filter{display:grid;gap:5px;min-width:120px}.paper-filter.search{flex:1 1 220px}.paper-filter label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--tx-muted)}
+.paper-filter input,.paper-filter select{width:100%;min-height:34px}.paper-filter-actions{display:flex;gap:7px;flex-wrap:wrap}.paper-filter-summary{width:100%;font-size:11px;color:var(--tx-muted)}
+.paper-view-toggle.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+@media(min-width:901px){
+ body.paper-view.paper-compact .wrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+ body.paper-view.paper-compact table{display:table;width:100%;table-layout:fixed;border-collapse:collapse}
+ body.paper-view.paper-compact thead{display:table-header-group}
+ body.paper-view.paper-compact tbody{display:table-row-group}
+ body.paper-view.paper-compact tr{display:table-row;background:transparent;box-shadow:none;border:0}
+ body.paper-view.paper-compact th,body.paper-view.paper-compact td{display:table-cell;padding:7px 6px;border:0;border-bottom:1px solid var(--border);border-right:1px solid var(--border);font-size:10px;vertical-align:top;overflow-wrap:anywhere}
+ body.paper-view.paper-compact td::before{display:none}
+ body.paper-view.paper-compact th{font-size:9px;line-height:1.2;white-space:normal;text-align:left;background:var(--surface2)}
+ body.paper-view.paper-compact td:first-child{width:20%} body.paper-view.paper-compact th:first-child{width:20%}
+ body.paper-view.paper-compact td:nth-child(2),body.paper-view.paper-compact th:nth-child(2){width:6%}
+ body.paper-view.paper-compact td:nth-child(3),body.paper-view.paper-compact th:nth-child(3){width:8%}
+ body.paper-view.paper-compact td:nth-child(4),body.paper-view.paper-compact th:nth-child(4){width:6%}
+ body.paper-view.paper-compact td:nth-child(5),body.paper-view.paper-compact th:nth-child(5){width:7%}
+ body.paper-view.paper-compact td:nth-child(6),body.paper-view.paper-compact th:nth-child(6){width:14%}
+ body.paper-view.paper-compact td:nth-child(7),body.paper-view.paper-compact th:nth-child(7){width:8%}
+ body.paper-view.paper-compact td:nth-child(8),body.paper-view.paper-compact th:nth-child(8){width:7%}
+ body.paper-view.paper-compact td:nth-child(9),body.paper-view.paper-compact th:nth-child(9){width:8%}
+ body.paper-view.paper-compact td:nth-child(10),body.paper-view.paper-compact th:nth-child(10){width:6%}
+ body.paper-view.paper-compact td:nth-child(11),body.paper-view.paper-compact th:nth-child(11){width:10%}
+ body.paper-view.paper-compact input,body.paper-view.paper-compact select{width:100%;min-width:0;padding:4px;font-size:10px}
+ body.paper-view.paper-compact .btn.sm{padding:4px 6px;font-size:9px}
+ body.paper-view.paper-compact .sym-sub{font-size:9px}
+}
+@media(max-width:650px){.paper-filter{flex:1 1 44%}.paper-filter.search{flex-basis:100%}.paper-filter-actions{width:100%}.paper-filter-actions .btn{flex:1}}
+
+/* Readable compact grid and trade-history controls */
+.history-filters{display:flex;flex-wrap:wrap;align-items:end;gap:10px;padding:12px;margin:0 0 12px;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+.history-filter{display:grid;gap:5px;min-width:145px}.history-filter label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--tx-muted)}
+.history-filter input,.history-filter select{width:100%;min-height:34px}.history-summary{width:100%;font-size:11px;color:var(--tx-muted)}
+.sort-hint{font-size:10px;color:var(--tx-muted);white-space:nowrap}
+@media(min-width:901px){
+ body.paper-view.paper-compact main#v{max-width:1440px}
+ body.paper-view.paper-compact .wrap{max-height:62vh;overflow:auto;scrollbar-gutter:stable}
+ body.paper-view.paper-compact table{min-width:1120px;table-layout:fixed}
+ body.paper-view.paper-compact thead{position:sticky;top:0;z-index:4;box-shadow:0 2px 5px rgba(0,0,0,.18)}
+ body.paper-view.paper-compact th{padding:9px 7px;font-size:10px;line-height:1.25;color:var(--tx);background:var(--surface2);border-bottom:2px solid var(--accent)}
+ body.paper-view.paper-compact td{padding:8px 7px;font-size:11px;line-height:1.35;vertical-align:middle}
+ body.paper-view.paper-compact tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 55%,transparent)}
+ body.paper-view.paper-compact tbody tr:hover{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+ body.paper-view.paper-compact td:nth-child(4),body.paper-view.paper-compact td:nth-child(5),body.paper-view.paper-compact td:nth-child(7),body.paper-view.paper-compact td:nth-child(9),body.paper-view.paper-compact td:nth-child(10){text-align:right;font-variant-numeric:tabular-nums}
+ body.paper-view.paper-compact th:nth-child(4),body.paper-view.paper-compact th:nth-child(5),body.paper-view.paper-compact th:nth-child(7),body.paper-view.paper-compact th:nth-child(9),body.paper-view.paper-compact th:nth-child(10){text-align:right}
+ body.paper-view.paper-compact td:first-child{position:sticky;left:0;z-index:2;background:inherit;box-shadow:2px 0 3px rgba(0,0,0,.10)}
+ body.paper-view.paper-compact th:first-child{position:sticky;left:0;z-index:5}
+ body.paper-view.paper-compact input,body.paper-view.paper-compact select{font-size:11px;min-height:29px;background:var(--surface);color:var(--tx);border-color:var(--border)}
+ body.paper-view.paper-compact .actions-cell{gap:4px;flex-wrap:wrap}
+ body.paper-view.paper-compact .tag{font-size:9px;white-space:nowrap}
+ body.paper-view.paper-compact .sym-name{font-size:12px;line-height:1.3}
+}
+@media(max-width:650px){.history-filter{flex:1 1 44%}.history-filter:first-child,.history-filter:nth-child(2){flex-basis:44%}}
+
+/* Non-disruptive live updates and Super Agent learning panel */
+.agent-panel{margin:16px 0;padding:14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.agent-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}.agent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}.agent-metric{padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--surface2)}.agent-metric b{display:block;font-size:18px;margin-top:4px}.agent-list{margin:10px 0 0;padding-left:18px;font-size:12px;line-height:1.6}.safe-note{font-size:11px;color:var(--tx-muted);margin-top:10px}.refresh-status{font-size:11px;color:var(--tx-muted)}
+html{scroll-behavior:auto} body{min-height:100vh;overflow-y:scroll}
+
+/* Scanner control and Super Agent insight details */
+.scanner-toggle.running{background:var(--green);color:#fff;border-color:var(--green)}
+.scanner-toggle.paused{background:var(--amber-bg);color:var(--amber);border-color:rgba(245,158,11,.45)}
+.scanner-state{font:700 11px/1.3 var(--mono)}
+.agent-actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.agent-insights{margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+.agent-insight{padding:11px;border:1px solid var(--border);border-radius:8px;background:var(--surface-raised)}
+.agent-insight h4{margin:0 0 7px;font-size:12px}.agent-insight p{margin:4px 0;font-size:11px;color:var(--tx-muted)}
+.agent-insight strong{color:var(--tx-main)}.agent-badge{display:inline-block;margin:2px 4px 2px 0;padding:2px 6px;border-radius:4px;font:10px var(--mono);background:var(--blue-bg);color:var(--blue)}
+
+/* Evidence-based trade analyst */
+.agent-drawer{position:fixed;right:18px;bottom:18px;width:min(430px,calc(100vw - 24px));max-height:min(720px,calc(100vh - 36px));z-index:50;display:none;flex-direction:column;border:1px solid var(--border);border-radius:12px;background:var(--surface);box-shadow:0 18px 60px rgba(0,0,0,.35);overflow:hidden}.agent-drawer.open{display:flex}.agent-chat-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:13px;border-bottom:1px solid var(--border);background:var(--surface2)}.agent-chat-body{padding:12px;overflow:auto}.agent-context{padding:9px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);font-size:11px}.agent-messages{display:grid;gap:9px;margin:12px 0}.agent-msg{max-width:92%;padding:9px 10px;border-radius:9px;font-size:12px;line-height:1.5;white-space:pre-wrap}.agent-msg.user{justify-self:end;background:var(--blue);color:#fff}.agent-msg.bot{justify-self:start;background:var(--surface2);border:1px solid var(--border)}.agent-quick{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.agent-chat-form{display:flex;gap:7px;padding:11px;border-top:1px solid var(--border)}.agent-chat-form input{flex:1;min-width:0}.agent-chat-status{padding:7px 11px;font-size:11px;color:var(--tx-muted);border-top:1px solid var(--border)}.agent-chat-status.error{color:var(--red)}.evidence-row{display:grid;grid-template-columns:120px 1fr;gap:7px;padding:4px 0;border-bottom:1px dashed var(--border);font-size:11px}.confidence{font-weight:800}.confidence.low{color:var(--amber)}.confidence.medium{color:var(--blue)}.confidence.high{color:var(--green)}.proposal{margin-top:10px;padding:9px;border:1px solid var(--border);border-radius:8px}.shadow-tag{padding:2px 6px;border-radius:4px;background:var(--blue-bg);color:var(--blue);font-size:10px}.agent-fab{position:fixed;right:18px;bottom:18px;z-index:40;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+
+.agent-chat-bottom{margin-top:auto;background:var(--surface);border-top:1px solid var(--border)}
+.agent-presets{display:flex;gap:6px;overflow-x:auto;padding:9px 11px;scrollbar-width:thin}.agent-presets .btn{flex:0 0 auto;white-space:nowrap}
+.agent-provider{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 11px;font-size:10px;color:var(--tx-muted);border-top:1px solid var(--border)}
+.agent-source{margin-top:5px;padding-top:5px;border-top:1px dashed var(--border);font-size:10px}.agent-source a{color:var(--blue)}
+.agent-thinking{opacity:.75;font-style:italic}.ai-config-note{padding:9px;border:1px solid var(--border);border-radius:7px;background:var(--surface2);font-size:11px;margin-top:8px}
+
+/* Side-by-side evidence comparison, source confidence and timestamps */
+.analysis-compare{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:7px}.analysis-pane{padding:9px;border:1px solid var(--border);border-radius:8px;background:var(--surface)}.analysis-pane.external{background:var(--surface2)}.analysis-pane h4{display:flex;justify-content:space-between;gap:6px;margin:0 0 7px;font-size:11px}.analysis-content{white-space:pre-wrap;font-size:11px;line-height:1.5}.source-card{display:block;margin-top:6px;padding:6px;border:1px solid var(--border);border-radius:6px;text-decoration:none;color:var(--tx-main)}.source-meta{display:flex;justify-content:space-between;gap:6px;margin-top:3px;font-size:9px;color:var(--tx-muted)}.source-confidence{font-weight:800}.source-confidence.high{color:var(--green)}.source-confidence.medium{color:var(--blue)}.source-confidence.low{color:var(--amber)}.analysis-time{font:9px var(--mono);color:var(--tx-muted)}
+@media(max-width:700px){.analysis-compare{grid-template-columns:1fr}}
+
+/* Once-per-day loss review to conserve Gemini quota */
+.daily-review{margin:14px 0;padding:13px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}.daily-review-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}.daily-review-actions{display:flex;gap:7px;flex-wrap:wrap}.daily-loss-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:9px;margin-top:10px}.daily-loss-card{padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);font-size:11px}.daily-loss-card h4{margin:0 0 6px}.quota-note{font-size:10px;color:var(--tx-muted);margin-top:7px}.daily-report{margin-top:10px;padding:11px;border:1px solid var(--border);border-radius:8px;white-space:pre-wrap;font-size:11px;line-height:1.55}.daily-report.external{background:var(--surface2)}
+
+.external-launchers{display:flex;gap:7px;flex-wrap:wrap;padding:8px 11px;border-top:1px solid var(--border)}
+.ai-launch{display:inline-flex;align-items:center;gap:6px}.ai-logo{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;color:white;font-weight:900;font-size:11px}.ai-logo.chatgpt{background:#10a37f}.ai-logo.claude{background:#c15f3c}.ai-logo.gemini{background:linear-gradient(135deg,#4285f4,#9b72cb,#d96570)}
+.copy-hint{padding:0 11px 7px;font-size:10px;color:var(--tx-muted)}
+
+.agent-answer-actions{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 3px;padding:9px;border:1px solid var(--border);border-radius:8px;background:var(--surface2)}
+.agent-answer-actions .label{width:100%;font-size:10px;color:var(--tx-muted)}
+.copy-ok{color:var(--green)!important}.agent-presets{scroll-snap-type:x proximity}.agent-presets .btn{scroll-snap-align:start}
+.agent-msg.bot{max-width:100%}.agent-msg.bot{line-height:1.45}
+/* Filtered-out rows must stay hidden even though .paper-view tr sets display:grid/block/table-row */
+.paper-open-row[hidden], .paper-closed-row[hidden] { display:none !important; }
+
+/* LiveStrikes Tab Styles */
+.ls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 14px; margin-bottom: 16px; }
+.ls-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+.ls-card h3 { margin: 0 0 8px; font-size: 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ls-presets { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.ls-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(115px, 1fr)); gap: 10px; align-items: end; }
+.ls-form-field label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: var(--tx-muted); margin-bottom: 4px; }
+.ls-form-field input, .ls-form-field select { width: 100%; text-align: left; padding: 6px 8px; min-height: 32px; background: var(--surface-raised); color: var(--tx-main); border: 1px solid var(--border); border-radius: 5px; font-family: var(--mono); font-size: 12px; }
+.ls-preview-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed var(--border); font-size: 12px; }
+.ls-preview-row:last-child { border-bottom: 0; }
+.ls-ta-pill { display: inline-block; padding: 2px 6px; border-radius: 4px; font: 10px var(--mono); margin: 2px 3px 2px 0; background: var(--surface-raised); border: 1px solid var(--border); }
+.ls-signal-box { padding: 6px 9px; border-radius: 6px; font-weight: 700; font-size: 11px; font-family: var(--mono); display: inline-block; margin-bottom: 4px; }
+.ls-signal-box.keep { background: var(--green-bg); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
+.ls-signal-box.sell { background: var(--red-bg); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+.ls-signal-box.warn { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
+
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <span>AlphaPulse</span>
+    <span class="brand-badge">PRO TERMINAL</span>
+  </div>
+  <nav>
+    <button class="btn on" id="btn-picks" onclick="setTab('picks')">⚡ Auto-Picks</button>
+    <button class="btn" id="btn-paper" onclick="setTab('paper')">💼 Paper Trading</button>
+    <button class="btn" id="btn-live" onclick="setTab('live')">🎯 LiveStrikes</button>
+    <button class="btn" id="btn-set" onclick="setTab('set')">⚙️ Settings</button>
+  </nav>
+  <div class="header-right">
+    <div class="market-clock" id="us-market-clock" title="U.S. equities session (holiday and early-close aware) · times shown in your local time" aria-live="off">
+      <span class="market-led closed" id="market-led"></span>
+      <div class="market-main">
+        <div class="market-state" id="market-state">US MARKET · CHECKING</div>
+        <div class="market-meta" id="market-time">--:--:--</div>
+        <div class="market-meta" id="market-next">Loading session</div>
+      </div>
+    </div>
+    <div class="status-pill">
+      <span class="dot" id="dot"></span>
+      <span id="bs">BRIDGE OFFLINE</span>
+    </div>
+  </div>
+</header>
+
+<main id="v"></main>
+
+<main class="mu" style="padding-top:0; font-size:11px;">
+  Market data delayed by ~15m when routing via Yahoo fallback. Auto-sync occurs every 15s. Realized P&amp;L records net of commissions and OCC/ORF clearing fees.
+</main>
+
+<script type="text/plain" id="bridge">
+const http = require('http'), PORT = process.env.PORT || 8787, UA = { 'User-Agent': 'Mozilla/5.0' };
+let cookie = '', crumb = '';
+let moomoo = { key: process.env.MOOMOO_KEY || '', secret: process.env.MOOMOO_SECRET || '', host: '127.0.0.1', port: 33333 };
+async function auth() {
+  const r = await fetch('https://fc.yahoo.com', { headers: UA, redirect: 'manual' });
+  cookie = (r.headers.getSetCookie?.() || []).map(c => c.split(';')[0]).join('; ');
+  crumb = await (await fetch('https://query1.finance.yahoo.com/v1/test/getcrumb', { headers: { ...UA, cookie } })).text();
+}
+async function yf(path) {
+  for (let i = 0; i < 2; i++) {
+    if (!crumb) await auth();
+    const r = await fetch('https://query2.finance.yahoo.com' + path + (path.includes('?') ? '&' : '?') + 'crumb=' + encodeURIComponent(crumb), { headers: { ...UA, cookie } });
+    if (r.ok) return r.json();
+    crumb = '';
+  }
+  throw new Error('Yahoo request failed');
+}
+
+let mm = null, mmReady = false, mmErr = '', subd = new Set(), mmTimer = null;
+// Minimal protobuf reader for InitWebSocket.Response (retType=1, retMsg=2, errCode=3).
+function pbInit(ab) {
+  const u = new Uint8Array(ab), o = {}; let i = 0;
+  const vi = () => { let r = 0n, s = 0n, b; do { b = u[i++]; r |= BigInt(b & 127) << s; s += 7n; } while (b & 128); return r; };
+  while (i < u.length) {
+    const t = Number(vi()), f = t >> 3, w = t & 7;
+    if (w === 0) { const v = vi(); if (f === 1) o.retType = Number(BigInt.asIntN(32, v)); if (f === 3) o.errCode = Number(BigInt.asIntN(32, v)); }
+    else if (w === 2) { const n = Number(vi()); if (f === 2) o.retMsg = Buffer.from(u.subarray(i, i + n)).toString('utf8'); i += n; }
+    else if (w === 1) i += 8; else if (w === 5) i += 4; else break;
+  }
+  return o;
+}
+function mmClose() {
+  clearTimeout(mmTimer);
+  try { if (mm && typeof mm.stop === 'function') mm.stop(); } catch (e) {}
+  mm = null; mmReady = false;
+}
+function mmConnect() {
+  mmClose();
+  let M;
+  try { M = require('moomoo-api'); }
+  catch (e) { mmErr = 'moomoo-api not installed. Run: npm i moomoo-api (in the same folder as server.js)'; return; }
+  try {
+    const C = M.default || M, me = new C();
+    let refusal = null;
+    mm = me; subd.clear(); mmErr = 'connecting';
+    me.onlogin = (ret, msg) => {
+      if (mm !== me) return;
+      clearTimeout(mmTimer);
+      mmReady = !!ret;
+      if (ret) mmErr = '';
+      else if (refusal) mmErr = 'OpenD refused the connection: ' + (refusal.retMsg || 'no message') + ' (code ' + refusal.retType + (refusal.errCode ? '/' + refusal.errCode : '') + '). Check the WebSocket key matches OpenD.';
+      else mmErr = 'OpenD login failed: ' + (msg || 'check WebSocket key (plain text, not the MD5) and port');
+      console.log('[moomoo] login', ret ? 'OK' : 'FAILED', refusal ? JSON.stringify(refusal) : (msg && msg.message || msg || ''));
+    };
+    me.start(moomoo.host, +moomoo.port, false, moomoo.key);
+    // The SDK throws away OpenD's error reply to the init request; read it ourselves so the real reason is shown.
+    const wb = me.websock;
+    if (wb && typeof wb.sendBuff === 'function') {
+      const orig = wb.sendBuff.bind(wb);
+      wb.sendBuff = (cmd, buf, t) => {
+        const p = orig(cmd, buf, t);
+        return cmd !== 1 ? p : p.then(r => { try { if (r && r.buff) { const d = pbInit(r.buff); if (d.retType !== undefined && d.retType !== 0) refusal = d; } } catch (e) {} return r; });
+      };
+    }
+    mmTimer = setTimeout(() => {
+      if (mm === me && !mmReady && mmErr === 'connecting')
+        mmErr = 'No login response from OpenD at ' + moomoo.host + ':' + moomoo.port + ' after 8s. Check OpenD is running, its WebSocket port is enabled, and the key matches.';
+    }, 8000);
+  } catch (e) { mm = null; mmErr = e.message; }
+}
+// A refused/dropped OpenD socket can throw asynchronously inside the SDK; keep the bridge alive and report it.
+process.on('uncaughtException', e => { console.error('[bridge]', e.message); if (mm && !mmReady) mmErr = 'OpenD connection error: ' + e.message; });
+process.on('unhandledRejection', e => { console.error('[bridge]', e && e.message || e); if (mm && !mmReady) mmErr = 'OpenD connection error: ' + (e && e.message || e); });
+async function moomooQuote(code) {
+  const m = /^(.+?)(\d{6}[CP])(\d{8})$/.exec(code);
+  if (!m || !mm || !mmReady) return null;
+  const sec = { market: 11, code: code };
+  try {
+    if (!subd.has(sec.code)) { await mm.Sub({ c2s: { securityList: [sec], subTypeList: [1], isSubOrUnSub: true, isRegOrUnRegPush: false } }); subd.add(sec.code); }
+    const q = (await mm.GetBasicQot({ c2s: { securityList: [sec] } })).s2c.basicQotList[0];
+    return q ? { last: q.curPrice } : null;
+  } catch (e) { mmErr = e.message; return null; }
+}
+if (moomoo.key) mmConnect();
+
+const E = encodeURIComponent;
+const routes = {
+  '/api/chain': q => yf(`/v7/finance/options/${E(q.symbol)}` + (q.date ? `?date=${q.date}` : '')),
+  '/api/quote': q => yf(`/v7/finance/quote?symbols=${E(q.symbols)}`),
+  '/api/chart': q => yf(`/v8/finance/chart/${E(q.symbol)}?range=${q.range || '6mo'}&interval=${q.interval || '1d'}`),
+  '/api/moomoo/quote': async q => ({ quote: await moomooQuote(q.code) }),
+  '/api/moomoo/status': async () => ({ configured: !!moomoo.key, connected: mmReady, error: mmErr, host: moomoo.host, port: moomoo.port }),
+};
+
+http.createServer(async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'content-type');
+  if (req.method === 'OPTIONS') return res.end();
+  const u = new URL(req.url, 'http://x'), q = Object.fromEntries(u.searchParams);
+  const send = (c, o) => { res.writeHead(c, { 'Content-Type': 'application/json' }); res.end(JSON.stringify(o)); };
+  try {
+    if (req.method === 'POST' && u.pathname === '/api/moomoo/config') {
+      let b = ''; for await (const chunk of req) b += chunk; const c = JSON.parse(b || '{}');
+      for (const k of ['key', 'secret', 'host', 'port']) if (c[k] !== undefined && c[k] !== '' && c[k] !== null) moomoo[k] = c[k];
+      mmConnect();
+      return send(200, { ok: true });
+    }
+    const h = routes[u.pathname];
+    if (!h) return send(404, { error: 'not found' });
+    send(200, await h(q));
+  } catch (e) { send(500, { error: e.message }); }
+}).listen(PORT, '127.0.0.1', () => console.log('Bridge on http://127.0.0.1:' + PORT));
+</script>
+
+<script>
+const $ = s => document.querySelector(s);
+let cfg = {
+  bridge: 'http://localhost:8787',
+  uni: 'SPY,QQQ,IWM,AAPL,MSFT,NVDA,TSLA,AMZN,META',
+  fee: 0.69,
+  strictRR: 1.5,
+  balancedRR: 1.5,
+  stopPct: 25,
+  maxOpenPos: 3,
+  cooldownMins: 30,
+  onePerSymbol: true,
+  breakevenTrail: true,
+  eodSquareOff: true,
+  rthOnly: true,
+  pos: [],
+  livePos: [],
+  closed: [],
+  autoPickExecuted: {},
+  superAgent: { enabled:true, history:[], blocked:0 },
+  scannerPaused: false,
+  analyst: { messages:[], proposals:[], approvedRules:[], provider:'local', dailyReports:{} }
+};
+
+try {
+  const stored = JSON.parse(localStorage.getItem('opt') || '{}');
+  cfg = Object.assign(cfg, stored);
+  if (!Array.isArray(cfg.pos)) cfg.pos = [];
+  if (!Array.isArray(cfg.livePos)) cfg.livePos = [];
+  normalizeCfg();
+  if (typeof cfg.onePerSymbol !== 'boolean') cfg.onePerSymbol = true;
+  if (typeof cfg.breakevenTrail !== 'boolean') cfg.breakevenTrail = true;
+  if (typeof cfg.eodSquareOff !== 'boolean') cfg.eodSquareOff = true;
+  if (typeof cfg.rthOnly !== 'boolean') cfg.rthOnly = true;
+  if (!Array.isArray(cfg.closed)) cfg.closed = [];
+  if (!cfg.autoPickExecuted || typeof cfg.autoPickExecuted !== 'object' || Array.isArray(cfg.autoPickExecuted)) cfg.autoPickExecuted = {};
+  if (!cfg.superAgent || typeof cfg.superAgent !== 'object') cfg.superAgent={enabled:true,history:[],blocked:0};
+  if (!Array.isArray(cfg.superAgent.history)) cfg.superAgent.history=[];
+  cfg.scannerPaused = cfg.scannerPaused === true;
+  if(!cfg.analyst||typeof cfg.analyst!=='object')cfg.analyst={messages:[],proposals:[],approvedRules:[]};
+  if(!Array.isArray(cfg.analyst.messages))cfg.analyst.messages=[];if(!Array.isArray(cfg.analyst.proposals))cfg.analyst.proposals=[];if(!Array.isArray(cfg.analyst.approvedRules))cfg.analyst.approvedRules=[];if(!cfg.analyst.dailyReports||typeof cfg.analyst.dailyReports!=='object')cfg.analyst.dailyReports={};
+} catch(e) {}
+
+function clampNum(v, min, max, def, o = {}) {
+  let n = Number(v);
+  if (!Number.isFinite(n) || (!n && !o.allowZero)) n = def;
+  n = Math.min(max, Math.max(min, n));
+  return o.round ? Math.round(n) : n;
+}
+function normalizeCfg() {
+  cfg.strictRR = clampNum(cfg.strictRR, 0.1, 10, 1.5);
+  cfg.balancedRR = clampNum(cfg.balancedRR, 0.1, 10, 1.5);
+  cfg.stopPct = clampNum(cfg.stopPct, 5, 60, 25);
+  cfg.maxOpenPos = clampNum(cfg.maxOpenPos, 1, 20, 3, { round: true });
+  cfg.cooldownMins = clampNum(cfg.cooldownMins, 0, 240, 30, { round: true, allowZero: true });
+}
+
+const save = () => { try { localStorage.setItem('opt', JSON.stringify(cfg)); } catch(e){} };
+
+const api = async (p) => {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 8000);
+  try {
+    const r = await fetch(cfg.bridge + p, { signal: ctrl.signal });
+    clearTimeout(timer);
+    if (!r.ok) throw new Error(r.status);
+    return await r.json();
+  } catch (e) {
+    clearTimeout(timer);
+    throw e;
+  }
+};
+
+const AUTO_PICK_POLICY = Object.freeze({ premiumMin: 0.25, premiumMax: 3.50, strictMin: 76, balancedMin: 72, maxSpreadPct: 0.10, minVolume: 50, minOI: 200, scanMs: 30000 });
+// Single source of truth for tiering and the per-tier risk plan (used by scoring, the picks table and order creation).
+const tierForScore = s => s >= AUTO_PICK_POLICY.strictMin ? 'Strict' : s >= AUTO_PICK_POLICY.balancedMin ? 'Balanced' : null;
+const tierRR = tier => tier === 'Strict' ? cfg.strictRR : cfg.balancedRR;
+function riskPlan(mid, tier, intraday) {
+  const slMult = 1 - cfg.stopPct / 100;
+  const stop = +(mid * (intraday ? slMult : Math.min(slMult, 0.70))).toFixed(2);
+  const rr = tierRR(tier);
+  return { stop, rr, tgt: +(mid + (mid - stop) * rr).toFixed(2) };
+}
+let tab = 'picks', mode = 'intraday', tier = 'All', picks = [], msg = '', busy = false, autoTradeMsg = 'Auto-entry armed';
+
+function setTab(t) {
+  tab = t;
+  render();
+  if (t === 'paper' || t === 'live') refresh();
+  if (t === 'live') updateLiveStrikesTA();
+}
+
+function setMode(m) { mode = m; render(); }
+function setTier(t) { tier = t; render(); }
+
+// ---- Contract parsing: every input format is normalised to ONE canonical OCC contract ----
+// Accepts  OCC            NFLX261106P00061000
+//          Moomoo compact NFLX261106P61000  (a US. prefix or -US suffix is fine)
+//          Display text   NFLX 11-06 61P · NFLX 11/06 61.5 PUT · NFLX 2026-11-06 61P · NFLX Nov 6 2026 61P · NFLX 261106 61P
+// Before this, text such as "NFLX 11-06 61P" was stored as-is: the underlying became "NFLX " (trailing space),
+// so the 5m chart request failed and the Moomoo link pointed at a page that does not exist (404).
+const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+function contractFromParts(root, y, mo, d, call, strike) {
+  if (!root || !(y >= 2000 && y <= 2100) || !(mo >= 1 && mo <= 12) || !(d >= 1 && d <= 31) || !Number.isFinite(strike) || !(strike > 0)) return null;
+  const mid = new Date(Date.UTC(y, mo - 1, d));
+  if (mid.getUTCMonth() !== mo - 1 || mid.getUTCDate() !== d) return null; // rejects impossible dates such as 02-31
+  const z = n => String(n).padStart(2, '0');
+  const close = etWall(y, mo, d, 16, 0); // 4:00 PM New York on expiry day (EDT/EST handled)
+  return {
+    root, y, m: mo, d, call, strike,
+    occ: `${root}${z(y % 100)}${z(mo)}${z(d)}${call ? 'C' : 'P'}${String(Math.round(strike * 1000)).padStart(8, '0')}`,
+    expMidTs: Math.floor(mid.getTime() / 1000),                 // 00:00 UTC of expiry day = the key Yahoo's option chain uses
+    dte: Math.max(0, (close.getTime() - Date.now()) / 864e5),
+    label: `${root} ${z(d)} ${MONTHS[mo - 1]} ${y} $${+strike.toFixed(3)} ${call ? 'CALL' : 'PUT'}`
+  };
+}
+
+function parseExpiryText(txt, refTs) {
+  const ref = Number(refTs) || Date.now();
+  let y, mo, d, m;
+  if ((m = /^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})$/.exec(txt))) { y = +m[1]; mo = +m[2]; d = +m[3]; }            // 2026-11-06
+  else if ((m = /^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4}|\d{2})$/.exec(txt))) { mo = +m[1]; d = +m[2]; y = +m[3]; if (y < 100) y += 2000; } // 11-06-2026 (US order)
+  else if ((m = /^(\d{1,2})[-\/.](\d{1,2})$/.exec(txt))) { mo = +m[1]; d = +m[2]; }                                // 11-06
+  else if ((m = /^(\d{4})(\d{2})(\d{2})$/.exec(txt))) { y = +m[1]; mo = +m[2]; d = +m[3]; }                         // 20261106
+  else if ((m = /^(\d{2})(\d{2})(\d{2})$/.exec(txt))) { y = 2000 + +m[1]; mo = +m[2]; d = +m[3]; }                  // 261106
+  else if ((m = /^([A-Z]{3})[A-Z]*\.? (\d{1,2})(?:,? (\d{4}))?$/.exec(txt))) { mo = MONTHS.indexOf(m[1]) + 1; d = +m[2]; if (m[3]) y = +m[3]; } // NOV 6 [2026]
+  else if ((m = /^(\d{1,2}) ([A-Z]{3})[A-Z]*\.?(?:,? (\d{4}))?$/.exec(txt))) { d = +m[1]; mo = MONTHS.indexOf(m[2]) + 1; if (m[3]) y = +m[3]; } // 6 NOV [2026]
+  else return null;
+  if (!(mo >= 1)) return null;
+  if (y == null) { // year omitted: nearest upcoming occurrence (3 days of grace for contracts that just expired)
+    y = new Date(ref).getUTCFullYear();
+    if (Date.UTC(y, mo - 1, d, 21) < ref - 3 * 864e5) y++;
+  }
+  return { y, mo, d };
+}
+
+function parseContractInput(raw, refTs) {
+  const s = String(raw || '').toUpperCase().trim().replace(/^US[.:]/, '').replace(/-US$/, '').replace(/\s+/g, ' ');
+  if (!s) return null;
+  let m = /^([A-Z]{1,6})(\d{2})(\d{2})(\d{2})([CP])(\d{1,8})$/.exec(s.replace(/ /g, ''));
+  if (m) { // OCC (8 digits, thousandths) or Moomoo compact (thousandths, no padding). 1-4 digits = whole dollars.
+    const digits = m[6];
+    return contractFromParts(m[1], 2000 + +m[2], +m[3], +m[4], m[5] === 'C', digits.length >= 5 ? parseInt(digits, 10) / 1000 : parseInt(digits, 10));
+  }
+  let root, dateTxt, strikeTxt, typeTxt;
+  if ((m = /^([A-Z]{1,6}) (.+?) ?(\d+(?:\.\d+)?) ?(CALL|PUT|C|P)$/.exec(s))) [, root, dateTxt, strikeTxt, typeTxt] = m;      // NFLX 11-06 61P
+  else if ((m = /^([A-Z]{1,6}) (.+?) (CALL|PUT|C|P) ?(\d+(?:\.\d+)?)$/.exec(s))) [, root, dateTxt, typeTxt, strikeTxt] = m;  // NFLX 11-06 P 61
+  else return null;
+  const dt = parseExpiryText(dateTxt.trim(), refTs);
+  return dt ? contractFromParts(root, dt.y, dt.mo, dt.d, typeTxt[0] === 'C', parseFloat(strikeTxt)) : null;
+}
+
+// Moomoo option page, e.g. https://www.moomoo.com/options/NVDA261007C230000-US  (strike = dollars x 1000, no zero padding)
+function getMoomooUrl(code) {
+  const c = parseContractInput(code);
+  if (!c) return null;
+  const z = n => String(n).padStart(2, '0');
+  return `https://www.moomoo.com/options/${c.root}${z(c.y % 100)}${z(c.m)}${z(c.d)}${c.call ? 'C' : 'P'}${Math.round(c.strike * 1000)}-US`;
+}
+
+function openMoomooChart(code) {
+  const url = getMoomooUrl(code);
+  if (!url) { alert(`Can't build a Moomoo link: contract "${code}" is not recognised.\nUse a code like NFLX261106P00061000 or NFLX 11-06 61P.`); return; }
+  window.open(url, '_blank', 'noopener');
+}
+
+const N = x => {
+  const t = 1 / (1 + .2316419 * Math.abs(x)),
+        p = .3989423 * Math.exp(-x*x/2) * t * (.3193815 + t*(-.3565638 + t*(1.781478 + t*(-1.821256 + t*1.330274))));
+  return x > 0 ? 1 - p : p;
+};
+
+function greeks(S, K, T, iv, call) {
+  const r = .045, sd = iv * Math.sqrt(T);
+  if (sd <= 0) return { d: 0, th: 0 };
+  const d1 = (Math.log(S/K) + (r + iv*iv/2)*T) / sd,
+        d2 = d1 - sd,
+        pdf = .3989423 * Math.exp(-d1*d1/2);
+  return {
+    d: call ? N(d1) : N(d1) - 1,
+    th: (-S * pdf * iv / (2 * Math.sqrt(T)) - (call ? 1 : -1) * r * K * Math.exp(-r*T) * N(call ? d2 : -d2)) / 365
+  };
+}
+
+const ema = (a, n) => { const k = 2 / (n + 1); return a.reduce((e, x, i) => i ? x*k + e*(1-k) : x, a[0]); };
+const rsi = (c, n=14) => {
+  if (c.length <= n) return 50;
+  let g = 0, l = 0;
+  for (let i = c.length - n; i < c.length; i++) {
+    const d = c[i] - c[i-1];
+    d > 0 ? g += d : l -= d;
+  }
+  return l ? 100 - 100 / (1 + g/l) : 100;
+};
+const hv = c => {
+  if (c.length < 2) return 0.2;
+  const r = c.slice(-21).map((x, i, a) => i ? Math.log(x / a[i-1]) : 0).slice(1);
+  const m = r.reduce((a, b) => a + b, 0) / r.length;
+  return Math.sqrt(r.reduce((a, b) => a + (b - m)**2, 0) / Math.max(1, r.length - 1)) * Math.sqrt(252);
+};
+const cl = (x, a=0, z=1) => Math.max(a, Math.min(z, x));
+
+function pick(o, S, T, call, m, b, fs, H, ed) {
+  const iv = o.impliedVolatility, bid = o.bid || 0, ask = o.ask || 0, mid = (bid + ask) / 2;
+  // Hard gates first (cheap), so greeks/scoring only run for contracts that can actually qualify.
+  if (!(bid > 0) || !(ask > 0) || !(iv > 0) || (o.openInterest || 0) < AUTO_PICK_POLICY.minOI || (o.volume || 0) < AUTO_PICK_POLICY.minVolume) return null;
+  if (mid < AUTO_PICK_POLICY.premiumMin || mid > AUTO_PICK_POLICY.premiumMax) return null;
+  const sp = (ask - bid) / mid;
+  if (sp > AUTO_PICK_POLICY.maxSpreadPct) return null;
+  const g = greeks(S, o.strike, T, iv, call), id = m === 'intraday', tg = id ? .45 : .4;
+  let s = 25 * cl(Math.abs(b) / 85) + 15 * cl(1 - Math.abs(Math.abs(g.d) - tg) / .3) + 15 * cl(1 - sp / .15) + 10 * cl((o.volume || 0) / 500) + 10 * cl(1.3 - iv / (H || .2)) + 10 * cl(1 - Math.abs(g.th) / mid / (id ? .5 : .15)) + 10 * fs;
+  s = s * 100 / 95 - (ed < (id ? 1 : 10) ? 8 : 0);
+  const score = Math.round(s), tier = tierForScore(score);
+  if (!tier) return null;
+  const plan = riskPlan(mid, tier, id);
+  return {
+    code: o.contractSymbol, k: o.strike, bid, ask, mid, iv, d: g.d, th: g.th, oi: o.openInterest, v: o.volume || 0,
+    score, tier, earn: ed < (id ? 1 : 10), stop: plan.stop, tgt: plan.tgt,
+    evidence:{underlying:S,dte:T*365,bias:Math.round(b),fundamental:fs,hv:H,earningsDays:ed,spreadPct:sp*100,delta:g.d,theta:g.th,iv,oi:o.openInterest||0,volume:o.volume||0,bid,ask,mid,score,tier,mode:m,capturedAt:Date.now()}
+  };
+}
+
+async function analyze(sym) {
+  const E = encodeURIComponent(sym);
+  const [ch, qt, c0] = await Promise.all([api('/api/chart?symbol=' + E), api('/api/quote?symbols=' + E), api('/api/chain?symbol=' + E)]);
+  const c = ch.chart.result[0].indicators.quote[0].close.filter(x => x != null),
+        q = qt.quoteResponse.result[0] || {},
+        S = c.at(-1);
+  const e20 = ema(c, 20), e50 = ema(c, 50), R = rsi(c), H = hv(c), chg = q.regularMarketChangePercent || 0;
+  const b = (S > e20 ? 20 : -20) + (e20 > e50 ? 25 : -25) + (S > e50 ? 10 : -10) + (R > 55 ? 15 : R < 45 ? -15 : 0) + (chg > .3 ? 15 : chg < -.3 ? -15 : 0);
+  if (Math.abs(b) < 30) return [];
+  const call = b > 0, etf = q.quoteType === 'ETF' || sym[0] === '^';
+  let f = 5;
+  if (!etf) {
+    const ar = parseFloat(q.averageAnalystRating) || 3;
+    f += ar < 2.2 ? 3 : ar > 3 ? -3 : 0;
+    if (q.forwardPE && q.trailingPE && q.forwardPE < q.trailingPE) f += 2;
+  }
+  const ed = q.earningsTimestamp ? (q.earningsTimestamp * 1000 - Date.now()) / 864e5 : 99,
+        fs = (call ? f : 10 - f) / 10,
+        dte = e => (e * 1000 + 864e5 - Date.now()) / 864e5,
+        ex = c0.optionChain.result[0].expirationDates,
+        out = [];
+  for (const m of ['intraday', 'swing']) {
+    const e = ex.find(e => m === 'intraday' ? dte(e) > 0 && dte(e) <= 3 : dte(e) >= 5 && dte(e) <= 14);
+    if (!e) continue;
+    const res = (await api(`/api/chain?symbol=${E}&date=${e}`)).optionChain.result[0],
+          op = res.options[0],
+          S2 = res.quote.regularMarketPrice || S;
+    out.push(...(call ? op.calls : op.puts).map(o => pick(o, S2, Math.max(dte(e), .05) / 365, call, m, b, fs, H, ed)).filter(Boolean).map(p => ({ ...p, sym, m, call, exp: e, b: Math.round(b), R: Math.round(R), evidence:{...p.evidence,symbol:sym,expiry:e,rsi:R,ema20:e20,ema50:e50,marketChangePct:chg,fundamentalRaw:f,optionType:call?'CALL':'PUT',quoteSource:'Yahoo option chain',capturedAt:Date.now()} })));
+  }
+  return out;
+}
+
+function agentKey(p){return `${p.sym}|${p.m||'intraday'}|${p.tier||'None'}|${p.call?'CALL':'PUT'}`;}
+function superAgentStats(){
+  const closed=(cfg.closed||[]).filter(p=>p.autoEntered),by=agentGroupStats(closed,agentKey),wins=closed.filter(p=>Number(p.realizedPL)>0).length;
+  return {closed,wins,winRate:closed.length?wins/closed.length*100:0,by};
+}
+function agentGroupStats(trades,keyFn){const out={};trades.forEach(p=>{const k=keyFn(p),x=out[k]||(out[k]={trades:0,wins:0,pnl:0});x.trades++;x.pnl+=Number(p.realizedPL)||0;if(Number(p.realizedPL)>0)x.wins++;});Object.values(out).forEach(x=>{x.winRate=x.trades?x.wins/x.trades*100:0;x.avg=x.trades?x.pnl/x.trades:0;});return out;}
+function superAgentInsights(){
+  const a=superAgentStats(),t=a.closed;
+  const bySymbol=agentGroupStats(t,p=>p.sym||'Unknown'),byTier=agentGroupStats(t,p=>p.tier||'None'),byMode=agentGroupStats(t,p=>(p.m||'intraday').toUpperCase()),byType=agentGroupStats(t,p=>p.call?'CALL':'PUT'),byReason=agentGroupStats(t,p=>p.closeReason||'Closed');
+  const ranked=o=>Object.entries(o).sort((a,b)=>b[1].winRate-a[1].winRate||b[1].pnl-a[1].pnl);
+  const best=ranked(a.by)[0],weak=Object.entries(a.by).filter(([,x])=>x.trades>=3).sort((a,b)=>a[1].winRate-b[1].winRate)[0];
+  const losses=t.filter(p=>Number(p.realizedPL)<=0),avgWin=a.wins?t.filter(p=>Number(p.realizedPL)>0).reduce((z,p)=>z+Number(p.realizedPL||0),0)/a.wins:0,avgLoss=losses.length?losses.reduce((z,p)=>z+Number(p.realizedPL||0),0)/losses.length:0;
+  return {a,bySymbol,byTier,byMode,byType,byReason,best,weak,avgWin,avgLoss,ranked};
+}
+function exportLearningHistory(filter='all'){
+  const history=cfg.superAgent.history||[], closed=(cfg.closed||[]).filter(p=>p.autoEntered);
+  let rows=[['Timestamp','Event','Result','Symbol','Pattern','Mode','Tier','Option Type','Contract','Entry','Exit','Net P&L','Close Reason','Agent Decision']];
+  closed.forEach(p=>{const result=Number(p.realizedPL)>0?'WIN':'LOSS';if(filter!=='all'&&filter.toUpperCase()!==result)return;const d=superAgentDecision(p);rows.push([new Date(p.closedAt||Date.now()).toISOString(),'CLOSED_TRADE',result,p.sym,agentKey(p),p.m||'intraday',p.tier||'',p.call?'CALL':'PUT',p.code||'',p.entry||'',p.exitPrice||'',Number(p.realizedPL||0).toFixed(2),p.closeReason||'',d.reason]);});
+  if(filter==='all') history.forEach(h=>{if(!rows.some(r=>r[0]===new Date(h.at).toISOString()&&r[4]===h.key))rows.push([new Date(h.at).toISOString(),'LEARNING_EVENT',h.result,h.symbol,h.key,'','','','','','',''+Number(h.pnl||0).toFixed(2),h.reason||'','Recorded lesson']);});
+  if(rows.length===1){alert('No learning history available for this filter.');return;}
+  const esc=v=>'"'+String(v??'').replace(/"/g,'""')+'"',csv='\uFEFF'+rows.map(r=>r.map(esc).join(',')).join('\r\n'),url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download=`AlphaPulse_Super_Agent_${filter}_${new Date().toISOString().slice(0,10)}.csv`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+
+function superAgentDecision(p){
+  if(!cfg.superAgent.enabled)return {allow:true,reason:'Learning guard disabled'};
+  const pattern=agentKey(p),approved=(cfg.analyst?.approvedRules||[]).some(r=>r.pattern===pattern);
+  if(approved)return {allow:false,reason:'Manually approved learning guard for '+pattern};
+  const st=superAgentStats(),x=st.by[pattern];
+  // Never learn from a tiny sample. Only quarantine a repeated pattern after 8 comparable paper trades.
+  if(x&&x.trades>=8&&x.winRate<35)return {allow:false,reason:`Quarantined pattern: ${x.wins}/${x.trades} wins (${x.winRate.toFixed(1)}%)`};
+  return {allow:true,reason:x?`Observed ${x.trades} comparable trades`:'New pattern; collecting evidence'};
+}
+function recordAgentLesson(p){
+  if(!p||!p.autoEntered)return;
+  const loss=Number(p.realizedPL)<=0;
+  const lesson={at:Date.now(),key:agentKey(p),symbol:p.sym,result:loss?'LOSS':'WIN',pnl:Number(p.realizedPL)||0,reason:p.closeReason||'Closed'};
+  cfg.superAgent.history.unshift(lesson);cfg.superAgent.history=cfg.superAgent.history.slice(0,200);
+}
+function toggleSuperAgent(){cfg.superAgent.enabled=!cfg.superAgent.enabled;save();render();}
+
+// pick() already enforces premium range, liquidity and tier thresholds; this only guards against stale/foreign objects.
+function isAutoPickEligible(p) { return !!(p && p.tier && p.tier === tierForScore(p.score)); }
+function parseOccMeta(code) {
+  const c = parseContractInput(code);
+  if (!c) return null;
+  return { root: c.root, expiryTs: c.expMidTs, dte: c.dte, call: c.call, strike: c.strike };
+}
+
+function isSymbolInCooldown(sym) {
+  const cdMs = (Number(cfg.cooldownMins) || 0) * 60000;
+  if (cdMs <= 0) return false;
+  const now = Date.now();
+  return (cfg.closed || []).some(c => c.sym === sym && c.closedAt && (now - c.closedAt) < cdMs);
+}
+
+function createPaperOrder(p, source = 'Manual Auto-Picks') {
+  if (!isAutoPickEligible(p)) return { ok:false, reason:'Not eligible' };
+  if (cfg.pos.some(x => x.code === p.code)) return { ok:false, reason:'Already open' };
+  const isAutoEntry = source === 'Auto-Picks hard trigger';
+  if (isAutoEntry) {
+    // 1. Regular Trading Hours (RTH) gate for automated entries
+    if (cfg.rthOnly !== false && typeof marketPhase === 'function' && marketPhase().code !== 'open') {
+      return { ok:false, retry:true, reason:'US regular market closed (RTH filter active)' };
+    }
+    // 2. Max concurrent open positions gate (prevents 10 correlated positions firing together)
+    const maxPos = Number(cfg.maxOpenPos) || 3;
+    if (cfg.pos.length >= maxPos) {
+      return { ok:false, retry:true, reason:`Max open positions (${maxPos}) reached` };
+    }
+    // 3. One active position per underlying root symbol (prevents QQQ 716P + 717P + 715P strike-stacking)
+    if (cfg.onePerSymbol !== false && cfg.pos.some(x => x.sym === p.sym)) {
+      return { ok:false, retry:true, reason:`Active position already open for ${p.sym}` };
+    }
+    // 4. Symbol cooldown after exit (30m default)
+    if (isSymbolInCooldown(p.sym)) {
+      return { ok:false, retry:true, reason:`${p.sym} is in ${cfg.cooldownMins}m post-exit cooldown` };
+    }
+    const guard = superAgentDecision(p);
+    if (!guard.allow) {
+      cfg.superAgent.blocked = (cfg.superAgent.blocked || 0) + 1;
+      return { ok:false, reason:guard.reason };
+    }
+  }
+  const occ = parseOccMeta(p.code);
+  const entry = +p.mid.toFixed(2);
+  const stop = +p.stop.toFixed(2);
+  const rr = tierRR(p.tier);          // same tier R:R for auto and manual entries
+  const target = +p.tgt.toFixed(2);   // exactly the target shown in the picks table
+  const target1 = +(entry + Math.max(0, entry - stop) * 0.7).toFixed(2); // 0.7R breakeven trigger
+  const computedDte = p.evidence?.dte ?? (p.exp ? (p.exp * 1000 + 864e5 - Date.now()) / 864e5 : (occ ? occ.dte : null));
+  const entryEvidence={
+    symbol:p.sym || (occ && occ.root),contract:p.code,strike:p.k || (occ && occ.strike),optionType:p.call?'CALL':'PUT',expiry:p.exp || (occ && occ.expiryTs),mode:p.m,
+    underlying:p.evidence?.underlying??null,bid:p.evidence?.bid??p.bid??null,ask:p.evidence?.ask??p.ask??null,mid:p.evidence?.mid??p.mid??null,
+    spreadPct:p.evidence?.spreadPct??((p.ask>0&&p.bid>=0&&p.mid>0)?(p.ask-p.bid)/p.mid*100:null),
+    delta:p.evidence?.delta??p.d??null,theta:p.evidence?.theta??p.th??null,iv:p.evidence?.iv??p.iv??null,hv:p.evidence?.hv??null,
+    volume:p.evidence?.volume??p.v??null,oi:p.evidence?.oi??p.oi??null,dte:computedDte,
+    bias:p.evidence?.bias??p.b??null,rsi:p.evidence?.rsi??p.R??null,ema20:p.evidence?.ema20??null,ema50:p.evidence?.ema50??null,
+    marketChangePct:p.evidence?.marketChangePct??null,fundamental:p.evidence?.fundamental??null,fundamentalRaw:p.evidence?.fundamentalRaw??null,
+    earningsDays:p.evidence?.earningsDays??null,score:p.score,tier:p.tier,quoteSource:p.evidence?.quoteSource||'Auto-Picks option chain',capturedAt:Date.now()
+  };
+  cfg.pos.push({
+    id: Date.now() + cfg.pos.length, sym: p.sym, code: p.code, k: p.k, call: p.call, side: sideOf(p), exp: p.exp || (occ && occ.expiryTs),
+    qty: 1, entry, live: p.mid, stop, initialStop: stop, target1, breakevenArmed: false, tgt: target,
+    autoClose: true, m: p.m, rr, tier: p.tier, score: p.score,
+    autoEntered: isAutoEntry, entrySource: source, openedAt: Date.now(),
+    entrySnapshot:{...entryEvidence,entry,stop,initialStop:stop,target1,target,rr},
+    timeline:[{at:Date.now(),type:'ENTRY',price:entry,underlying:entryEvidence.underlying,source:'Auto-Picks',bid:entryEvidence.bid,ask:entryEvidence.ask,iv:entryEvidence.iv,delta:entryEvidence.delta,theta:entryEvidence.theta}]
+  });
+  return { ok:true };
+}
+function executeEligibleAutoPicks() {
+  const eligible = picks.filter(isAutoPickEligible);
+  const liveCodes = new Set(eligible.map(p => p.code));
+  // Rearm only after a contract leaves the eligible result set.
+  Object.keys(cfg.autoPickExecuted).forEach(code => { if (!liveCodes.has(code)) delete cfg.autoPickExecuted[code]; });
+  let added = 0, handled = 0, waiting = 0, waitReason = '';
+  eligible.forEach(p => {
+    if (cfg.autoPickExecuted[p.code]) { handled++; return; }
+    const result = createPaperOrder(p, 'Auto-Picks hard trigger');
+    if (result.ok) added++;
+    else if (result.retry) { waiting++; waitReason = result.reason; return; } // temporary gate (market closed, slots full, cooldown): leave un-handled so the next scan retries it
+    else handled++;
+    cfg.autoPickExecuted[p.code] = Date.now();
+  });
+  save();
+  autoTradeMsg = (added ? `${added} eligible contract${added === 1 ? '' : 's'} auto-added to Paper Trading` :
+                 `No new entry (${eligible.length} eligible, ${handled} already handled/open)`) +
+                 (waiting ? ` · ${waiting} waiting: ${waitReason}` : '');
+  return added;
+}
+function scannerCanRun(){return !cfg.scannerPaused && !document.hidden;}
+function toggleScanner(){
+  cfg.scannerPaused=!cfg.scannerPaused;save();
+  msg=cfg.scannerPaused?'Scanner paused. Existing paper positions continue live-price and exit monitoring.':'Scanner resumed. Next automatic scan is scheduled; use Scan Now to run immediately.';
+  render();
+  if(!cfg.scannerPaused&&!busy)setTimeout(()=>{if(scannerCanRun())scan();},150);
+}
+async function scan(manual=false) {
+  if (busy) return;
+  if (cfg.scannerPaused && !manual) { msg='Scanner paused'; if(tab==='picks')render(); return; }
+  busy = true;
+  picks = [];
+  msg = 'Connecting to bridge...';
+  if(tab === 'picks') render();
+  for (const s of [...new Set(cfg.uni.split(',').map(s => s.trim().toUpperCase()).filter(Boolean))]) {
+    msg = 'Scanning ' + s + '…';
+    if(tab === 'picks') render();
+    try {
+      picks.push(...await analyze(s));
+    } catch(e) {
+      console.warn('Bridge check for ' + s + ':', e.message);
+    }
+  }
+  // Sorted once, best first: this is also the entry priority when the max-open-positions limit binds.
+  picks.sort((a, b) => b.score - a.score);
+  busy = false;
+  const added = executeEligibleAutoPicks();
+  msg = picks.length ? (`Synced: ${new Date().toLocaleTimeString()} · ${picks.length} qualified · ${added} new paper order${added === 1 ? '' : 's'}`) : 'Bridge offline or zero eligible strikes returned';
+  if(tab === 'picks' || (added && tab === 'paper')) render();
+}
+
+const dt = e => new Date(e * 1000).toISOString().slice(5, 10),
+      lbl = p => `${p.sym} ${dt(p.exp)} ${p.k}${p.call ? 'C' : 'P'}`,
+      sideOf = p => String(p.side || 'BUY').toUpperCase() === 'SELL' ? 'SELL' : 'BUY';
+
+// Date + time stamp shown on each paper-trading row (viewer's local timezone).
+const tsFmt = new Intl.DateTimeFormat(undefined, {day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit'});
+const fmtTs = ts => { if (!ts) return '--'; const d = new Date(ts); return isNaN(d) ? '--' : tsFmt.format(d); };
+
+function rPicks() {
+  const L = picks.filter(p => p.m === mode && (tier === 'All' || p.tier === tier));
+  return `
+  <div class="row" style="justify-content: space-between;">
+    <div class="row" style="margin:0">
+      ${[['intraday','Intraday (0-3 DTE)'],['swing','Swing (5-14 DTE)']].map(([m,t])=>`<button class="btn ${mode===m?'on':''}" onclick="setMode('${m}')">${t}</button>`).join('')}
+      <span class="mu" style="margin-left:8px;">Tier:</span>
+      ${['All','Strict','Balanced'].map(t=>`<button class="btn ${tier===t?'on':''}" onclick="setTier('${t}')">${t}</button>`).join('')}
+    </div>
+    <div class="row" style="margin:0">
+      <button class="btn pri" onclick="scan(true)">⚡ Scan Now</button>
+      <button class="btn scanner-toggle ${cfg.scannerPaused?'paused':'running'}" onclick="toggleScanner()">${cfg.scannerPaused?'▶ Resume Scanner':'⏸ Pause Scanner'}</button>
+      <span class="scanner-state ${cfg.scannerPaused?'mu':'g'}">${cfg.scannerPaused?'SCANNER PAUSED':'SCANNER RUNNING'}</span>
+      <span class="mu mono" style="font-size:11px;">${msg}</span>
+    </div>
+  </div>
+  <div class="row" style="justify-content:space-between;padding:9px 12px;background:var(--blue-bg);border:1px solid rgba(59,130,246,.25);border-radius:7px;">
+    <span><b>${cfg.scannerPaused?'Auto scanning PAUSED':'Auto-execution ON'}</b> · Strict ${AUTO_PICK_POLICY.strictMin}+ (R:R 1:${cfg.strictRR}) · Balanced ${AUTO_PICK_POLICY.balancedMin}-${AUTO_PICK_POLICY.strictMin - 1} (R:R 1:${cfg.balancedRR}) · SL ${cfg.stopPct}% · Max Open: ${cfg.maxOpenPos} · 1/Sym: ${cfg.onePerSymbol?'ON':'OFF'} · BE Trail: ${cfg.breakevenTrail?'0.7R':'OFF'}</span>
+    <span class="mono mu">${autoTradeMsg}</span>
+  </div>
+  <div class="wrap"><table>
+    <thead>
+      <tr>
+        <th>Underlying & Strike</th>
+        <th>Side</th>
+        <th>Mid</th>
+        <th>Bid / Ask</th>
+        <th>Delta</th>
+        <th>Theta/Day</th>
+        <th>IV</th>
+        <th>OI / Vol</th>
+        <th>Trend / RSI</th>
+        <th>Setup Tier</th>
+        <th>Stop → Target</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${L.map(p=>`<tr>
+        <td>
+          <div class="sym-name">${lbl(p)}</div>
+          <div class="sym-sub">${p.call?'LONG CALL':'LONG PUT'} ${p.earn?'• <span class="r">EARNINGS</span>':''}</div>
+        </td>
+        <td><span class="tag ${sideOf(p) === 'BUY' ? 'Buy' : 'Sell'}">${sideOf(p)}</span></td>
+        <td class="mono font-weight-bold">${p.mid.toFixed(2)}</td>
+        <td class="mono mu">${p.bid.toFixed(2)} /${p.ask.toFixed(2)}</td>
+        <td class="mono">${p.d.toFixed(2)}</td>
+        <td class="mono r">${p.th.toFixed(2)}</td>
+        <td class="mono">${(p.iv*100).toFixed(0)}%</td>
+        <td class="mono mu">${p.oi} /${p.v}</td>
+        <td class="mono">${p.b} /${p.R}</td>
+        <td><span class="tag ${p.tier}">${p.tier}${p.score}</span></td>
+        <td class="mono"><span class="r">${p.stop.toFixed(2)}</span> → <span class="g">${p.tgt.toFixed(2)}</span></td>
+        <td>
+          <div class="actions-cell">
+            <button class="btn sm pri" onclick="add('${p.code}')">+ Paper</button>
+            <button class="btn sm" title="Send strike to LiveStrikes calculator" onclick="sendPickToLive('${p.code}')">+ LiveStrikes</button>
+            <button class="btn sm" onclick="openAnalyst('${p.id}')">Ask Agent</button>
+          <button class="btn sm" title="View exact strike chart on Moomoo" onclick="openMoomooChart('${p.code}')">Chart ↗</button>
+          </div>
+        </td>
+      </tr>`).join('') || `<tr><td colspan="12" class="mu" style="text-align:center; padding:32px;">${busy ? 'Analyzing option chains...' : 'Ready to scan. Start the local bridge and click <b>⚡ Scan Scanner</b>.'}</td></tr>`}
+    </tbody>
+  </table></div>`;
+}
+
+
+function sendPickToLive(code) {
+  const p = picks.find(x => x.code === code);
+  if (!p) return;
+  lsDraft.code = p.code;
+  lsDraft.entry = +p.mid.toFixed(2);
+  lsDraft.qty = lsFitQty(lsDraft.entry, lsDraft.budget || 500, lsDraft.maxRisk || 25, lsDraft.stopPct || 25);
+  setTab('live');
+}
+
+function add(code) {
+  const p = picks.find(x => x.code === code);
+  if (!p) return;
+  const result = createPaperOrder(p, 'Manual Auto-Picks');
+  if (!result.ok) { alert(result.reason === 'Already open' ? 'This contract is already open in Paper Trading.' : 'Contract no longer meets the hard Auto-Picks policy.'); return; }
+  cfg.autoPickExecuted[code] = Date.now();
+  save();
+  setTab('paper');
+}
+
+function ed(i, k, v) {
+  if (!cfg.pos[i]) return;
+  cfg.pos[i][k] = Math.max(0, +v);
+  save();
+  render();
+}
+
+function setRR(i, ratio) {
+  const p = cfg.pos[i];
+  if (!p) return;
+  if (ratio === 'custom') return;
+  p.rr = +ratio;
+  const risk = Math.max(0, p.entry - (p.stop || 0));
+  p.tgt = +(p.entry + risk * p.rr).toFixed(2);
+  save();
+  render();
+}
+
+function setCustomRR(i, value) {
+  const p = cfg.pos[i];
+  const ratio = Math.max(0.1, +value || 0);
+  if (!p || !ratio) return;
+  p.rr = ratio;
+  const risk = Math.max(0, p.entry - (p.stop || 0));
+  p.tgt = +(p.entry + risk * ratio).toFixed(2);
+  save();
+  render();
+}
+
+const BE_FEE_BUFFER = 0.02; // breakeven + small fee buffer
+function armBreakeven(p, reason, initStop) {
+  p.initialStop = initStop ?? (p.initialStop || p.stop);
+  p.stop = +(p.entry + BE_FEE_BUFFER).toFixed(2);
+  p.breakevenArmed = true;
+  (p.timeline ??= []).push({ at: Date.now(), type: 'TRAIL_BE', price: p.live, newStop: p.stop, reason });
+}
+
+function toggleAutoClose(i) {
+  const p = cfg.pos[i];
+  if (!p) return;
+  p.autoClose = p.autoClose === false;
+  save();
+  render();
+}
+
+function classifyFailure(p){
+  const e=p.entrySnapshot||{},loss=Number(p.realizedPL)<0,move=e.entry?((Number(p.exitPrice||p.live)-e.entry)/e.entry*100):0,reasons=[];
+  if(!loss)return {primary:'Profitable outcome',factors:['Target/exit produced positive net P&L'],confidence:'medium'};
+  if(String(p.closeReason||'').includes('Stop loss'))reasons.push('Stop loss reached');
+  if(e.spreadPct!=null && Number(e.spreadPct)>10)reasons.push('Wide entry spread');
+  if(e.theta!=null && e.mid!=null && Math.abs(Number(e.theta))/(Number(e.mid)||1)>.15)reasons.push('High theta burden');
+  if(e.volume==null || e.oi==null) {
+    reasons.push('Telemetry missing at entry (legacy/unverified liquidity)');
+  } else {
+    if(Number(e.volume)<200)reasons.push('Light option volume');
+    if(Number(e.oi)<300)reasons.push('Limited open interest');
+  }
+  if(e.earningsDays!=null&&Number(e.earningsDays)<2)reasons.push('Event proximity');
+  if(move<-20)reasons.push('Large premium reversal');
+  const primary=reasons[0]||'Price moved against the setup after entry';
+  const completeness=['underlying','spreadPct','theta','volume','oi'].filter(k=>e[k]!=null).length;
+  return {primary,factors:reasons.slice(1).length?reasons.slice(1):['No single technical cause is proven by stored evidence'],confidence:completeness>=4?'medium':'low'};
+}
+function comparableTrades(p){const key=agentKey(p);return (cfg.closed||[]).filter(x=>x.autoEntered&&x!==p&&agentKey(x)===key);}
+function updateShadowTests(closed){
+  (cfg.analyst.proposals||[]).filter(x=>x.status==='shadow').forEach(x=>{if(x.pattern===agentKey(closed)){x.observations=(x.observations||0)+1;if(Number(closed.realizedPL)<=0)x.avoidedLosses=(x.avoidedLosses||0)+1;else x.missedWins=(x.missedWins||0)+1;x.updatedAt=Date.now();}});
+}
+function closePos(i, reason = 'Manual close') {
+  const p = cfg.pos[i];
+  if (!p) return;
+  const feeTotal = 2 * cfg.fee * p.qty;
+  const realizedPL = (p.live - p.entry) * 100 * p.qty - feeTotal;
+  cfg.closed.push({
+    ...p,
+    exitPrice: p.live,
+    realizedPL,
+    feeTotal,
+    closedAt: Date.now(),
+    closeReason: reason,
+    autoClosed: reason !== 'Manual close',
+    exitSnapshot:{price:p.live,quoteSource:p.src||'Unknown',quoteTime:p.ts||Date.now(),closedAt:Date.now()},
+    timeline:[...(p.timeline||[]),{at:Date.now(),type:'EXIT',price:p.live,source:p.src||'Unknown',reason}]
+  });
+  const justClosed=cfg.closed[cfg.closed.length-1];justClosed.failure=classifyFailure(justClosed);updateShadowTests(justClosed);
+  recordAgentLesson(cfg.closed[cfg.closed.length-1]);
+  cfg.pos.splice(i, 1);
+  save();
+  render();
+}
+
+function exportTradeHistory() {
+  const rows = [['Status','Opened At','Closed At','Underlying','Contract','Side','Setup Tier','Strategy Tag','Option Type','Expiry','Strike','Quantity','Entry Price','Live/Exit Price','Stop Loss','Target','Risk Amount','Reward Amount','R:R Value','Auto-Close Status','Close Reason','Net P&L','P&L %','Fees','Quote Source']];
+  const append = (p, closed) => {
+    const px = closed ? p.exitPrice : p.live;
+    const fees = closed ? (p.feeTotal ?? 2*cfg.fee*p.qty) : 2*cfg.fee*p.qty;
+    const pnl = closed ? (p.realizedPL ?? ((px-p.entry)*100*p.qty-fees)) : ((px-p.entry)*100*p.qty-fees);
+    const capital = p.entry*100*p.qty;
+    const risk = Math.max(0,p.entry-(p.stop||0))*100*p.qty;
+    const reward = Math.max(0,(p.tgt||p.entry)-p.entry)*100*p.qty;
+    const rr = +(p.rr || (risk ? reward/risk : 0));
+    rows.push([closed?'Closed':'Open',new Date(p.openedAt||p.id||Date.now()).toISOString(),closed?new Date(p.closedAt||Date.now()).toISOString():'',p.sym,p.code,sideOf(p),(p.tier ? `${p.tier}${p.score != null ? ' ' + p.score : ''}` : 'Not captured'),(p.m||'intraday').toUpperCase(),p.call?'Call':'Put',p.exp,p.k,p.qty,p.entry,px,p.stop||'',p.tgt||'',risk.toFixed(2),reward.toFixed(2),`1:${rr.toFixed(2)}`,p.autoClose===false?'Disabled':(p.autoClosed?'Triggered':'Armed'),p.closeReason||'',pnl.toFixed(2),capital?(pnl/capital*100).toFixed(2):'0.00',fees.toFixed(2),p.src||'']);
+  };
+  cfg.pos.forEach(p=>append(p,false));
+  cfg.closed.forEach(p=>append(p,true));
+  if(rows.length===1){alert('No paper trades to export.');return;}
+  const esc=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+  const csv='\uFEFF'+rows.map(r=>r.map(esc).join(',')).join('\r\n');
+  const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  const a=document.createElement('a'); a.href=url; a.download=`AlphaPulse_Trade_History_${new Date().toISOString().slice(0,10)}.csv`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+}
+
+let paperViewMode = localStorage.getItem('alphaPaperView') || 'cards';
+const paperUI={search:'',symbol:'',side:'',tier:'',histTier:'',pnl:'',sort:'default',from:'',to:'',historySort:'date-desc'};
+// Setup-tier filter helpers: options like "Strict 78" / "Balanced 73" (tier + score), plus "All Strict" / "All Balanced".
+const tierLabel=p=>p&&p.tier?`${p.tier}${p.score!=null?' '+p.score:''}`:'None';
+function tierFilterOptions(list){
+  const groups=['Strict','Balanced'];
+  let h='<option value="">All tiers</option>';
+  groups.forEach(g=>{
+    const rows=(list||[]).filter(p=>p.tier===g);
+    if(!rows.length)return;
+    const counts=new Map();rows.forEach(p=>{const l=tierLabel(p);counts.set(l,(counts.get(l)||0)+1);});
+    const items=[...counts.entries()].sort((a,b)=>(parseFloat(b[0].split(' ')[1])||0)-(parseFloat(a[0].split(' ')[1])||0));
+    h+=`<optgroup label="${g}"><option value="tier:${g}">All ${g} (${rows.length})</option>${items.map(([l,c])=>`<option value="score:${l}">${l} (${c})</option>`).join('')}</optgroup>`;
+  });
+  const none=(list||[]).filter(p=>!p.tier).length;
+  if(none)h+=`<option value="tier:None">Not captured (${none})</option>`;
+  return h;
+}
+function tierMatch(filter,el){
+  if(!filter)return true;
+  const i=filter.indexOf(':'),kind=filter.slice(0,i),val=filter.slice(i+1);
+  return kind==='tier'?el.dataset.tier===val:el.dataset.tierscore===val;
+}
+function syncPaperView(){
+  const compact=paperViewMode==='compact' && innerWidth>900;
+  document.body.classList.toggle('paper-compact',compact);
+  const b=document.getElementById('paperViewBtn');
+  if(b){b.classList.toggle('active',compact);b.textContent=compact?'Card View':'Compact Table';b.title=innerWidth<=900?'Compact table is available on desktop screens':'Switch paper-trading layout';}
+}
+function togglePaperView(){paperViewMode=paperViewMode==='compact'?'cards':'compact';localStorage.setItem('alphaPaperView',paperViewMode);syncPaperView();}
+function applyPaperFilters(){
+  const get=id=>String(document.getElementById(id)?.value||'').trim();
+  paperUI.search=get('pfSearch');paperUI.symbol=get('pfSymbol');paperUI.side=get('pfSide');paperUI.tier=get('pfTier');paperUI.pnl=get('pfPnl');paperUI.sort=get('pfSort')||'default';
+  const q=paperUI.search.toLowerCase(),symbol=paperUI.symbol.toLowerCase(),side=paperUI.side.toLowerCase(),tier=paperUI.tier.toLowerCase(),pnl=paperUI.pnl;
+  const rows=[...document.querySelectorAll('.paper-open-row')]; let shown=0;
+  rows.forEach(r=>{const ok=(!q||r.dataset.search.includes(q))&&(!symbol||r.dataset.symbol.toLowerCase()===symbol)&&(!side||r.dataset.side.toLowerCase()===side)&&tierMatch(paperUI.tier,r)&&(!pnl||r.dataset.pnl===pnl);r.hidden=!ok;if(ok)shown++;});
+  const [key,dir]=paperUI.sort.split('-');
+  if(key!=='default'){rows.sort((a,b)=>(Number(a.dataset[key]||0)-Number(b.dataset[key]||0))*(dir==='asc'?1:-1)).forEach(r=>r.parentNode.appendChild(r));}
+  const el=document.getElementById('paperFilterSummary');if(el)el.textContent=`Showing ${shown} of ${rows.length} open positions${paperUI.sort!=='default'?' · Sorted by '+document.getElementById('pfSort').selectedOptions[0].text:''}`;
+}
+function clearPaperFilters(){Object.assign(paperUI,{search:'',symbol:'',side:'',tier:'',pnl:'',sort:'default'});['pfSearch','pfSymbol','pfSide','pfTier','pfPnl'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});const s=document.getElementById('pfSort');if(s)s.value='default';applyPaperFilters();}
+function localDateStart(v){return v?new Date(v+'T00:00:00').getTime():-Infinity;}
+function localDateEnd(v){return v?new Date(v+'T23:59:59.999').getTime():Infinity;}
+function applyHistoryFilters(){
+  paperUI.histTier=String(document.getElementById('hfTier')?.value||'');paperUI.from=String(document.getElementById('hfFrom')?.value||'');paperUI.to=String(document.getElementById('hfTo')?.value||'');paperUI.historySort=String(document.getElementById('hfSort')?.value||'date-desc');
+  const from=localDateStart(paperUI.from),to=localDateEnd(paperUI.to),rows=[...document.querySelectorAll('.paper-closed-row')];let shown=0;
+  const invalid=from>to;rows.forEach(r=>{const t=Number(r.dataset.closed||0),ok=!invalid&&t>=from&&t<=to&&tierMatch(paperUI.histTier,r);r.hidden=!ok;if(ok)shown++;});
+  const [key,dir]=paperUI.historySort.split('-');rows.sort((a,b)=>(Number(a.dataset[key]||0)-Number(b.dataset[key]||0))*(dir==='asc'?1:-1)).forEach(r=>r.parentNode.appendChild(r));
+  const el=document.getElementById('historyFilterSummary');if(el)el.textContent=invalid?'Start date must not be after end date.':`Showing ${shown} of ${rows.length} closed trades`;
+}
+function setHistoryRange(days){const now=new Date(),from=new Date();from.setDate(now.getDate()-Math.max(0,days-1));const ymd=d=>{const z=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`};paperUI.from=ymd(from);paperUI.to=ymd(now);const a=document.getElementById('hfFrom'),b=document.getElementById('hfTo');if(a)a.value=paperUI.from;if(b)b.value=paperUI.to;applyHistoryFilters();}
+function clearHistoryFilters(){paperUI.histTier='';paperUI.from='';paperUI.to='';paperUI.historySort='date-desc';['hfFrom','hfTo','hfTier'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});const s=document.getElementById('hfSort');if(s)s.value='date-desc';applyHistoryFilters();}
+addEventListener('resize',syncPaperView);
+
+let analystTradeId=null;
+function findAnalystTrade(id){return [...(cfg.pos||[]),...(cfg.closed||[])].find(p=>String(p.id)===String(id));}
+function evidenceCompleteness(p){const e=p.entrySnapshot||{},fields=['underlying','bid','ask','mid','spreadPct','delta','theta','iv','hv','volume','oi','dte','bias','rsi','fundamental'];const present=fields.filter(k=>e[k]!==null&&e[k]!==undefined&&e[k]!=='').length;return {present,total:fields.length,pct:Math.round(present/fields.length*100),missing:fields.filter(k=>e[k]===null||e[k]===undefined||e[k]==='')};}
+function analystEvidence(p){const e=p.entrySnapshot||{},c=comparableTrades(p),wins=c.filter(x=>Number(x.realizedPL)>0),failure=p.failure||classifyFailure(p);return {e,c,wins,rate:c.length?wins.length/c.length*100:0,failure};}
+function humanTradeIntro(p){const closed=p.closedAt!=null,fees=closed?Number(p.feeTotal??2*cfg.fee*p.qty):2*cfg.fee*p.qty,pl=closed?Number(p.realizedPL||0):((p.live-p.entry)*100*p.qty-fees),capital=Number(p.entry||0)*100*Number(p.qty||0),pct=capital?pl/capital*100:0;return `${lbl(p)} was a ${p.tier||'unclassified'} ${p.m||'intraday'} ${p.call?'call':'put'} setup with a score of ${p.score??'not recorded'}. ${closed?`It closed at $${Number(p.exitPrice).toFixed(2)} for a net result of ${pl>=0?'+':''}$${pl.toFixed(2)} (${pct>=0?'+':''}${pct.toFixed(1)}%).`:`It is still open at $${Number(p.live).toFixed(2)}.`}`;}
+function friendlyFieldName(k){return ({underlying:'underlying price',bid:'bid price',ask:'ask price',mid:'midpoint',spreadPct:'bid-ask spread',delta:'delta',theta:'theta',iv:'implied volatility',hv:'historical volatility',volume:'option volume',oi:'open interest',dte:'days to expiry',bias:'directional bias',rsi:'RSI',fundamental:'fundamental input'})[k]||k;}
+function analystAnswer(p,q){
+  const x=analystEvidence(p),e=x.e||{},text=String(q||'').toLowerCase(),closed=p.closedAt!=null;
+  const supported=/date|time|when|open|close|entry|exit|price|stop|target|risk|reward|delta|theta|iv|volatility|greek|liquid|spread|volume|interest|why|loss|mistake|fail|strike|select|similar|compare|history|improve|logic|change|quarantine|shadow|evidence|missing|event|market|news|earnings|detail|momentum/i.test(text);
+  if(!supported)return `That question is unrelated to this paper trade. Ask about the loss, entry/exit, stop/target, Greeks, liquidity, market context, comparable trades, missing evidence, or Auto-Picks logic.`;
+  const n=(v,d=2)=>Number.isFinite(Number(v))?Number(v).toFixed(d):'Not captured';
+  const money=v=>Number.isFinite(Number(v))?'$'+Number(v).toFixed(2):'Not captured';
+  const when=v=>v?fmtTs(v):'Not captured';
+  const expiry=p.exp?new Date(Number(p.exp)*1000).toLocaleDateString(undefined,{day:'2-digit',month:'short',year:'numeric'}):'Not captured';
+  const fees=closed?Number(p.feeTotal??2*cfg.fee*p.qty):2*cfg.fee*p.qty;
+  const pl=closed?Number(p.realizedPL||0):((p.live-p.entry)*100*p.qty-fees),capital=Number(p.entry||0)*100*Number(p.qty||0),pct=capital?pl/capital*100:0;
+  const risk=Math.max(0,Number(p.entry||0)-Number(p.stop||0))*100*Number(p.qty||0),reward=Math.max(0,Number(p.tgt||0)-Number(p.entry||0))*100*Number(p.qty||0);
+  const overview=()=>[
+    `CONTRACT: ${lbl(p)} (${p.code||'contract code not captured'})`,
+    `STATUS: ${closed?'Closed':'Open'} | Side ${sideOf(p)} | ${p.m||'intraday'} | Tier ${p.tier||'Not captured'}${p.score!=null?' '+p.score:''}`,
+    `TIMING: Entered ${when(p.openedAt||p.id)} | ${closed?'Exited '+when(p.closedAt):'Still open'} | Expiry ${expiry}`,
+    `PRICES: Entry ${money(p.entry)} | ${closed?'Exit '+money(p.exitPrice):'Live '+money(p.live)} | Stop ${money(p.stop)}${p.initialStop && p.initialStop !== p.stop ? ' (Initial ' + money(p.initialStop) + ')' : ''} | Target ${money(p.tgt)}`,
+    `POSITION: ${p.qty||0} contract(s) | R:R 1:${n(p.rr||0,2)} | Fees ${money(fees)}`,
+    `RESULT: ${pl>=0?'+':''}${money(pl)} (${pct>=0?'+':''}${n(pct,2)}%) | Close reason ${p.closeReason||'Not closed'}`
+  ];
+  const asksDate=/date|time|when|opened|closed|entry.*exit|exit.*entry/.test(text);
+  const asksAll=/all detail|all information|full detail|everything|complete|show all/.test(text);
+  const asksPrice=/price|entry price|exit price|stop|target|risk|reward|r:r/.test(text);
+  const asksGreek=/delta|theta|iv|implied|greek/.test(text);
+  const asksLiquidity=/liquid|spread|volume|open interest|\boi\b/.test(text);
+  const asksWhy=/why|loss|happen|mistake|failed|stop loss hit/.test(text);
+  const asksEntry=/entry|early|timing/.test(text);
+  const asksStrike=/strike|appropriate|selection/.test(text);
+  const asksCompare=/similar|compare|history|comparable/.test(text);
+  const asksLogic=/improve|logic|change|quarantine|shadow/.test(text);
+  const lines=[];
+  if(asksDate){
+    lines.push(`ENTRY AND EXIT DATES FOR ${lbl(p)}`);
+    lines.push(`Entry date/time: ${when(p.openedAt||p.id)}`);
+    lines.push(`Exit date/time: ${closed?when(p.closedAt):'Position is still open; no exit date exists.'}`);
+    lines.push(`Option expiry: ${expiry}`);
+    lines.push(`Holding period: ${closed&&p.closedAt&&(p.openedAt||p.id)?formatDuration(Number(p.closedAt)-Number(p.openedAt||p.id)):'Not available until the position closes.'}`);
+    lines.push(`Entry source: ${p.entrySource||'Not captured'} | Exit reason: ${p.closeReason||'Not closed'}`);
+    return lines.join('\n');
+  }
+  if(asksAll){
+    lines.push(...overview());
+    lines.push(`ENTRY EVIDENCE: underlying ${money(e.underlying)} | bid/ask ${money(e.bid)} / ${money(e.ask)} | midpoint ${money(e.mid)} | spread ${e.spreadPct!=null?n(e.spreadPct,1)+'%':'Not captured'}`);
+    lines.push(`GREEKS AND VOLATILITY: delta ${n(e.delta,3)} | theta ${n(e.theta,4)} | IV ${e.iv!=null?n(e.iv*100,1)+'%':'Not captured'} | historical volatility ${e.hv!=null?n(e.hv*100,1)+'%':'Not captured'}`);
+    lines.push(`LIQUIDITY: volume ${e.volume??'Not captured'} | open interest ${e.oi??'Not captured'} | DTE ${n(e.dte,2)}`);
+    lines.push(`SIGNAL: score ${e.score??p.score??'Not captured'} | tier ${e.tier??p.tier??'Not captured'} | directional bias ${e.bias??'Not captured'} | RSI ${e.rsi!=null?n(e.rsi,1):'Not captured'} | EMA20 ${e.ema20!=null?n(e.ema20,2):'Not captured'} | EMA50 ${e.ema50!=null?n(e.ema50,2):'Not captured'} | market change ${e.marketChangePct!=null?n(e.marketChangePct,2)+'%':'Not captured'} | fundamental input ${e.fundamental??'Not captured'}`);
+    lines.push(`FAILURE REVIEW: ${x.failure.primary}. Factors: ${x.failure.factors.join('; ')}. Confidence ${x.failure.confidence.toUpperCase()}.`);
+    lines.push(`COMPARABLE TRADES: ${x.c.length}, wins ${x.wins.length}, observed win rate ${n(x.rate,1)}%.`);
+    return lines.join('\n');
+  }
+  if(/event|market move|news|earnings/.test(text))return `${humanTradeIntro(p)}
+
+The saved entry snapshot shows earnings proximity of ${e.earningsDays!=null?n(e.earningsDays,1)+' days':'not recorded'}, an underlying market change of ${e.marketChangePct!=null?n(e.marketChangePct,2)+'%':'not recorded'}, directional bias of ${e.bias??'not recorded'}, and RSI of ${e.rsi!=null?n(e.rsi,1):'not recorded'}.
+
+${e.earningsDays==null&&e.marketChangePct==null?'There is not enough saved event or market context to say that an outside event caused this loss.':'These values provide context, but they do not prove that a specific event caused the loss.'}`;
+  if(/stop.*tight|tight.*stop/.test(text)){const distance=Number(p.entry)-Number(p.stop),distPct=p.entry?distance/p.entry*100:0;return `${humanTradeIntro(p)}
+
+The stop was $${Number(p.stop).toFixed(2)}, which was $${distance.toFixed(2)} or ${distPct.toFixed(1)}% below the $${Number(p.entry).toFixed(2)} entry. The planned risk was ${money(risk)} and the planned reward was ${money(reward)}.
+
+I cannot call the stop too tight from one trade alone. The better test is to compare maximum adverse movement across at least 8 similar trades. If several valid setups recover after touching this same stop distance, test a wider stop in shadow mode. Do not change the paper-trading stop from this single outcome.`;}
+  if(asksPrice){lines.push(...overview().slice(3));lines.push(`Planned risk ${money(risk)} | planned reward ${money(reward)}.`);return lines.join('\n');}
+  if(asksGreek){lines.push(`GREEKS FOR ${lbl(p)} AT ENTRY`);lines.push(`Delta: ${n(e.delta,3)} | Theta/day: ${n(e.theta,4)} | Implied volatility: ${e.iv!=null?n(e.iv*100,1)+'%':'Not captured'} | Historical volatility: ${e.hv!=null?n(e.hv*100,1)+'%':'Not captured'}.`);lines.push(e.capturedAt?`Snapshot captured ${when(e.capturedAt)}.`:'These fields were not captured for older trades.');return lines.join('\n');}
+  if(asksLiquidity){lines.push(`LIQUIDITY REVIEW FOR ${lbl(p)}`);lines.push(`Bid/ask: ${money(e.bid)} / ${money(e.ask)} | Spread: ${e.spreadPct!=null?n(e.spreadPct,1)+'%':'Not captured'} | Volume: ${e.volume??'Not captured'} | Open interest: ${e.oi??'Not captured'}.`);lines.push(Number(e.spreadPct)>12?'The stored spread was wide and may have increased execution loss.':'The stored evidence does not prove that spread alone caused the outcome.');return lines.join('\n');}
+  lines.push(...overview().slice(0,2));
+  if(asksWhy)return `${humanTradeIntro(p)}
+
+The strongest recorded explanation is ${String(x.failure.primary).toLowerCase()}. ${x.failure.factors?.length?`Other relevant evidence includes ${x.failure.factors.join(', ').toLowerCase()}.`:''}
+
+This is a ${x.failure.confidence}-confidence interpretation of the saved evidence, not proof that one factor alone caused the loss.`;
+  if(asksEntry)lines.push(e.capturedAt?`ENTRY SNAPSHOT: ${when(e.capturedAt)} | score ${e.score??'--'} | spread ${n(e.spreadPct,1)}% | delta ${n(e.delta,2)} | theta ${n(e.theta,3)} | volume ${e.volume??'--'} | OI ${e.oi??'--'}.`:'The original entry snapshot is incomplete for this older trade. The recorded entry time is still shown above.');
+  if(asksStrike)lines.push(`STRIKE REVIEW: ${p.k} ${p.call?'CALL':'PUT'} | entry ${money(p.entry)} | delta ${n(e.delta,2)} | spread ${e.spreadPct!=null?n(e.spreadPct,1)+'%':'Not captured'} | DTE ${n(e.dte,2)}.`);
+  if(/what evidence|evidence.*missing|missing evidence|not captured/.test(text)){const z=evidenceCompleteness(p),missing=z.missing.map(friendlyFieldName);return `${humanTradeIntro(p)}
+
+For this trade, ${z.present} of ${z.total} core entry fields are available (${z.pct}%). ${missing.length?`The missing fields are ${missing.join(', ')}.`:'The core entry snapshot is complete.'}
+
+Those fields matter for different reasons: underlying price and directional indicators help determine whether the market signal failed; bid, ask and spread show execution quality; delta, theta and IV separate direction, time decay and volatility effects; volume and open interest show liquidity; and DTE measures expiry pressure.
+
+New trades opened with this dashboard capture these fields automatically. Older trades cannot be reconstructed reliably after the fact.`;}
+  if(asksCompare){const sample=x.c.length,rate=n(x.rate,1);return `${humanTradeIntro(p)}
+
+I found ${sample} completed trade${sample===1?'':'s'} with the same pattern: ${p.sym}, ${p.m||'intraday'}, ${p.tier||'unclassified'}, ${p.call?'CALL':'PUT'}. ${x.wins.length} ${x.wins.length===1?'was':'were'} profitable, so the observed win rate is ${rate}%.
+
+${sample<8?'This is a warning signal, but the sample is still too small to justify changing Auto-Picks. I would keep collecting evidence and test any proposed restriction in shadow mode.':x.rate<40?'The repeated weakness is sufficient for a shadow-mode test, but not an automatic production change.':'The comparable evidence does not currently support restricting this setup.'}`;}
+  if(asksLogic){const sample=x.c.length,rate=n(x.rate,1);return `${humanTradeIntro(p)}
+
+My recommendation is to leave the Auto-Picks logic unchanged for now. I found ${sample} comparable completed trade${sample===1?'':'s'}, with ${x.wins.length} win${x.wins.length===1?'':'s'} and an observed win rate of ${rate}%.
+
+${sample<8?'That sample is too small to tell whether the rule is genuinely weak or whether this is simply a short losing streak. I would collect at least 8 comparable trades before proposing even a shadow filter.':'There is enough history to review the pattern in shadow mode, but not to rewrite Auto-Picks automatically.'}
+
+This recommendation does not change Auto-Picks, the paper-trading stop, or the target.`;}
+  if(lines.length===2){lines.push('Please ask a trade-related question. Supported topics: dates, prices, stop/target, Greeks, liquidity, loss evidence, comparable trades, missing evidence, and Auto-Picks logic.');}
+  return lines.join('\n');
+}
+function formatDuration(ms){if(!Number.isFinite(ms)||ms<0)return 'Not captured';const m=Math.floor(ms/60000),d=Math.floor(m/1440),h=Math.floor((m%1440)/60),min=m%60;return [d?d+'d':'',h?h+'h':'',min+'m'].filter(Boolean).join(' ');}
+
+function openAnalyst(id){analystTradeId=id;const p=findAnalystTrade(id);if(!p)return;const box=document.getElementById('agentDrawer');if(!box)return;box.classList.add('open');renderAnalystChat();}
+function closeAnalyst(){document.getElementById('agentDrawer')?.classList.remove('open');}
+function renderAnalystChat(){
+  const p=findAnalystTrade(analystTradeId),body=document.getElementById('agentChatBody');if(!p||!body)return;
+  const x=analystEvidence(p),msgs=(cfg.analyst.messages||[]).filter(m=>String(m.tradeId)===String(p.id)).slice(-12),lastAnswer=[...msgs].reverse().find(m=>m.role==='bot');
+  body.innerHTML=`<div class="agent-context"><b>${lbl(p)}</b><div class="evidence-row"><span>Status</span><span>${p.closedAt?'Closed '+fmtTs(p.closedAt):'Open'}</span></div><div class="evidence-row"><span>Entry → ${p.closedAt?'Exit':'Live'}</span><span>$${Number(p.entry).toFixed(2)} → $${Number(p.closedAt?p.exitPrice:p.live).toFixed(2)}</span></div><div class="evidence-row"><span>Failure class</span><span>${x.failure.primary}</span></div><div class="evidence-row"><span>Comparable trades</span><span>${x.c.length} · ${x.rate.toFixed(1)}% wins</span></div><div class="evidence-row"><span>Confidence</span><span class="confidence ${x.failure.confidence}">${x.failure.confidence.toUpperCase()}</span></div><div class="evidence-row"><span>Entry evidence</span><span>${(()=>{const z=evidenceCompleteness(p);return `${z.present}/${z.total} fields (${z.pct}%)`})()}</span></div></div><div class="agent-messages">${msgs.map(m=>`<div class="agent-msg ${m.role}">${escapeHtml(m.localText||m.text||'')}</div>`).join('')}</div>${lastAnswer?`<div class="agent-answer-actions"><div class="label">Copy the local explanation or continue in an outside chatbot:</div><button type="button" class="btn sm" onclick="copyLatestExplanation()">⧉ Copy Answer</button><button type="button" class="btn sm ai-launch" onclick="openOutsideAgent('chatgpt')"><span class="ai-logo chatgpt">C</span>ChatGPT</button><button type="button" class="btn sm ai-launch" onclick="openOutsideAgent('claude')"><span class="ai-logo claude">A</span>Claude</button><button type="button" class="btn sm ai-launch" onclick="openOutsideAgent('gemini')"><span class="ai-logo gemini">G</span>Gemini</button></div>`:''}${renderShadowProposal(p,x)}`;
+  body.scrollTop=body.scrollHeight;
+}
+
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function resolveTradeFromQuestion(q){
+  const text=String(q||'').toUpperCase(),all=[...(cfg.pos||[]),...(cfg.closed||[])];
+  const symbol=(text.match(/\b[A-Z]{1,6}\b/)||[])[0];
+  const strikeMatch=text.match(/\b(\d+(?:\.\d+)?)\s*([PC])\b/),strike=strikeMatch?Number(strikeMatch[1]):null,type=strikeMatch?strikeMatch[2]:null;
+  const dates=[...text.matchAll(/\b(\d{1,2})[-\/](\d{1,2})\b/g)].map(m=>({m:+m[1],d:+m[2]}));
+  const candidates=all.filter(p=>(!symbol||String(p.sym).toUpperCase()===symbol)&&(!strike||Number(p.k)===strike)&&(!type||(p.call?'C':'P')===type)&&(!dates.length||dates.some(x=>{const d=new Date(Number(p.exp)*1000);return d.getUTCMonth()+1===x.m&&d.getUTCDate()===x.d;})));
+  return candidates.sort((a,b)=>Number(b.closedAt||b.openedAt||b.id)-Number(a.closedAt||a.openedAt||a.id))[0]||null;
+}
+function setAnalystStatus(text,error=false){const e=document.getElementById('agentChatStatus');if(e){e.textContent=text;e.classList.toggle('error',error);}}
+function analystPrompt(p,question){const x=analystEvidence(p),e=x.e||{},snapshot={contract:p.code,symbol:p.sym,strike:p.k,type:p.call?'CALL':'PUT',status:p.closedAt?'closed':'open',entry:p.entry,currentOrExit:p.closedAt?p.exitPrice:p.live,netPnl:p.closedAt?p.realizedPL:((p.live-p.entry)*100*p.qty-2*cfg.fee*p.qty),closeReason:p.closeReason||'',localFailure:x.failure,entrySnapshot:e,comparableTrades:x.c.length,comparableWins:x.wins.length,comparableWinRate:x.rate,timeline:(p.timeline||[]).slice(-20)};return `USER QUESTION:
+${question}
+
+LOCAL DASHBOARD EVIDENCE (JSON):
+${JSON.stringify(snapshot)}
+
+Rules: do not invent missing fields; distinguish local facts from inference; use external context only to explain general market/option mechanics or current event context; do not give a buy/sell instruction; do not propose changing Auto-Picks unless repeated comparable evidence and shadow tests support it.`;}
+function askAnalyst(q){let p=findAnalystTrade(analystTradeId);const question=String(q||'').trim();if(!question){setAnalystStatus('Enter or choose a question first.',true);return;}if(!p){p=resolveTradeFromQuestion(question);if(p)analystTradeId=p.id;}if(!p){setAnalystStatus('No matching paper trade found. Select Ask Agent on its row, or include symbol, expiry and strike.',true);return;}const answer=analystAnswer(p,question);cfg.analyst.messages.push({at:Date.now(),tradeId:p.id,role:'user',text:question});cfg.analyst.messages.push({at:Date.now(),tradeId:p.id,role:'bot',text:answer,localText:answer,localAt:new Date().toISOString()});cfg.analyst.messages=cfg.analyst.messages.slice(-200);save();renderAnalystChat();setAnalystStatus('Answered from stored paper-trade evidence.');}
+function chooseDiagnostic(q){const i=document.getElementById('agentQuestion');if(!i){setAnalystStatus('Ask box is unavailable. Close and reopen the Agent.',true);return;}const value=String(q||'').trim();i.value=value;i.defaultValue=value;i.dispatchEvent(new Event('input',{bubbles:true}));i.dispatchEvent(new Event('change',{bubbles:true}));i.focus();if(typeof i.setSelectionRange==='function')i.setSelectionRange(value.length,value.length);setAnalystStatus('Question loaded in the Ask box. Click Ask to see the evidence-based answer.',false);}
+async function copyLatestExplanation(){const p=findAnalystTrade(analystTradeId);if(!p){setAnalystStatus('Select a trade first.',true);return;}const m=[...(cfg.analyst.messages||[])].reverse().find(x=>String(x.tradeId)===String(p.id)&&x.role==='bot'),text=String(m?.localText||m?.text||'').trim();if(!text){setAnalystStatus('Click Ask first to create an explanation.',true);return;}let copied=false;try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);copied=true;}}catch(e){}if(!copied){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(ta);ta.select();try{copied=document.execCommand('copy');}catch(e){}ta.remove();}if(copied)setAnalystStatus('Explanation copied. Paste it into ChatGPT, Claude, or Gemini.');else{window.prompt('Copy the explanation below:',text);setAnalystStatus('Use Ctrl+C in the copy window, then paste into the chatbot.');}}
+function externalPrompt(p,q){const x=analystEvidence(p),local=analystAnswer(p,q);return `Act as an evidence-based paper-trade analyst. Analyze this losing option strike using the local dashboard evidence below. Separate facts from inference, explain likely reasons for the loss, identify missing evidence, and say whether the logic should remain unchanged or only be shadow-tested. Do not give a live buy/sell instruction and do not promise profitability.
+
+QUESTION:
+${q}
+
+LOCAL AGENT EXPLANATION:
+${local}
+
+TRADE EVIDENCE:
+${analystPrompt(p,q)}`;}
+async function openOutsideAgent(kind){let p=findAnalystTrade(analystTradeId);const i=document.getElementById('agentQuestion'),q=String(i?.value||'').trim();if(!p&&q){p=resolveTradeFromQuestion(q);if(p)analystTradeId=p.id;}if(!p){setAnalystStatus('Select Ask Agent on a trade row first.',true);return;}const lastUser=[...(cfg.analyst.messages||[])].reverse().find(x=>String(x.tradeId)===String(p.id)&&x.role==='user');const question=q||lastUser?.text||'Why did this trade lose?';const prompt=externalPrompt(p,question);try{await navigator.clipboard.writeText(prompt);setAnalystStatus('Evidence prompt copied. Paste it into '+kind+'.');}catch(e){window.prompt('Copy this evidence prompt, then paste it into '+kind+':',prompt);setAnalystStatus('Copy the displayed prompt and paste it into '+kind+'.');}const urls={chatgpt:'https://chatgpt.com/',claude:'https://claude.com/',gemini:'https://gemini.google.com/'};window.open(urls[kind],'_blank','noopener,noreferrer');}
+function submitAnalyst(e){e.preventDefault();const i=document.getElementById('agentQuestion');if(i)askAnalyst(i.value);return false;}
+function renderShadowProposal(p,x){if(x.c.length<8||x.rate>=40)return `<div class="safe-note">No logic change proposed. A minimum of 8 comparable outcomes with weak results is required even for shadow mode.</div>`;let pr=cfg.analyst.proposals.find(z=>z.pattern===agentKey(p));if(!pr){pr={id:Date.now(),pattern:agentKey(p),createdAt:Date.now(),status:'candidate',basis:x.c.length,winRate:x.rate,observations:0,avoidedLosses:0,missedWins:0};cfg.analyst.proposals.push(pr);save();}return `<div class="proposal"><b>Shadow-mode candidate</b><p class="mu">Pattern ${pr.pattern} · basis ${pr.basis} trades · ${pr.winRate.toFixed(1)}% wins.</p><p>Shadow testing records what would happen if future matching entries were skipped. It does not change Auto-Picks.</p>${pr.status==='candidate'?`<button class="btn sm" onclick="startShadow(${pr.id})">Start Shadow Test</button>`:`<span class="shadow-tag">SHADOW ACTIVE</span> ${pr.observations||0} observations · ${pr.avoidedLosses||0} losses avoided · ${pr.missedWins||0} wins missed`}${pr.status==='shadow'&&pr.observations>=10&&pr.avoidedLosses>pr.missedWins*2?`<button class="btn sm danger" onclick="approveRule(${pr.id})">Approve Guard Rule</button>`:''}</div>`;}
+function startShadow(id){const p=cfg.analyst.proposals.find(x=>x.id===id);if(p){p.status='shadow';p.startedAt=Date.now();save();renderAnalystChat();}}
+function approveRule(id){const p=cfg.analyst.proposals.find(x=>x.id===id);if(!p||p.observations<10)return;if(!confirm('Apply this pattern as an automatic paper-entry guard? Auto-Picks scoring remains unchanged and this can be removed later.'))return;p.status='approved';p.approvedAt=Date.now();cfg.analyst.approvedRules.push({pattern:p.pattern,approvedAt:p.approvedAt,sourceProposal:id});save();renderAnalystChat();}
+function clearAnalystChat(){const p=findAnalystTrade(analystTradeId);if(!p)return;cfg.analyst.messages=(cfg.analyst.messages||[]).filter(m=>String(m.tradeId)!==String(p.id));save();const i=document.getElementById('agentQuestion');if(i)i.value='';renderAnalystChat();setAnalystStatus('Chat cleared for this trade.');}
+function analystShell(){return `<button class="btn pri agent-fab" onclick="analystTradeId=null;document.getElementById('agentDrawer').classList.add('open');setAnalystStatus('Type a contract description, or select Ask Agent on a trade row.')">Ask Super Agent</button><aside id="agentDrawer" class="agent-drawer" aria-label="Super Agent paper-trade analyst"><div class="agent-chat-head"><div><b>Super Agent Analyst</b><div class="mu" style="font-size:10px">Complete trade evidence · new trades capture full entry snapshot · no automatic logic changes</div></div><div style="display:flex;gap:6px"><button type="button" class="btn sm" onclick="clearAnalystChat()">Clear chat</button><button type="button" class="btn sm" onclick="closeAnalyst()">✕</button></div></div><div id="agentChatBody" class="agent-chat-body"><div class="mu">Select Ask Agent on an open or closed trade.</div></div><div class="agent-chat-bottom"><div class="agent-presets">${['Show all details','Show entry and exit dates','Show entry, exit, stop and target','Show Greeks and IV','Show liquidity and spread','Why did this lose?','Was entry too early?','Was the strike appropriate?','Did momentum fail after entry?','Was the stop too tight?','Did theta decay contribute?','Did IV fall after entry?','Was liquidity or spread poor?','Did an event or market move affect it?','Compare similar trades','What evidence is missing?','What should shadow mode test?','Should this setup be quarantined?','Should logic improve?'].map(q=>`<button type="button" class="btn sm agent-preset-btn" data-question="${encodeURIComponent(q)}" onclick="chooseDiagnostic(decodeURIComponent(this.dataset.question))">${q}</button>`).join('')}</div><div id="agentChatStatus" class="agent-chat-status" aria-live="polite">Choose a diagnostic question below or type your own question.</div><form class="agent-chat-form" onsubmit="submitAnalyst(event)"><input id="agentQuestion" type="text" value="" autocomplete="off" placeholder="Ask about the selected trade loss…"><button class="btn pri" type="submit">Ask</button></form></div></aside>`;}
+
+function localDayKey(ts=Date.now()){const d=new Date(ts),z=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`;}
+function todaysClosedLosses(){const k=localDayKey();return (cfg.closed||[]).filter(p=>localDayKey(p.closedAt||0)===k&&Number(p.realizedPL)<0);}
+function dailyLocalReview(losses){
+  if(!losses.length)return 'No closed losing paper trades were recorded today.';
+  const counts={},patterns={};let pnl=0;losses.forEach(p=>{const f=p.failure||classifyFailure(p),r=f.primary||'Unclassified';counts[r]=(counts[r]||0)+1;const k=agentKey(p);patterns[k]=(patterns[k]||0)+1;pnl+=Number(p.realizedPL)||0;});
+  const top=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0],repeat=Object.entries(patterns).sort((a,b)=>b[1]-a[1])[0];
+  return `TODAY'S LOCAL LOSS REVIEW
+Closed losses: ${losses.length}
+Combined realized P&L: $${pnl.toFixed(2)}
+Most frequent classification: ${top?top[0]+' ('+top[1]+')':'--'}
+Most repeated pattern: ${repeat?repeat[0]+' ('+repeat[1]+')':'--'}
+
+Trade details:
+${losses.map(p=>{const f=p.failure||classifyFailure(p),e=p.entrySnapshot||{};return `• ${lbl(p)} | P&L $${Number(p.realizedPL).toFixed(2)} | ${f.primary} | spread ${e.spreadPct!=null?Number(e.spreadPct).toFixed(1)+'%':'missing'} | delta ${e.delta!=null?Number(e.delta).toFixed(2):'missing'} | theta ${e.theta!=null?Number(e.theta).toFixed(3):'missing'} | vol/OI ${e.volume??'missing'}/${e.oi??'missing'}`}).join('\n')}
+
+Decision: Keep Auto-Picks unchanged today unless repeated comparable evidence and shadow results support a proposal.`;
+}
+function dailyAgentPrompt(losses,local){return `Analyze only today's closed losing paper-option trades. Identify repeated mistakes, distinguish stored facts from inference, and recommend data collection or a shadow test. Do not give live trading instructions and do not propose immediate Auto-Picks changes.
+
+${local}
+
+RAW SNAPSHOTS:
+${JSON.stringify(losses.map(p=>({symbol:p.sym,contract:p.code,strike:p.k,type:p.call?'CALL':'PUT',entry:p.entry,exit:p.exitPrice,pnl:p.realizedPL,reason:p.closeReason,failure:p.failure,entrySnapshot:p.entrySnapshot,timeline:(p.timeline||[]).slice(-15)})))}`;}
+function runDailyLossReview(){const day=localDayKey(),losses=todaysClosedLosses(),local=dailyLocalReview(losses);cfg.analyst.dailyReports[day]={day,local,localAt:new Date().toISOString()};save();render();}
+function clearDailyReport(){delete cfg.analyst.dailyReports[localDayKey()];save();render();}
+function dailyReviewPanel(){const day=localDayKey(),losses=todaysClosedLosses(),rec=cfg.analyst.dailyReports[day]||{};return `<div class="daily-review"><div class="daily-review-head"><div><b>Daily Loss Analyst</b><div class="mu" style="font-size:11px">Local evidence review of today’s closed losing paper trades. No external API or quota required.</div></div><div class="daily-review-actions"><button class="btn sm pri" onclick="runDailyLossReview()">Analyze Today’s Losses</button><button class="btn sm" onclick="clearDailyReport()">Clear Report</button></div></div><div class="agent-grid"><div class="agent-metric"><span class="mu">Today’s losses</span><b>${losses.length}</b></div><div class="agent-metric"><span class="mu">Status</span><b style="font-size:13px">${rec.local?'READY':'NOT RUN'}</b></div></div>${rec.local?`<div class="daily-report"><b>Local loss analysis · ${rec.localAt?fmtTs(rec.localAt):'--'}</b>
+
+${escapeHtml(rec.local)}</div>`:'<div class="quota-note">Click Analyze Today’s Losses. The report uses only stored paper-trade evidence.</div>'}</div>`;}
+
+
+function rPaper() {
+  let activeTot = 0, closedTot = 0, totalFees = 0, activeCapital = 0, closedCapital = 0;
+
+  const activeRows = cfg.pos.map((p, i) => {
+    const fee = 2 * cfg.fee * p.qty;
+    const pl = (p.live - p.entry) * 100 * p.qty - fee;
+    const capital = p.entry * 100 * p.qty;
+    const plPct = capital > 0 ? pl / capital * 100 : 0;
+    activeTot += pl;
+    activeCapital += capital;
+    totalFees += fee;
+    return `<tr class="paper-open-row" data-search="${(p.sym+' '+p.code+' '+lbl(p)).toLowerCase()}" data-symbol="${p.sym}" data-side="${sideOf(p)}" data-tier="${p.tier || 'None'}" data-tierscore="${tierLabel(p)}" data-pnl="${pl >= 0 ? 'profit' : 'loss'}" data-profit="${pl}" data-live="${p.live}" data-entry="${p.entry}" data-opened="${p.openedAt||p.id||0}">
+      <td data-label="Side">
+        <div class="sym-name">${lbl(p)}</div>
+        <div class="sym-sub mono">${p.code}${p.autoEntered ? ' · <span class="g">AUTO-PICKS ORDER</span>' : ''} · <span class="tag ${p.m === 'swing' ? 'Balanced' : 'Strict'}">${(p.m || 'intraday').toUpperCase()}</span></div>
+        <div class="sym-sub mono">Opened ${fmtTs(p.openedAt || p.id)}</div>
+      </td>
+      <td data-label="Setup Tier"><span class="tag ${sideOf(p) === 'BUY' ? 'Buy' : 'Sell'}">${sideOf(p)}</span></td>
+      <td data-label="Quantity">${p.tier ? `<span class="tag ${p.tier}">${p.tier}${p.score != null ? ' ' + p.score : ''}</span>` : '<span class="mu">Not captured</span>'}</td>
+      <td data-label="Entry Price"><input type="number" min="1" value="${p.qty}" onchange="ed(${i},'qty',this.value)"></td>
+      <td data-label="Risk Plan"><input type="number" step="0.01" value="${p.entry}" onchange="ed(${i},'entry',this.value)"></td>
+      <td data-label="Live Price">
+        <input type="number" step="0.01" title="Stop Loss" value="${p.stop || (p.entry * 0.65).toFixed(2)}" onchange="ed(${i},'stop',this.value)">
+        <span class="mu">→</span>
+        <input type="number" step="0.01" title="Target" value="${p.tgt || (p.entry * 1.5).toFixed(2)}" onchange="ed(${i},'tgt',this.value)">
+        <select title="Risk to Reward ratio" onchange="setRR(${i},this.value)" style="margin-left:6px;min-width:86px;">
+          <option value="1" ${+(p.rr || 1.5) === 1 ? 'selected' : ''}>R:R 1:1</option>
+          <option value="1.5" ${+(p.rr || 1.5) === 1.5 ? 'selected' : ''}>R:R 1:1.5</option>
+          <option value="custom" ${![1,1.5].includes(+(p.rr || 1.5)) ? 'selected' : ''}>Custom</option>
+        </select>
+        <input type="number" min="0.1" step="0.1" title="Custom reward value for 1:X" value="${p.rr || 1.5}" onchange="setCustomRR(${i},this.value)" style="margin-left:6px;width:72px;" placeholder="1:X">
+      </td>
+      <td data-label="Exit Automation" class="mono">
+        ${p.live.toFixed(2)}
+        <span class="mu" style="font-size:10px;">${p.src ? `[${p.src}]` : ''}</span>
+      </td>
+      <td data-label="Net P&L">
+        <button class="btn sm ${p.autoClose !== false ? 'on' : ''}" onclick="toggleAutoClose(${i})" title="Enable or disable automatic exit at stop loss or target">
+          ${p.autoClose !== false ? 'Auto-Close: ON' : 'Auto-Close: OFF'}
+        </button>
+      </td>
+      <td data-label="Estimated Fees" class="mono ${pl >= 0 ? 'g' : 'r'} font-weight-bold">${pl >= 0 ? '+' : ''}${pl.toFixed(2)} <span style="font-size:11px;">(${plPct >= 0 ? '+' : ''}${plPct.toFixed(2)}%)</span></td>
+      <td data-label="Actions" class="mono mu">${fee.toFixed(2)}</td>
+      <td>
+        <div class="actions-cell">
+          <button class="btn sm pri" title="Close at live market price" onclick="closePos(${i})">Close</button>
+          <button class="btn sm" onclick="openAnalyst('${p.id}')">Ask Agent</button>
+          <button class="btn sm" title="View exact strike chart on Moomoo" onclick="openMoomooChart('${p.code}')">Chart ↗</button>
+          <button class="btn sm danger" title="Delete without logging" onclick="cfg.pos.splice(${i},1);save();render()">✕</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  const closedRows = cfg.closed.map((p, i) => {
+    const fee = p.feeTotal != null ? p.feeTotal : (2 * cfg.fee * p.qty);
+    const pl = p.realizedPL;
+    const capital = p.entry * 100 * p.qty;
+    const plPct = capital > 0 ? pl / capital * 100 : 0;
+    closedTot += pl;
+    closedCapital += capital;
+    totalFees += fee;
+    return `<tr class="paper-closed-row" data-tier="${p.tier || 'None'}" data-tierscore="${tierLabel(p)}" data-closed="${p.closedAt||0}" data-date="${p.closedAt||0}" data-profit="${pl}" data-exit="${p.exitPrice||0}" data-entry="${p.entry||0}">
+      <td data-label="Side">
+        <div class="sym-name">${lbl(p)}</div>
+        <div class="sym-sub mono">Opened ${fmtTs(p.openedAt || p.id)}</div>
+        <div class="sym-sub mono">Closed ${fmtTs(p.closedAt)} · <span class="tag ${p.m === 'swing' ? 'Balanced' : 'Strict'}">${(p.m || 'intraday').toUpperCase()}</span></div>
+      </td>
+      <td data-label="Setup Tier"><span class="tag ${sideOf(p) === 'BUY' ? 'Buy' : 'Sell'}">${sideOf(p)}</span></td>
+      <td data-label="Quantity">${p.tier ? `<span class="tag ${p.tier}">${p.tier}${p.score != null ? ' ' + p.score : ''}</span>` : '<span class="mu">Not captured</span>'}</td>
+      <td data-label="Entry Price" class="mono">${p.qty}</td>
+      <td data-label="Exit & Risk Plan" class="mono">${p.entry.toFixed(2)}</td>
+      <td data-label="Realized P&L" class="mono">
+        Exit: <b>${p.exitPrice.toFixed(2)}</b>
+        <span class="mu" style="font-size:11px;">(SL: ${p.stop||'--'} | TP: ${p.tgt||'--'} | R:R 1:${+(p.rr || 1.5)})</span><br><span class="${p.autoClosed ? 'g' : 'mu'}" style="font-size:10px;">${p.closeReason || 'Manual close'}</span>
+      </td>
+      <td data-label="Fees Paid" class="mono ${pl >= 0 ? 'g' : 'r'} font-weight-bold">${pl >= 0 ? '+' : ''}${pl.toFixed(2)} <span style="font-size:11px;">(${plPct >= 0 ? '+' : ''}${plPct.toFixed(2)}%)</span></td>
+      <td data-label="Actions" class="mono mu">${fee.toFixed(2)}</td>
+      <td>
+        <div class="actions-cell">
+          <button class="btn sm" onclick="openAnalyst('${p.id}')">Ask Agent</button>
+          <button class="btn sm" title="View Moomoo chart" onclick="openMoomooChart('${p.code}')">Chart ↗</button>
+          <button class="btn sm danger" title="Delete record" onclick="cfg.closed.splice(${i},1);save();render()">✕</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  const grandTot = activeTot + closedTot;
+  const openWinners = cfg.pos.filter(p => ((p.live-p.entry)*100*p.qty-2*cfg.fee*p.qty) >= 0).length;
+  const closedWinners = cfg.closed.filter(p => Number(p.realizedPL) > 0).length;
+  const winRate = cfg.closed.length ? closedWinners / cfg.closed.length * 100 : 0;
+  const totalCapital = activeCapital + closedCapital;
+  const grandPct = totalCapital > 0 ? grandTot / totalCapital * 100 : 0;
+  const activePct = activeCapital > 0 ? activeTot / activeCapital * 100 : 0;
+  const closedPct = closedCapital > 0 ? closedTot / closedCapital * 100 : 0;
+
+  return `
+  <div class="paper-intro"><div><h2>Paper Trading</h2><div class="mu">Review open positions, live quotes, risk controls and completed trades in one place.</div></div><div class="paper-toolbar"><button class="btn" onclick="refresh()">↻ Refresh Live Prices</button><button class="btn pri" onclick="exportTradeHistory()">Export Trade History CSV</button></div></div>
+  ${dailyReviewPanel()}
+  ${(()=>{const x=superAgentInsights(),a=x.a,fmt=(k,v)=>`<span class="agent-badge">${k}: ${v.wins}/${v.trades} · ${v.winRate.toFixed(0)}% · $${v.pnl.toFixed(0)}</span>`,top=o=>x.ranked(o).slice(0,4).map(([k,v])=>fmt(k,v)).join('');return `<div class="agent-panel"><div class="agent-head"><div><b>Super Agent · Trade Insights</b><div class="mu" style="font-size:11px">Evidence-based insights from completed automatic paper trades.</div></div><div class="agent-actions"><button class="btn sm ${cfg.superAgent.enabled?'on':''}" onclick="toggleSuperAgent()">Guard ${cfg.superAgent.enabled?'Enabled':'Disabled'}</button><button class="btn sm" onclick="exportLearningHistory('all')">Export Learning CSV</button><button class="btn sm" onclick="exportLearningHistory('win')">Export Wins</button><button class="btn sm" onclick="exportLearningHistory('loss')">Export Losses</button></div></div><div class="agent-grid"><div class="agent-metric"><span class="mu">Learned trades</span><b>${a.closed.length}</b></div><div class="agent-metric"><span class="mu">Observed win rate</span><b class="${a.winRate>=50?'g':'r'}">${a.winRate.toFixed(1)}%</b></div><div class="agent-metric"><span class="mu">Average win</span><b class="g">$${x.avgWin.toFixed(2)}</b></div><div class="agent-metric"><span class="mu">Average loss</span><b class="r">$${x.avgLoss.toFixed(2)}</b></div><div class="agent-metric"><span class="mu">Entries blocked</span><b>${cfg.superAgent.blocked||0}</b></div></div><div class="agent-insights"><div class="agent-insight"><h4>Performance by Symbol</h4>${top(x.bySymbol)||'<p>Waiting for completed trades.</p>'}</div><div class="agent-insight"><h4>Tier and Strategy</h4>${top(x.byTier)} ${top(x.byMode)}</div><div class="agent-insight"><h4>CALL vs PUT</h4>${top(x.byType)||'<p>Waiting for completed trades.</p>'}</div><div class="agent-insight"><h4>Exit and Failure Reasons</h4>${top(x.byReason)||'<p>No exit evidence yet.</p>'}</div><div class="agent-insight"><h4>Agent Recommendation</h4>${!a.closed.length?'<p>Collect completed automatic paper trades before changing behavior.</p>':x.weak?`<p><strong>Review:</strong> ${x.weak[0]} has ${x.weak[1].wins}/${x.weak[1].trades} wins (${x.weak[1].winRate.toFixed(1)}%). The guard quarantines only after 8 comparable trades below 35%.</p>`:'<p>No repeated weak pattern has enough evidence yet. Continue paper observation.</p>'}${x.best?`<p><strong>Best observed:</strong> ${x.best[0]} at ${x.best[1].winRate.toFixed(1)}% across ${x.best[1].trades} trade(s).</p>`:''}</div><div class="agent-insight"><h4>Sample Quality</h4><p>${a.closed.length<20?'Small sample. Insights are provisional and should not drive live trading.':'Broader sample available, but market regimes can still change.'}</p><p>98% win rate is not guaranteed.</p></div></div></div>`})()}
+  <div class="kpi-deck">
+    <div class="kpi-card">
+      <div class="kpi-label">Combined Net P&amp;L</div>
+      <div class="kpi-val ${grandTot >= 0 ? 'g' : 'r'}">${grandTot >= 0 ? '+' : ''}$${grandTot.toFixed(2)} <span style="font-size:14px;">(${grandPct >= 0 ? '+' : ''}${grandPct.toFixed(2)}%)</span></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Active Unrealized</div>
+      <div class="kpi-val ${activeTot >= 0 ? 'g' : 'r'}">${activeTot >= 0 ? '+' : ''}$${activeTot.toFixed(2)} <span style="font-size:14px;">(${activePct >= 0 ? '+' : ''}${activePct.toFixed(2)}%)</span></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Closed Realized</div>
+      <div class="kpi-val ${closedTot >= 0 ? 'g' : 'r'}">${closedTot >= 0 ? '+' : ''}$${closedTot.toFixed(2)} <span style="font-size:14px;">(${closedPct >= 0 ? '+' : ''}${closedPct.toFixed(2)}%)</span></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Moomoo Total Fees (Roundtrip)</div>
+      <div class="kpi-val mu">$${totalFees.toFixed(2)}</div>
+    </div>
+    <div class="kpi-card"><div class="kpi-label">Open Winners</div><div class="kpi-val">${openWinners} <span class="mu" style="font-size:12px">of ${cfg.pos.length}</span></div></div>
+    <div class="kpi-card"><div class="kpi-label">Closed Win Rate</div><div class="kpi-val ${winRate>=50?'g':''}">${winRate.toFixed(1)}%</div></div>
+  </div>
+
+  <div class="paper-section-head"><div class="paper-section-title">Open Positions (${cfg.pos.length})</div><div class="mu">Auto-refresh every 3 seconds</div></div>
+  <div class="paper-filters" aria-label="Open position filters">
+    <div class="paper-filter search"><label for="pfSearch">Search contract</label><input id="pfSearch" type="search" placeholder="Symbol, contract or strike" oninput="applyPaperFilters()"></div>
+    <div class="paper-filter"><label for="pfSymbol">Symbol</label><select id="pfSymbol" onchange="applyPaperFilters()"><option value="">All symbols</option>${[...new Set(cfg.pos.map(p=>p.sym))].sort().map(x=>`<option>${x}</option>`).join('')}</select></div>
+    <div class="paper-filter"><label for="pfSide">Side</label><select id="pfSide" onchange="applyPaperFilters()"><option value="">All sides</option><option>BUY</option><option>SELL</option></select></div>
+    <div class="paper-filter"><label for="pfTier">Setup tier</label><select id="pfTier" onchange="applyPaperFilters()">${tierFilterOptions(cfg.pos)}</select></div>
+    <div class="paper-filter"><label for="pfPnl">P&amp;L status</label><select id="pfPnl" onchange="applyPaperFilters()"><option value="">All positions</option><option value="profit">Profit / Breakeven</option><option value="loss">Loss</option></select></div>
+    <div class="paper-filter"><label for="pfSort">Sort positions</label><select id="pfSort" onchange="applyPaperFilters()"><option value="default">Default order</option><option value="profit-desc">P&amp;L: highest first</option><option value="profit-asc">P&amp;L: lowest first</option><option value="live-desc">Live price: highest</option><option value="live-asc">Live price: lowest</option><option value="entry-desc">Entry price: highest</option><option value="entry-asc">Entry price: lowest</option></select></div>
+    <div class="paper-filter-actions"><button type="button" class="btn sm" onclick="clearPaperFilters()">Clear Filters</button><button type="button" id="paperViewBtn" class="btn sm paper-view-toggle" onclick="togglePaperView()">Compact Table</button></div>
+    <div id="paperFilterSummary" class="paper-filter-summary">Showing ${cfg.pos.length} of ${cfg.pos.length} open positions</div>
+  </div>
+  <div class="wrap"><table>
+    <thead>
+      <tr>
+        <th>Contract</th>
+        <th>Side</th>
+        <th>Setup Tier</th>
+        <th>Qty</th>
+        <th>Entry ($)</th>
+        <th>Stop Loss → Target · R:R</th>
+        <th>Live Price</th>
+        <th>Auto Close</th>
+        <th>Net P&amp;L</th>
+        <th>Fees</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${activeRows || '<tr><td colspan="11" class="mu" style="text-align:center; padding:24px;">No active paper trades open. Click "+ Paper" on any strike in Auto-Picks.</td></tr>'}
+    </tbody>
+  </table></div>
+
+  ${cfg.closed.length ? `
+  <div class="paper-section-head" style="margin-top:24px">
+    <div class="paper-section-title">Closed Positions (${cfg.closed.length})</div>
+    <button class="btn sm danger" onclick="if(confirm('Clear all closed trades?')){cfg.closed=[];save();render();}">Clear Closed Trades</button>
+  </div>
+  <div class="history-filters" aria-label="Trade history filters">
+    <div class="history-filter"><label for="hfFrom">Closed from</label><input id="hfFrom" type="date" onchange="applyHistoryFilters()"></div>
+    <div class="history-filter"><label for="hfTo">Closed to</label><input id="hfTo" type="date" onchange="applyHistoryFilters()"></div>
+    <div class="history-filter"><label for="hfTier">Setup tier</label><select id="hfTier" onchange="applyHistoryFilters()">${tierFilterOptions(cfg.closed)}</select></div>
+    <div class="history-filter"><label for="hfSort">Sort history</label><select id="hfSort" onchange="applyHistoryFilters()"><option value="date-desc">Newest closed first</option><option value="date-asc">Oldest closed first</option><option value="profit-desc">P&amp;L: highest first</option><option value="profit-asc">P&amp;L: lowest first</option><option value="exit-desc">Exit price: highest</option><option value="exit-asc">Exit price: lowest</option><option value="entry-desc">Entry price: highest</option><option value="entry-asc">Entry price: lowest</option></select></div>
+    <div class="paper-filter-actions"><button type="button" class="btn sm" onclick="setHistoryRange(7)">Last 7 Days</button><button type="button" class="btn sm" onclick="setHistoryRange(30)">Last 30 Days</button><button type="button" class="btn sm" onclick="clearHistoryFilters()">Clear</button></div>
+    <div id="historyFilterSummary" class="history-summary">Showing ${cfg.closed.length} of ${cfg.closed.length} closed trades</div>
+  </div>
+  <div class="wrap"><table>
+    <thead>
+      <tr>
+        <th>Contract</th>
+        <th>Side</th>
+        <th>Setup Tier</th>
+        <th>Qty</th>
+        <th>Entry</th>
+        <th>Exit &amp; Target Setup</th>
+        <th>Realized P&amp;L</th>
+        <th>Fees Paid</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${closedRows}
+    </tbody>
+  </table></div></div>` : ''}
+  ${analystShell()}`;
+}
+
+let quoteRefreshBusy=false;
+async function refresh() {
+  if (quoteRefreshBusy || (!cfg.pos.length && !(cfg.livePos && cfg.livePos.length)) || document.hidden) return;
+  quoteRefreshBusy=true;
+  try {
+  const g = {};
+  cfg.pos.forEach(p => (g[p.sym + '|' + p.exp] ??= []).push(p));
+  for (const k in g) {
+    try {
+      const [s, e] = k.split('|');
+      const o = (await api(`/api/chain?symbol=${encodeURIComponent(s)}&date=${e}`)).optionChain.result[0].options[0];
+      g[k].forEach(p => {
+        const c = [...o.calls, ...o.puts].find(x => x.contractSymbol === p.code);
+        if (c) {
+          const b = c.bid, a = c.ask, l = c.lastPrice;
+          p.live = (b && a ? (l >= b && l <= a ? l : (b + a) / 2) : l) || p.live;
+          p.src = 'Yahoo';
+          p.ts = (c.lastTradeDate || 0) * 1000;
+        }
+      });
+    } catch(e) {}
+  }
+  for (const p of cfg.pos) {
+    try {
+      const q = (await api('/api/moomoo/quote?code=' + p.code)).quote;
+      if (q && q.last > 0) {
+        p.live = q.last;
+        p.src = 'Moomoo';
+        p.ts = Date.now();
+        p.timeline=p.timeline||[];const last=p.timeline.at(-1);if(!last||Date.now()-last.at>=60000)p.timeline.push({at:Date.now(),type:'QUOTE',price:p.live,source:p.src});p.timeline=p.timeline.slice(-120);
+      }
+    } catch(e) {}
+  }
+  for (const p of (cfg.livePos || [])) {
+    try {
+      const q = (await api('/api/moomoo/quote?code=' + p.code)).quote;
+      if (q && q.last > 0) {
+        p.live = q.last;
+        p.src = 'Moomoo';
+        if (p.live > (p.highestSeen || p.entry)) p.highestSeen = p.live;
+        evaluateLiveStrikeDecision(p);
+      } else if (p.sym && p.exp) {
+        const o = (await api(`/api/chain?symbol=${encodeURIComponent(p.sym)}&date=${p.exp}`)).optionChain.result[0]?.options?.[0];
+        if (o) {
+          const c = [...(o.calls || []), ...(o.puts || [])].find(x => x.contractSymbol === p.code);
+          if (c) {
+            const b = c.bid, a = c.ask, l = c.lastPrice;
+            p.live = (b && a ? (l >= b && l <= a ? l : (b + a) / 2) : l) || p.live;
+            p.src = 'Yahoo';
+            if (p.live > (p.highestSeen || p.entry)) p.highestSeen = p.live;
+            evaluateLiveStrikeDecision(p);
+          }
+        }
+      }
+    } catch(e) {}
+  }
+  const phase = typeof marketPhase === 'function' ? marketPhase() : { code: 'open' };
+  const isRthOpen = phase.code === 'open';
+  const etNow = typeof etParts === 'function' ? etParts() : null;
+  const calNow = etNow && typeof marketCalendar === 'function' ? marketCalendar(etNow.y) : null;
+  const closeMins = (etNow && calNow && calNow.early.has(ymd(etNow))) ? 780 : 960;
+  const nowMins = etNow ? (etNow.h * 60 + etNow.min) : 0;
+  const isEodWindow = isRthOpen && etNow && nowMins >= (closeMins - 5) && nowMins < closeMins;
+
+  const exits = [];
+  const targetHitSymbols = new Set();
+
+  cfg.pos.forEach((p, i) => {
+    if (p.autoClose === false || !(p.live > 0)) return;
+    // Block fake off-hours stop/target triggers on stale quotes when RTH-Only protection is enabled
+    if (cfg.rthOnly !== false && !isRthOpen) return;
+
+    // 1. Breakeven Stop-Trail at 0.7R (prevents +32% winners like QQQ 716P from turning into -36% losers)
+    if (cfg.breakevenTrail !== false && !p.breakevenArmed && p.entry > 0) {
+      const initStop = p.initialStop || p.stop || (p.entry * 0.75);
+      const risk = Math.max(0.05, p.entry - initStop);
+      const triggerPx = p.target1 || +(p.entry + risk * 0.7).toFixed(2);
+      if (p.live >= triggerPx && p.stop < p.entry) {
+        armBreakeven(p, '0.7R reached -> Stop trailed to Breakeven', initStop);
+      }
+    }
+
+    // 2. Check Target, Stop Loss, and Intraday EOD Auto-Square-Off
+    if (p.tgt > 0 && p.live >= p.tgt) {
+      exits.push({ i, reason: p.breakevenArmed ? 'Auto-close: Target 2 hit' : 'Auto-close: Target hit' });
+      targetHitSymbols.add(p.sym);
+    } else if (p.stop > 0 && p.live <= p.stop) {
+      exits.push({ i, reason: p.breakevenArmed ? 'Auto-close: Breakeven stop hit' : 'Auto-close: Stop loss hit' });
+    } else if (cfg.eodSquareOff !== false && (p.m || 'intraday') === 'intraday' && isEodWindow) {
+      exits.push({ i, reason: 'Auto-close: Intraday EOD square-off (3:55 PM ET)' });
+    }
+  });
+
+  // 3. Sibling Protection: if any strike on symbol S hit Target, trail any remaining open position on S to Breakeven
+  if (targetHitSymbols.size > 0 && cfg.breakevenTrail !== false) {
+    cfg.pos.forEach(p => {
+      if (targetHitSymbols.has(p.sym) && p.stop < p.entry) {
+        armBreakeven(p, 'Sibling strike hit target -> Stop trailed to Breakeven');
+      }
+    });
+  }
+  const pageY=window.scrollY;
+  const scrollers=[...document.querySelectorAll('.paper-view .wrap')].map((e,i)=>({i,top:e.scrollTop,left:e.scrollLeft}));
+  exits.sort((a,b) => b.i-a.i).forEach(x => closePos(x.i, x.reason));
+  save();
+  // Never rebuild Paper Trading every 3 seconds. Rebuilding was resetting page/table scroll.
+  // A structural render is only needed after an automatic exit, then the previous scroll is restored.
+  if(tab==='paper'&&exits.length){requestAnimationFrame(()=>{window.scrollTo(0,pageY);document.querySelectorAll('.paper-view .wrap').forEach((e,i)=>{const x=scrollers.find(v=>v.i===i);if(x){e.scrollTop=x.top;e.scrollLeft=x.left;}});});}
+  if(tab==='live')renderLiveMonitor(); // LiveStrikes premiums update in place; the calculator form is left untouched
+  } finally { quoteRefreshBusy=false; }
+}
+
+
+// --- LIVESTRIKES INTRADAY CALCULATOR & TA ENGINE ---
+let lsDraft = {
+  code: 'SPY261106C00580000',
+  entry: 0.80,
+  qty: 1,
+  budget: 500,
+  maxRisk: 25,
+  profile: 'beginner',
+  stopPct: 25,
+  tgtPct: 60,
+  trailPct: 15,
+  limitBufPct: 3
+};
+
+// Beginner = conservative: wider 25% stop (avoids spread/noise stop-outs), 60% target (~1:2.4 gross, ~1:2 after fees),
+// hard cap on dollars risked per trade, and a minimum net R:R of 1:2.
+const LS_PROFILES = {
+  beginner: { label: 'Beginner ($500 Conservative)', stopPct: 25, tgtPct: 60, trailPct: 15, limitBufPct: 3, maxRisk: 25, minNetRR: 2.0,
+    desc: 'Conservative: 25% stop, 60% target (~1:2 net R:R), 15% trail, max $25 (5%) risk per trade. Prefer 7-30 DTE, premium $0.40-$0.90, 1 contract, limit orders only.' },
+  intermediate: { label: 'Intermediate (Intraday Trend)', stopPct: 25, tgtPct: 50, trailPct: 15, limitBufPct: 3, maxRisk: 40, minNetRR: 1.5,
+    desc: '25% stop loss, 50% target (1:2 R:R), 15% trailing stop for riding 5m EMA/VWAP trends.' },
+  advanced: { label: 'Advanced (0DTE / Momentum Runner)', stopPct: 30, tgtPct: 80, trailPct: 20, limitBufPct: 5, maxRisk: 60, minNetRR: 1.5,
+    desc: 'Wider 30% stop for 0DTE volatility, 80% target, 20% trailing stop.' }
+};
+
+function setLsProfile(prof) {
+  const p = LS_PROFILES[prof];
+  if (!p) return;
+  lsDraft.profile = prof;
+  lsDraft.stopPct = p.stopPct;
+  lsDraft.tgtPct = p.tgtPct;
+  lsDraft.trailPct = p.trailPct;
+  lsDraft.limitBufPct = p.limitBufPct;
+  lsDraft.maxRisk = p.maxRisk;
+  const elStop = $('#lsStopPct'), elTgt = $('#lsTgtPct'), elTrail = $('#lsTrailPct'), elLim = $('#lsLimPct'), elRisk = $('#lsMaxRisk');
+  if (elStop) elStop.value = p.stopPct;
+  if (elTgt) elTgt.value = p.tgtPct;
+  if (elTrail) elTrail.value = p.trailPct;
+  if (elLim) elLim.value = p.limitBufPct;
+  if (elRisk) elRisk.value = p.maxRisk;
+  updateLsCalculatorPreview();
+  document.querySelectorAll('.ls-prof-btn').forEach(b => b.classList.toggle('on', b.dataset.prof === prof));
+}
+
+// Sizes the position by BOTH the cash budget and the max-risk-per-trade cap (never less than 1 contract).
+function lsFitQty(entry, budget, maxRisk, stopPct) {
+  const costPerContract = entry * 100 + cfg.fee;
+  const riskPerContract = entry * 100 * (stopPct / 100) + (2 * cfg.fee);
+  return Math.max(1, Math.min(Math.floor(budget / costPerContract), Math.floor(maxRisk / riskPerContract)));
+}
+function autoFitLsQty() {
+  const entry = Math.max(0.01, +($('#lsEntry')?.value || lsDraft.entry || 1));
+  const budget = Math.max(50, +($('#lsBudget')?.value || lsDraft.budget || 500));
+  const maxRisk = Math.max(5, +($('#lsMaxRisk')?.value || lsDraft.maxRisk || 25));
+  const stopPct = Math.max(1, +($('#lsStopPct')?.value || lsDraft.stopPct || 25));
+  const qty = lsFitQty(entry, budget, maxRisk, stopPct);
+  lsDraft.qty = qty;
+  const qEl = $('#lsQty');
+  if (qEl) qEl.value = qty;
+  updateLsCalculatorPreview();
+}
+
+function lsMetrics(d) {
+  const { entry, qty, budget, stopPct, tgtPct, trailPct, limitBufPct } = d;
+  const maxRisk = d.maxRisk || 0;
+  const capital = entry * 100 * qty;
+  const roundtripFee = 2 * cfg.fee * qty;
+  const totalOutlay = capital + (cfg.fee * qty);
+  const slTrigger = +(entry * (1 - stopPct / 100)).toFixed(2);
+  const slLimit = +(slTrigger * (1 - limitBufPct / 100)).toFixed(2);
+  const tpLimit = +(entry * (1 + tgtPct / 100)).toFixed(2);
+  const trailDrop = +(entry * (trailPct / 100)).toFixed(2);
+  const trailFloorInit = +(entry - trailDrop).toFixed(2);
+  const breakevenPx = +(entry + (roundtripFee / (100 * qty))).toFixed(2);
+  const netProfitAtTp = (tpLimit - entry) * 100 * qty - roundtripFee;
+  const netProfitPct = capital > 0 ? (netProfitAtTp / capital) * 100 : 0;
+  const netLossAtSl = (slTrigger - entry) * 100 * qty - roundtripFee;
+  const netLossPct = capital > 0 ? (netLossAtSl / capital) * 100 : 0;
+  const worstLoss = (slLimit - entry) * 100 * qty - roundtripFee; // if the stop-limit fills at its limit price
+  const rr = Math.abs(netLossAtSl) > 0 ? Math.abs(netProfitAtTp / netLossAtSl) : 0;
+  const prof = LS_PROFILES[d.profile] || {};
+  const minRR = prof.minNetRR || 0;
+  const riskPctOfBudget = budget > 0 ? Math.abs(netLossAtSl) / budget * 100 : 0;
+  const occ = parseOccMeta(d.code);
+  const warnings = [];
+  if (totalOutlay > budget) warnings.push(`Position cost $${totalOutlay.toFixed(2)} exceeds your $${budget.toFixed(0)} budget.`);
+  if (maxRisk > 0 && Math.abs(netLossAtSl) > maxRisk) warnings.push(`Loss at stop is $${Math.abs(netLossAtSl).toFixed(2)}, above your $${maxRisk.toFixed(0)} max risk per trade. Use a cheaper premium, tighter stop, or fewer contracts.`);
+  if (minRR && rr < minRR - 0.05) warnings.push(`Net R:R 1:${rr.toFixed(2)} is below the ${d.profile} minimum of 1:${minRR.toFixed(1)}. Raise the target or lower the stop %.`);
+  if (budget > 0 && capital / budget > 0.4 && d.profile !== 'advanced') warnings.push(`This one position uses ${(capital / budget * 100).toFixed(0)}% of your budget. Keep a single trade at or below ~40%.`);
+  if (occ && d.profile !== 'advanced' && occ.dte < 2) warnings.push(`Only ${occ.dte.toFixed(1)} day(s) to expiry. Theta can eat 40-60% of the premium per day, so prefer 7-30 DTE.`);
+  return { capital, roundtripFee, totalOutlay, slTrigger, slLimit, tpLimit, trailDrop, trailFloorInit, breakevenPx,
+    netProfitAtTp, netProfitPct, netLossAtSl, netLossPct, worstLoss, rr, minRR, riskPctOfBudget, maxRisk, warnings };
+}
+
+function updateLsCalculatorPreview() {
+  const code = ($('#lsCode')?.value || lsDraft.code || '').toUpperCase().trim();
+  const entry = Math.max(0.01, +($('#lsEntry')?.value || lsDraft.entry || 0));
+  const qty = Math.max(1, Math.round(+($('#lsQty')?.value || lsDraft.qty || 1)));
+  const budget = Math.max(50, +($('#lsBudget')?.value || lsDraft.budget || 500));
+  const maxRisk = Math.max(0, +($('#lsMaxRisk')?.value ?? lsDraft.maxRisk ?? 25));
+  const stopPct = Math.max(1, +($('#lsStopPct')?.value || lsDraft.stopPct || 25));
+  const tgtPct = Math.max(1, +($('#lsTgtPct')?.value || lsDraft.tgtPct || 60));
+  const trailPct = Math.max(1, +($('#lsTrailPct')?.value || lsDraft.trailPct || 15));
+  const limitBufPct = Math.max(0.5, +($('#lsLimPct')?.value || lsDraft.limitBufPct || 3));
+
+  Object.assign(lsDraft, { code, entry, qty, budget, maxRisk, stopPct, tgtPct, trailPct, limitBufPct });
+  const m = lsMetrics(lsDraft);
+
+  const box = $('#lsCalcPreview');
+  if (!box) return;
+  const overBudget = m.totalOutlay > budget;
+  const rrOk = !m.minRR || m.rr >= m.minRR - 0.05;
+  const riskOk = !(m.maxRisk > 0) || Math.abs(m.netLossAtSl) <= m.maxRisk;
+  const pc = parseContractInput(code);
+  box.innerHTML = `
+    ${pc
+      ? `<div class="ls-preview-row"><span>Contract recognised</span><span class="mono g"><b>${pc.label}</b> → ${pc.occ}</span></div>`
+      : `<div class="ls-preview-row"><span class="r">⚠ Contract not recognised. Use an OCC code (NFLX261106P00061000), a Moomoo code (NFLX261106P61000) or text like NFLX 11-06 61P.</span></div>`}
+    <div class="ls-preview-row"><span>Total Position Cost (incl. Entry Fee)</span><span class="mono ${overBudget ? 'r' : 'g'}"><b>$${m.totalOutlay.toFixed(2)}</b> / $${budget.toFixed(0)} (${overBudget ? 'OVER BUDGET' : 'WITHIN $' + budget + ' LIMIT'})</span></div>
+    <div class="ls-preview-row"><span>Moomoo Roundtrip Fee (Buy + Sell)</span><span class="mono mu">$${m.roundtripFee.toFixed(2)} ($${cfg.fee.toFixed(2)}/contract/side)</span></div>
+    <div class="ls-preview-row"><span>Fee-Adjusted Breakeven Premium</span><span class="mono">$${m.breakevenPx.toFixed(2)}</span></div>
+    <div class="ls-preview-row"><span><b>Target Limit Order (TP +${tgtPct}%)</b></span><span class="mono g"><b>$${m.tpLimit.toFixed(2)}</b> → Net <b>+$${m.netProfitAtTp.toFixed(2)} (+${m.netProfitPct.toFixed(1)}%)</b></span></div>
+    <div class="ls-preview-row"><span><b>Stop-Limit Order (SL -${stopPct}% / Lim -${limitBufPct}%)</b></span><span class="mono r">Stop <b>$${m.slTrigger.toFixed(2)}</b> · Limit <b>$${m.slLimit.toFixed(2)}</b> → Net <b>$${m.netLossAtSl.toFixed(2)} (${m.netLossPct.toFixed(1)}%)</b></span></div>
+    <div class="ls-preview-row"><span>Worst-Case Loss (stop fills at limit)</span><span class="mono r">$${m.worstLoss.toFixed(2)}</span></div>
+    <div class="ls-preview-row"><span>Risk per Trade vs Cap (${m.riskPctOfBudget.toFixed(1)}% of budget)</span><span class="mono ${riskOk ? 'g' : 'r'}"><b>$${Math.abs(m.netLossAtSl).toFixed(2)}</b> / $${m.maxRisk.toFixed(0)} (${riskOk ? 'WITHIN CAP' : 'OVER CAP'})</span></div>
+    <div class="ls-preview-row"><span><b>Trailing Stop Order (Trail ${trailPct}%)</b></span><span class="mono">Trail Ratio <b>${trailPct}% ($${m.trailDrop.toFixed(2)} drop)</b> · Init Floor <b>$${m.trailFloorInit.toFixed(2)}</b></span></div>
+    <div class="ls-preview-row"><span>Net Risk : Reward Ratio (After Moomoo Fees)${m.minRR ? ' · min 1:' + m.minRR.toFixed(1) : ''}</span><span class="mono ${rrOk ? 'g' : 'r'}"><b>1 : ${m.rr.toFixed(2)}</b></span></div>
+    ${m.warnings.length
+      ? m.warnings.map(w => `<div class="ls-preview-row"><span class="r">⚠ ${w}</span></div>`).join('')
+      : `<div class="ls-preview-row"><span class="g">✓ Passes ${LS_PROFILES[lsDraft.profile]?.label || 'profile'} risk checks</span></div>`}
+  `;
+}
+
+function addLiveStrike() {
+  updateLsCalculatorPreview();
+  const { code: typedCode, entry, qty, budget, stopPct, tgtPct, trailPct, limitBufPct, profile } = lsDraft;
+  const c = parseContractInput(typedCode);
+  if (!c) {
+    alert('Contract not recognised. Use an OCC code (NFLX261106P00061000), a Moomoo code (NFLX261106P61000) or text like "NFLX 11-06 61P".');
+    return;
+  }
+  if (!(entry > 0) || !(qty >= 1)) {
+    alert('Please enter a valid entry premium and quantity.');
+    return;
+  }
+  // Always store the canonical OCC code and a Yahoo-compatible expiry key, so quotes, 5m charts and the Moomoo link all work.
+  const code = c.occ, sym = c.root, call = c.call, k = c.strike, exp = c.expMidTs;
+
+  const m = lsMetrics(lsDraft);
+  if (m.warnings.length) {
+    if (!confirm('Risk check warnings:\n\n- ' + m.warnings.join('\n- ') + '\n\nAdd to LiveStrikes anyway?')) return;
+  }
+
+  const slPrice = +(entry * (1 - stopPct / 100)).toFixed(2);
+  const slLimit = +(slPrice * (1 - limitBufPct / 100)).toFixed(2);
+  const tgtPrice = +(entry * (1 + tgtPct / 100)).toFixed(2);
+
+  cfg.livePos.unshift({
+    id: Date.now(),
+    code,
+    sym,
+    call,
+    k,
+    exp,
+    entry,
+    live: entry,
+    highestSeen: entry,
+    qty,
+    budget,
+    maxRisk: lsDraft.maxRisk,
+    profile,
+    stopPct,
+    tgtPct,
+    trailPct,
+    limitBufPct,
+    slPrice,
+    slLimit,
+    tgtPrice,
+    src: 'Manual',
+    openedAt: Date.now(),
+    ta: {
+      e5: 0, e10: 0, e20: 0, vwap: 0, rsi: 50, macd: 0, macdSig: 0, macdHist: 0,
+      pattern: 'Scanning 5m chart…',
+      action: 'ANALYZING…',
+      tone: 'warn',
+      reason: 'Fetching live 5m EMA 5/10/20, VWAP, RSI & MACD…',
+      updatedAt: null
+    }
+  });
+  save();
+  render();
+  refresh();
+  updateLiveStrikesTA();
+}
+
+function updateLiveStrikeField(i, field, val) {
+  const p = cfg.livePos[i];
+  if (!p) return;
+  const num = Math.max(0.01, +val || 0);
+  p[field] = num;
+  if (field === 'entry' || field === 'stopPct' || field === 'tgtPct' || field === 'limitBufPct') {
+    p.slPrice = +(p.entry * (1 - p.stopPct / 100)).toFixed(2);
+    p.slLimit = +(p.slPrice * (1 - (p.limitBufPct || 2) / 100)).toFixed(2);
+    p.tgtPrice = +(p.entry * (1 + p.tgtPct / 100)).toFixed(2);
+  }
+  if (field === 'live' && num > (p.highestSeen || p.entry)) {
+    p.highestSeen = num;
+  }
+  evaluateLiveStrikeDecision(p);
+  save();
+  render();
+}
+
+function emaSeries(arr, period) {
+  if (!arr || !arr.length) return [];
+  const k = 2 / (period + 1);
+  const out = [arr[0]];
+  for (let i = 1; i < arr.length; i++) {
+    out.push(arr[i] * k + out[i - 1] * (1 - k));
+  }
+  return out;
+}
+
+function macdCalc(closes) {
+  if (!closes || closes.length < 26) return { macd: 0, signal: 0, hist: 0 };
+  const e12 = emaSeries(closes, 12);
+  const e26 = emaSeries(closes, 26);
+  const macdLine = closes.map((_, i) => e12[i] - e26[i]);
+  const sigLine = emaSeries(macdLine, 9);
+  const macd = macdLine.at(-1) || 0;
+  const signal = sigLine.at(-1) || 0;
+  return { macd, signal, hist: macd - signal };
+}
+
+function vwapCalc(highs, lows, closes, vols) {
+  if (!closes || !closes.length) return 0;
+  let pv = 0, vTot = 0;
+  for (let i = 0; i < closes.length; i++) {
+    const c = closes[i], h = highs?.[i] ?? c, l = lows?.[i] ?? c, v = vols?.[i] ?? 0;
+    if (c == null || !(v > 0)) continue;
+    const tp = (h + l + c) / 3;
+    pv += tp * v;
+    vTot += v;
+  }
+  return vTot > 0 ? pv / vTot : closes.at(-1);
+}
+
+function detectIntradayPattern(opens, highs, lows, closes) {
+  const n = closes.length;
+  if (n < 4) return 'Neutral Bar';
+  const o = opens[n - 1], h = highs[n - 1], l = lows[n - 1], c = closes[n - 1];
+  const po = opens[n - 2], ph = highs[n - 2], pl = lows[n - 2], pc = closes[n - 2];
+  const body = Math.abs(c - o), range = Math.max(0.001, h - l);
+  const upperWick = h - Math.max(o, c), lowerWick = Math.min(o, c) - l;
+
+  if (c > o && pc < po && c >= po && o <= pc) return 'Bullish Engulfing';
+  if (c < o && pc > po && c <= po && o >= pc) return 'Bearish Engulfing';
+  if (lowerWick > body * 2 && upperWick < body * 0.8) return 'Bullish Hammer / Pinbar';
+  if (upperWick > body * 2 && lowerWick < body * 0.8) return 'Shooting Star (Rejection)';
+  if (c > ph && pc > highs[n - 3]) return 'Momentum Breakout';
+  if (c < pl && pc < lows[n - 3]) return 'Support Breakdown';
+  return c >= o ? 'Bullish Continuation' : 'Bearish Pullback';
+}
+
+function evaluateLiveStrikeDecision(p) {
+  const t = p.ta || {};
+  const peak = Math.max(p.entry, p.highestSeen || p.entry, p.live || p.entry);
+  p.highestSeen = peak;
+  const trailStopPx = +(peak * (1 - (p.trailPct || 12) / 100)).toFixed(2);
+  const isCall = p.call !== false;
+  // The monitor works any time of day. With the US market closed the premium is the last traded price, so say so.
+  const closedNow = typeof marketPhase === 'function' && marketPhase().code !== 'open';
+  const closedNote = closedNow ? ' US market is closed, so this uses the last traded premium.' : '';
+  const sellNow = closedNow ? 'SELL AT OPEN' : 'SELL NOW';
+
+  // 1. Hard price rules first (Stop Loss, Target, Trailing Stop)
+  if (p.live <= p.slPrice) {
+    t.action = `${sellNow} · STOP LOSS HIT`;
+    t.tone = 'sell';
+    t.reason = `Live premium ($${p.live.toFixed(2)}) breached -${p.stopPct}% Stop Loss ($${p.slPrice.toFixed(2)}). Protect capital immediately.${closedNote}`;
+    p.ta = t;
+    return;
+  }
+  if (p.live >= p.tgtPrice) {
+    t.action = closedNow ? 'SELL AT OPEN / LOCK PROFIT · TARGET HIT' : 'SELL / LOCK PROFIT · TARGET HIT';
+    t.tone = 'sell';
+    t.reason = `Live premium ($${p.live.toFixed(2)}) reached +${p.tgtPct}% Target ($${p.tgtPrice.toFixed(2)}). Book profit or ratchet stop.${closedNote}`;
+    p.ta = t;
+    return;
+  }
+  if (peak > p.entry * 1.06 && p.live <= trailStopPx) {
+    t.action = closedNow ? 'SELL AT OPEN · TRAILING STOP TRIGGERED' : 'SELL · TRAILING STOP TRIGGERED';
+    t.tone = 'sell';
+    t.reason = `Pulled back ${p.trailPct}% from peak ($${peak.toFixed(2)}) to trailing stop ($${trailStopPx.toFixed(2)}).${closedNote}`;
+    p.ta = t;
+    return;
+  }
+
+  // 2. Technical Analysis confluence score (EMA 5/10/20, VWAP, RSI, MACD, Chart Pattern)
+  if (!t.e20 || !t.vwap) {
+    t.tone = 'warn';
+    if (t.status === 'error') {
+      t.action = 'NO CHART DATA · SEE REASON';
+      t.reason = t.error || 'The 5m chart request failed.';
+    } else {
+      t.action = 'HOLD · LOADING 5M CHART…';
+      t.reason = 'Fetching 5m bars for EMA 5/10/20, VWAP, RSI & MACD. This also works with the market closed (it uses the last session).';
+    }
+    p.ta = t;
+    return;
+  }
+
+  let bullPts = 0, bearPts = 0;
+  const S = t.lastUnderlying || t.e5;
+  // EMA 5 vs 10 vs 20 alignment
+  if (t.e5 > t.e10 && t.e10 > t.e20) bullPts += 2;
+  else if (t.e5 < t.e10 && t.e10 < t.e20) bearPts += 2;
+  else if (t.e5 > t.e10) bullPts += 1;
+  else bearPts += 1;
+
+  // Price vs intraday VWAP
+  if (S > t.vwap) bullPts += 2; else bearPts += 2;
+
+  // RSI (14)
+  if (t.rsi >= 53 && t.rsi <= 74) bullPts += 1;
+  else if (t.rsi <= 47 && t.rsi >= 26) bearPts += 1;
+  else if (t.rsi > 78) bearPts += 1; // Overbought exhaustion
+  else if (t.rsi < 22) bullPts += 1; // Oversold bounce
+
+  // MACD Histogram
+  if (t.macdHist > 0) bullPts += 1; else bearPts += 1;
+
+  // Candlestick pattern
+  if (/Bullish|Breakout|Hammer/.test(t.pattern)) bullPts += 1;
+  if (/Bearish|Breakdown|Shooting/.test(t.pattern)) bearPts += 1;
+
+  const favorPts = isCall ? bullPts : bearPts;
+  const againstPts = isCall ? bearPts : bullPts;
+
+  if (favorPts >= 5) {
+    t.action = 'KEEP / HOLD STRIKE (STRONG TREND)';
+    t.tone = 'keep';
+    t.reason = `${isCall ? 'Bullish' : 'Bearish'} alignment: ${isCall ? 'EMA5 > EMA10 > EMA20 & above VWAP' : 'EMA5 < EMA10 < EMA20 & below VWAP'}, MACD ${t.macdHist >= 0 ? '+' : '-'}${Math.abs(t.macdHist).toFixed(3)}, RSI ${t.rsi.toFixed(0)} (${t.pattern}).`;
+  } else if (againstPts >= 5) {
+    t.action = 'SELL STRIKE (TA REVERSAL)';
+    t.tone = 'sell';
+    t.reason = `Intraday trend flipped against ${isCall ? 'CALL' : 'PUT'}: EMA 5/10 crossed against EMA 20 & VWAP ($${t.vwap.toFixed(2)}), MACD hist ${t.macdHist.toFixed(3)}, RSI ${t.rsi.toFixed(0)} (${t.pattern}).`;
+  } else {
+    t.action = 'HOLD WITH TIGHT TRAIL (CHOPPY)';
+    t.tone = 'warn';
+    t.reason = `Mixed intraday signals (${favorPts} pro vs ${againstPts} against). Keep trailing stop active at $${trailStopPx.toFixed(2)} (${t.pattern}).`;
+  }
+  if (taIsStale(t)) {
+    t.action = 'LAST SESSION · ' + t.action;
+    t.reason += ` Chart data is from ${fmtTs(t.barAt)} (market closed or feed delayed); the signal refreshes when new 5m bars arrive.`;
+  }
+  if (t.status === 'error' && t.error) t.reason += ` (Latest chart refresh failed: ${t.error})`;
+  p.ta = t;
+}
+
+const TA_STALE_MS = 30 * 60 * 1000; // newest 5m bar older than this = market closed or feed delayed
+const taIsStale = t => !!(t && t.barAt) && (Date.now() - t.barAt) > TA_STALE_MS;
+
+// EMA/VWAP/RSI/MACD/pattern from Yahoo's 5-day 5m series. The multi-day bars warm up EMA, RSI and MACD, so they are
+// valid at 9:35 AM and after the close. VWAP resets every day, so it uses the latest session only.
+function computeIntradayTA(res) {
+  const ts = res.timestamp || [], q = res.indicators?.quote?.[0] || {};
+  const off = Number(res.meta?.gmtoffset), gmt = Number.isFinite(off) ? off : -14400;
+  const bars = [];
+  ts.forEach((t, i) => {
+    const c = q.close?.[i];
+    if (c == null || !Number.isFinite(c)) return;
+    bars.push({ t, day: Math.floor((t + gmt) / 86400), o: q.open?.[i] ?? c, h: q.high?.[i] ?? c, l: q.low?.[i] ?? c, c, v: q.volume?.[i] ?? 0 });
+  });
+  if (bars.length < 6) return null;
+  const last = bars.at(-1), session = bars.filter(b => b.day === last.day);
+  const closes = bars.map(b => b.c), mc = macdCalc(closes);
+  return {
+    lastUnderlying: last.c,
+    e5: ema(closes, 5), e10: ema(closes, 10), e20: ema(closes, 20),
+    vwap: vwapCalc(session.map(b => b.h), session.map(b => b.l), session.map(b => b.c), session.map(b => b.v)),
+    rsi: rsi(closes, 14),
+    macd: mc.macd, macdSig: mc.signal, macdHist: mc.hist,
+    pattern: detectIntradayPattern(bars.map(b => b.o), bars.map(b => b.h), bars.map(b => b.l), closes),
+    barAt: last.t * 1000, sessionBars: session.length
+  };
+}
+
+function taErrorMessage(e, sym) {
+  const msg = String((e && e.message) || e || '');
+  if (/failed to fetch|networkerror|load failed|abort/i.test(msg)) return `Bridge unreachable at ${cfg.bridge}. Start server.js (node server.js) and check Settings > Local Bridge URL.`;
+  if (/^\d{3}$/.test(msg)) return `Chart request for ${sym} failed (HTTP ${msg}). Yahoo may be rate limiting, or the symbol is wrong.`;
+  return msg;
+}
+
+// Repairs rows saved by earlier versions (code "NFLX 11-06 61P", underlying "NFLX ", wrong expiry key) so they re-sync.
+function migrateLivePos() {
+  let changed = false;
+  (cfg.livePos || []).forEach(p => {
+    const c = parseContractInput(p.code, p.openedAt || p.id);
+    if (!c) return;
+    const fix = { code: c.occ, sym: c.root, call: c.call, k: c.strike, exp: c.expMidTs };
+    Object.keys(fix).forEach(key => { if (p[key] !== fix[key]) { p[key] = fix[key]; changed = true; } });
+    if (p.ta && p.ta.status !== 'ok') { p.ta.status = 'loading'; p.ta.error = null; }
+  });
+  if (changed) save();
+}
+
+let taBusy = false;
+async function updateLiveStrikesTA() {
+  if (taBusy || !cfg.livePos || !cfg.livePos.length || document.hidden) return;
+  taBusy = true;
+  try {
+    const bySym = {};
+    cfg.livePos.forEach(p => (bySym[p.sym] ??= []).push(p));
+    for (const sym of Object.keys(bySym)) {
+      try {
+        if (!/^[A-Z][A-Z0-9.\-]{0,9}$/.test(sym)) throw new Error(`Underlying "${sym}" is not a valid ticker. Remove this row and re-add it with a recognised contract code.`);
+        const ch = await api(`/api/chart?symbol=${encodeURIComponent(sym)}&range=5d&interval=5m`);
+        const res = ch?.chart?.result?.[0];
+        if (!res) throw new Error(ch?.chart?.error?.description || `Yahoo returned no chart data for ${sym}.`);
+        const ta = computeIntradayTA(res);
+        if (!ta) throw new Error(`Yahoo returned fewer than 6 five-minute bars for ${sym}.`);
+        bySym[sym].forEach(p => { p.ta = { ...(p.ta || {}), ...ta, status: 'ok', error: null, updatedAt: Date.now() }; evaluateLiveStrikeDecision(p); });
+      } catch (e) {
+        const error = taErrorMessage(e, sym);
+        bySym[sym].forEach(p => { p.ta = { ...(p.ta || {}), status: 'error', error }; evaluateLiveStrikeDecision(p); });
+      }
+    }
+    save();
+    if (tab === 'live') renderLiveMonitor();
+  } finally { taBusy = false; }
+}
+
+// Builds the KPI strip and the monitor table separately so they can refresh every few seconds
+// without rebuilding (and stealing focus from) the calculator form above them.
+function liveMonitorParts() {
+  let totNetPL = 0, totCap = 0, totFees = 0, keepCount = 0, sellCount = 0, holdCount = 0;
+
+  const rows = (cfg.livePos || []).map((p, i) => {
+    evaluateLiveStrikeDecision(p);
+    const fee = 2 * cfg.fee * p.qty;
+    const cap = p.entry * 100 * p.qty;
+    const grossPL = (p.live - p.entry) * 100 * p.qty;
+    const netPL = grossPL - fee;
+    const netPLPct = cap > 0 ? (netPL / cap) * 100 : 0;
+    const peak = Math.max(p.entry, p.highestSeen || p.entry, p.live || p.entry);
+    const trailStopPx = +(peak * (1 - (p.trailPct || 12) / 100)).toFixed(2);
+    const slNetPL = (p.slPrice - p.entry) * 100 * p.qty - fee;
+    const tpNetPL = (p.tgtPrice - p.entry) * 100 * p.qty - fee;
+
+    totNetPL += netPL;
+    totCap += cap;
+    totFees += fee;
+    const tone = p.ta?.tone;
+    if (tone === 'sell') sellCount++; else if (tone === 'keep') keepCount++; else holdCount++;
+
+    const t = p.ta || {};
+    return `<tr>
+      <td>
+        <div class="sym-name">${p.sym} · ${p.code}</div>
+        <div class="sym-sub mono">${p.call !== false ? 'LONG CALL' : 'LONG PUT'} · Capital $${cap.toFixed(2)} · Peak $${peak.toFixed(2)}</div>
+        <div class="sym-sub mono">Added ${fmtTs(p.openedAt || p.id)} ${p.src ? `[${p.src}]` : ''}</div>
+      </td>
+      <td>
+        <div style="display:flex;gap:4px;align-items:center;justify-content:flex-end">
+          <input type="number" min="1" step="1" value="${p.qty}" title="Contracts" onchange="updateLiveStrikeField(${i},'qty',this.value)" style="width:52px">
+          <span class="mu">@</span>
+          <input type="number" min="0.01" step="0.01" value="${p.entry}" title="Entry Premium ($)" onchange="updateLiveStrikeField(${i},'entry',this.value)" style="width:72px">
+        </div>
+      </td>
+      <td>
+        <input type="number" min="0.01" step="0.01" value="${p.live.toFixed(2)}" title="Live Premium ($)" onchange="updateLiveStrikeField(${i},'live',this.value)" style="width:78px;font-weight:700">
+      </td>
+      <td class="mono" style="text-align:left">
+        <div><span class="g"><b>TP (+${p.tgtPct}%): $${p.tgtPrice.toFixed(2)}</b></span> <span class="mu">(+$${tpNetPL.toFixed(2)})</span></div>
+        <div><span class="r"><b>SL (-${p.stopPct}%): $${p.slPrice.toFixed(2)}</b></span> · <span class="mu">Lim $${(p.slLimit || p.slPrice * 0.98).toFixed(2)} ($${slNetPL.toFixed(2)})</span></div>
+        <div><span style="color:var(--blue)"><b>Trail (-${p.trailPct}%): $${trailStopPx.toFixed(2)}</b></span> <span class="mu">(from $${peak.toFixed(2)} peak)</span></div>
+      </td>
+      <td class="mono ${netPL >= 0 ? 'g' : 'r'}" style="font-weight:700">
+        ${netPL >= 0 ? '+' : ''}$${netPL.toFixed(2)}<br>
+        <span style="font-size:11px">(${netPLPct >= 0 ? '+' : ''}${netPLPct.toFixed(2)}%)</span>
+      </td>
+      <td class="mono mu">
+        $${fee.toFixed(2)}<br>
+        <span style="font-size:10px">Gross ${grossPL >= 0 ? '+' : ''}$${grossPL.toFixed(2)}</span>
+      </td>
+      <td style="text-align:left;max-width:340px;white-space:normal">
+        <div class="ls-signal-box ${t.tone || 'warn'}">${t.action || 'ANALYZING…'}</div>
+        <div style="font-size:11px;line-height:1.35;margin-bottom:4px">${t.reason || ''}</div>
+        <div>
+          <span class="ls-ta-pill">Spot $${(t.lastUnderlying || 0).toFixed(2)}</span>
+          <span class="ls-ta-pill">VWAP $${(t.vwap || 0).toFixed(2)}</span>
+          <span class="ls-ta-pill">EMA 5/10/20: ${(t.e5 || 0).toFixed(2)} / ${(t.e10 || 0).toFixed(2)} / ${(t.e20 || 0).toFixed(2)}</span>
+          <span class="ls-ta-pill">RSI ${(t.rsi || 50).toFixed(0)}</span>
+          <span class="ls-ta-pill">MACD Hist ${(t.macdHist || 0) >= 0 ? '+' : ''}${(t.macdHist || 0).toFixed(3)}</span>
+          <span class="ls-ta-pill">${t.pattern || '5m Pattern'}</span>
+          ${t.barAt ? `<span class="ls-ta-pill" ${taIsStale(t) ? 'style="color:var(--amber)"' : ''}>${taIsStale(t) ? 'Last session' : '5m bars'} · ${fmtTs(t.barAt)}</span>` : ''}
+        </div>
+      </td>
+      <td>
+        <div class="actions-cell">
+          <button class="btn sm" title="Open strike on Moomoo" onclick="openMoomooChart('${p.code}')">Moomoo ↗</button>
+          <button class="btn sm danger" title="Remove strike" onclick="cfg.livePos.splice(${i},1);save();render()">✕</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  const totNetPct = totCap > 0 ? (totNetPL / totCap) * 100 : 0;
+
+  const kpi = `
+  <div class="kpi-deck">
+    <div class="kpi-card">
+      <div class="kpi-label">LiveStrikes Net P&amp;L (After Moomoo Fee)</div>
+      <div class="kpi-val ${totNetPL >= 0 ? 'g' : 'r'}">${totNetPL >= 0 ? '+' : ''}$${totNetPL.toFixed(2)} <span style="font-size:14px">(${totNetPct >= 0 ? '+' : ''}${totNetPct.toFixed(2)}%)</span></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Active Capital Deployed</div>
+      <div class="kpi-val">$${totCap.toFixed(2)}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Total Moomoo Roundtrip Fees</div>
+      <div class="kpi-val mu">$${totFees.toFixed(2)}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Intraday TA Verdict Count</div>
+      <div class="kpi-val"><span class="g">${keepCount} KEEP</span> · <span class="r">${sellCount} SELL</span> · <span class="mu">${holdCount} HOLD</span></div>
+    </div>
+  </div>`;
+
+  const monitor = `
+  <div class="paper-section-head">
+    <div class="paper-section-title">Active LiveStrikes Monitor (${(cfg.livePos || []).length})</div>
+    <div class="mu">Live premium &amp; 5m Technical Analysis (EMA 5/10/20, VWAP, RSI, MACD, Patterns) · works with the market closed using the last session</div>
+  </div>
+  <div class="wrap"><table>
+    <thead>
+      <tr>
+        <th>Contract &amp; Capital</th>
+        <th>Qty @ Entry ($)</th>
+        <th>Live ($)</th>
+        <th>Moomoo TP / SL-Limit / Trail</th>
+        <th>Net P&amp;L ($ &amp; %)</th>
+        <th>Moomoo Fee</th>
+        <th>Intraday TA Suggestion (EMA 5/10/20 · VWAP · RSI · MACD)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${rows || '<tr><td colspan="8" class="mu" style="text-align:center;padding:28px">No contracts in LiveStrikes yet. Configure your premium above and click <b>+ Add Strike to LiveStrikes Monitor</b>.</td></tr>'}
+    </tbody>
+  </table></div>`;
+
+  return { kpi, monitor };
+}
+
+function rLive() {
+  const { kpi, monitor } = liveMonitorParts();
+  return `
+  <div class="paper-intro">
+    <div>
+      <h2>🎯 LiveStrikes · Moomoo Intraday Calculator &amp; TA Advisor</h2>
+      <div class="mu">Calculate exact Target, Stop-Loss, Trailing Stop &amp; Limit prices from premium %, track live P&amp;L net of Moomoo fees ($${cfg.fee.toFixed(2)}/side), and get automated KEEP vs SELL signals from 5m EMA 5/10/20, VWAP, RSI &amp; MACD.</div>
+    </div>
+    <div class="paper-toolbar">
+      <button class="btn" onclick="refresh();updateLiveStrikesTA()">↻ Sync Quotes &amp; 5m TA</button>
+    </div>
+  </div>
+
+  <div id="lsKpi">${kpi}</div>
+
+  <div class="ls-grid">
+    <div class="ls-card">
+      <h3>
+        <span>1. Moomoo Strike &amp; Percentage Limit Calculator</span>
+        <button class="btn sm" onclick="autoFitLsQty()">Auto-Fit Qty (Budget &amp; Risk Cap)</button>
+      </h3>
+      <div class="ls-presets">
+        <span class="mu" style="font-size:11px;align-self:center">Tier Preset:</span>
+        <button type="button" class="btn sm ls-prof-btn ${lsDraft.profile === 'beginner' ? 'on' : ''}" data-prof="beginner" onclick="setLsProfile('beginner')">Beginner ($500 Conservative: -25% / +60%)</button>
+        <button type="button" class="btn sm ls-prof-btn ${lsDraft.profile === 'intermediate' ? 'on' : ''}" data-prof="intermediate" onclick="setLsProfile('intermediate')">Intermediate (-25% / +50%)</button>
+        <button type="button" class="btn sm ls-prof-btn ${lsDraft.profile === 'advanced' ? 'on' : ''}" data-prof="advanced" onclick="setLsProfile('advanced')">Advanced 0DTE (-30% / +80%)</button>
+      </div>
+      <div class="ls-form-grid">
+        <div class="ls-form-field" style="grid-column: span 2">
+          <label>Contract (OCC code, Moomoo code, or text like NFLX 11-06 61P)</label>
+          <input id="lsCode" value="${lsDraft.code}" placeholder="e.g. NFLX 11-06 61P or SPY261106C00580000" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Entry Premium ($)</label>
+          <input id="lsEntry" type="number" min="0.01" step="0.01" value="${lsDraft.entry}" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Contracts (Qty)</label>
+          <input id="lsQty" type="number" min="1" step="1" value="${lsDraft.qty}" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Max Budget ($)</label>
+          <input id="lsBudget" type="number" min="50" step="50" value="${lsDraft.budget}" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Max Risk per Trade ($)</label>
+          <input id="lsMaxRisk" type="number" min="5" step="5" value="${lsDraft.maxRisk}" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Stop Loss (%)</label>
+          <input id="lsStopPct" type="number" min="1" max="90" step="1" value="${lsDraft.stopPct}" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Target (%)</label>
+          <input id="lsTgtPct" type="number" min="1" max="500" step="1" value="${lsDraft.tgtPct}" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Trailing Stop (%)</label>
+          <input id="lsTrailPct" type="number" min="1" max="80" step="1" value="${lsDraft.trailPct}" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Stop-Limit Slippage (%)</label>
+          <input id="lsLimPct" type="number" min="0.5" max="20" step="0.5" value="${lsDraft.limitBufPct}" oninput="updateLsCalculatorPreview()">
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <span class="mu" style="font-size:11px">${LS_PROFILES[lsDraft.profile]?.desc || ''}</span>
+        <button class="btn pri" onclick="addLiveStrike()">+ Add Strike to LiveStrikes Monitor</button>
+      </div>
+    </div>
+
+    <div class="ls-card">
+      <h3>
+        <span>2. Exact Moomoo Order Ticket Values (Net of Fees)</span>
+        <span class="tag Strict">MOOMOO READY</span>
+      </h3>
+      <div id="lsCalcPreview"></div>
+    </div>
+  </div>
+
+  <div id="lsMonitor">${monitor}</div>`;
+}
+
+// Refreshes only the KPI strip and the monitor table (called after every quote / 5m TA update while this tab is open).
+// Skipped while the user is typing inside the table, so edits to qty / entry / live are never wiped.
+function renderLiveMonitor() {
+  if (tab !== 'live') return;
+  const kpiEl = document.getElementById('lsKpi'), monEl = document.getElementById('lsMonitor');
+  if (!kpiEl || !monEl || monEl.contains(document.activeElement)) return;
+  const { kpi, monitor } = liveMonitorParts();
+  kpiEl.innerHTML = kpi;
+  monEl.innerHTML = monitor;
+}
+
+function rSet() {
+  return `<div class="set">
+    <h3 style="margin-top:0">Terminal Configuration</h3>
+    <label>Local Bridge URL</label>
+    <input id="b" value="${cfg.bridge}">
+    
+    <label>Watchlist Symbols (Comma separated)</label>
+    <input id="u" value="${cfg.uni}">
+
+    <label>Moomoo Fee per Contract ($/side, default: $0.69 including OCC $0.025 &amp; ORF $0.0122)</label>
+    <input id="f" type="number" min="0" step="0.01" value="${cfg.fee}">
+
+    <h3 style="margin:24px 0 8px">Auto-Picks Risk, Guardrails &amp; Execution Rules</h3>
+    <div class="mu" style="margin-bottom:12px">Applied when qualifying contracts are automatically added and monitored in Paper Trading.</div>
+    <div class="row" style="align-items:flex-end">
+      <div style="flex:1;min-width:160px">
+        <label>Auto Stop-Sell (% of Premium)</label>
+        <input id="slp" type="number" min="5" max="60" step="1" value="${cfg.stopPct}">
+      </div>
+      <div style="flex:1;min-width:160px">
+        <label>Strict Tier Target R:R (1 : R)</label>
+        <input id="srr" type="number" min="0.1" max="10" step="0.1" value="${cfg.strictRR}">
+      </div>
+      <div style="flex:1;min-width:160px">
+        <label>Balanced Tier Target R:R (1 : R)</label>
+        <input id="brr" type="number" min="0.1" max="10" step="0.1" value="${cfg.balancedRR}">
+      </div>
+      <div style="flex:1;min-width:160px">
+        <label>Max Open Sandbox Positions</label>
+        <input id="mop" type="number" min="1" max="20" step="1" value="${cfg.maxOpenPos}">
+      </div>
+      <div style="flex:1;min-width:160px">
+        <label>Symbol Cooldown After Exit (min)</label>
+        <input id="cdm" type="number" min="0" max="240" step="5" value="${cfg.cooldownMins}">
+      </div>
+    </div>
+    <div class="row" style="margin-top:12px;gap:18px">
+      <label style="display:inline-flex;align-items:center;gap:6px;margin:0;cursor:pointer"><input id="ops" type="checkbox" style="width:auto" ${cfg.onePerSymbol!==false?'checked':''}> Lock 1 Active Strike Per Underlying Symbol (Prevents Strike-Stacking)</label>
+      <label style="display:inline-flex;align-items:center;gap:6px;margin:0;cursor:pointer"><input id="bet" type="checkbox" style="width:auto" ${cfg.breakevenTrail!==false?'checked':''}> Auto-Trail Stop to Breakeven at +0.7R (and on Sibling Target Hit)</label>
+      <label style="display:inline-flex;align-items:center;gap:6px;margin:0;cursor:pointer"><input id="eod" type="checkbox" style="width:auto" ${cfg.eodSquareOff!==false?'checked':''}> Intraday EOD Auto-Square-Off (3:55 PM ET)</label>
+      <label style="display:inline-flex;align-items:center;gap:6px;margin:0;cursor:pointer"><input id="rth" type="checkbox" style="width:auto" ${cfg.rthOnly!==false?'checked':''}> RTH-Only Entries &amp; Stop Evaluation (Blocks Off-Hours Stale Triggers)</label>
+    </div>
+
+    <div style="margin-top: 16px;">
+      <button class="btn pri" onclick="sv()">Save Settings</button>
+      <button class="btn" onclick="dl()">Download Bridge (server.js)</button>
+    </div>
+
+    <h3 style="margin-top:28px">Moomoo OpenAPI Direct Gateway</h3>
+    <label>OpenD Host</label>
+    <input id="mh" value="127.0.0.1">
+
+    <label>OpenD WebSocket Port</label>
+    <input id="mp" value="33333">
+
+    <label>OpenD WebSocket Key (the plain-text password you set in OpenD, not its MD5 hash)</label>
+    <input id="mk" autocomplete="off" placeholder="Leave blank if unchanged">
+
+    <label>API Secret (optional, not used by the OpenD WebSocket login)</label>
+    <input id="ms" type="password" autocomplete="off" placeholder="Leave blank if unchanged">
+
+    <div style="margin-top: 16px;">
+      <button class="btn" onclick="mm()">Connect Gateway</button>
+      <span id="mst" class="mu mono" style="margin-left: 8px;"></span>
+    </div>
+  </div>`;
+}
+
+function dl() {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([$('#bridge').textContent.trim() + '\n'], { type: 'text/javascript' }));
+  a.download = 'server.js';
+  a.click();
+}
+
+function sv() {
+  cfg.bridge = $('#b').value.trim();
+  cfg.uni = $('#u').value;
+  cfg.fee = Math.max(0, +$('#f').value || 0);
+  cfg.stopPct = +$('#slp').value;
+  cfg.strictRR = +$('#srr').value;
+  cfg.balancedRR = +$('#brr').value;
+  cfg.maxOpenPos = +$('#mop').value;
+  cfg.cooldownMins = +$('#cdm').value;
+  normalizeCfg();
+  cfg.onePerSymbol = !!$('#ops')?.checked;
+  cfg.breakevenTrail = !!$('#bet')?.checked;
+  cfg.eodSquareOff = !!$('#eod')?.checked;
+  cfg.rthOnly = !!$('#rth')?.checked;
+  save();
+  ping();
+  alert('Settings saved successfully.');
+  render();
+}
+
+async function mm() {
+  const out = $('#mst');
+  out.className = 'mu mono';
+  try {
+    await fetch(cfg.bridge + '/api/moomoo/config', {
+      method: 'POST',
+      body: JSON.stringify({ key: $('#mk').value, secret: $('#ms').value, host: $('#mh').value, port: +$('#mp').value })
+    });
+    $('#mk').value = $('#ms').value = '';
+    // The login handshake is asynchronous, so poll instead of reading the status once.
+    for (let i = 1; i <= 14; i++) {
+      out.textContent = 'Connecting to OpenD… ' + i + 's';
+      await new Promise(r => setTimeout(r, 1000));
+      const s = await api('/api/moomoo/status');
+      if (s.connected) {
+        out.className = 'g mono';
+        out.textContent = '✔ Connected to OpenD at ' + s.host + ':' + s.port;
+        ping();
+        return;
+      }
+      if (s.error && s.error !== 'connecting') {
+        out.className = 'r mono';
+        out.textContent = '✖ ' + s.error;
+        return;
+      }
+    }
+    out.className = 'r mono';
+    out.textContent = '✖ Timed out waiting for OpenD. Check the bridge terminal for [moomoo] logs.';
+  } catch(e) {
+    out.className = 'r mono';
+    out.textContent = 'Bridge connection failed.';
+  }
+}
+
+async function ping() {
+  try {
+    const st = await api('/api/moomoo/status');
+    $('#dot').classList.add('online');
+    $('#bs').textContent = 'BRIDGE ONLINE' + (st.connected ? ' · MOOMOO LINKED' : '');
+    $('#bs').style.color = 'var(--green)';
+  } catch(e) {
+    $('#dot').classList.remove('online');
+    $('#bs').textContent = 'BRIDGE OFFLINE';
+    $('#bs').style.color = 'var(--red)';
+  }
+}
+
+function render() {
+  document.body.classList.toggle('paper-view', tab === 'paper');
+  $('#v').innerHTML = tab === 'picks' ? rPicks() : tab === 'paper' ? rPaper() : tab === 'live' ? rLive() : rSet();
+  if(tab === 'paper') requestAnimationFrame(()=>{syncPaperView();const vals={pfSearch:paperUI.search,pfSymbol:paperUI.symbol,pfSide:paperUI.side,pfTier:paperUI.tier,pfPnl:paperUI.pnl,pfSort:paperUI.sort,hfFrom:paperUI.from,hfTo:paperUI.to,hfSort:paperUI.historySort,hfTier:paperUI.histTier};Object.entries(vals).forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.value=v;});applyPaperFilters();applyHistoryFilters();});
+  if(tab === 'live') requestAnimationFrame(()=>updateLsCalculatorPreview());
+  ['picks', 'paper', 'live', 'set'].forEach(t => {
+    const el = document.getElementById('btn-' + t);
+    if (el) el.classList.toggle('on', tab === t);
+  });
+}
+
+
+// Display-only U.S. market session clock. This does not affect Auto-Picks or trading logic.
+const ET_ZONE = 'America/New_York';
+const etPartsFmt = new Intl.DateTimeFormat('en-US', {timeZone:ET_ZONE, year:'numeric', month:'2-digit', day:'2-digit', weekday:'short', hour:'2-digit', minute:'2-digit', second:'2-digit', hourCycle:'h23'});
+const etClockFmt = new Intl.DateTimeFormat('en-US', {timeZone:ET_ZONE, weekday:'short', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit', timeZoneName:'short', hour12:true});
+function etParts(d=new Date()) { const o={}; etPartsFmt.formatToParts(d).forEach(x=>{if(x.type!=='literal')o[x.type]=x.value}); return {y:+o.year,m:+o.month,d:+o.day,wd:o.weekday,h:+o.hour,min:+o.minute,s:+o.second}; }
+function ymd(p){return `${p.y}-${String(p.m).padStart(2,'0')}-${String(p.d).padStart(2,'0')}`}
+function nthWeekday(y,m,weekday,n){let d=new Date(Date.UTC(y,m-1,1)),shift=(weekday-d.getUTCDay()+7)%7;return 1+shift+7*(n-1)}
+function lastWeekday(y,m,weekday){let d=new Date(Date.UTC(y,m,0));return d.getUTCDate()-((d.getUTCDay()-weekday+7)%7)}
+function easterUTC(y){let a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,n=Math.floor((a+11*h+22*l)/451),m=Math.floor((h+l-7*n+114)/31),day=(h+l-7*n+114)%31+1;return new Date(Date.UTC(y,m-1,day))}
+function observed(y,m,d){let x=new Date(Date.UTC(y,m-1,d)),w=x.getUTCDay();if(w===6)x.setUTCDate(x.getUTCDate()-1);if(w===0)x.setUTCDate(x.getUTCDate()+1);return `${x.getUTCFullYear()}-${String(x.getUTCMonth()+1).padStart(2,'0')}-${String(x.getUTCDate()).padStart(2,'0')}`}
+function marketCalendar(y){const z=(m,d)=>`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`, closed=new Set();closed.add(observed(y,1,1));closed.add(z(1,nthWeekday(y,1,1,3)));closed.add(z(2,nthWeekday(y,2,1,3)));let gf=easterUTC(y);gf.setUTCDate(gf.getUTCDate()-2);closed.add(`${gf.getUTCFullYear()}-${String(gf.getUTCMonth()+1).padStart(2,'0')}-${String(gf.getUTCDate()).padStart(2,'0')}`);closed.add(z(5,lastWeekday(y,5,1)));closed.add(observed(y,6,19));closed.add(observed(y,7,4));closed.add(z(9,nthWeekday(y,9,1,1)));closed.add(z(11,nthWeekday(y,11,4,4)));closed.add(observed(y,12,25));const thanks=nthWeekday(y,11,4,4), early=new Set([z(11,thanks+1)]);let xmas=new Date(Date.UTC(y,11,25)),cw=xmas.getUTCDay();if(cw>=2&&cw<=5)early.add(z(12,24));return {closed,early}}
+function marketPhase(date=new Date()){const p=etParts(date),key=ymd(p),cal=marketCalendar(p.y),mins=p.h*60+p.min,weekend=p.wd==='Sat'||p.wd==='Sun',holiday=cal.closed.has(key),close=cal.early.has(key)?780:960;if(weekend)return {code:'closed',label:'US MARKET · CLOSED',detail:'Weekend'};if(holiday)return {code:'closed',label:'US MARKET · CLOSED',detail:'Market holiday'};if(mins>=570&&mins<close)return {code:'open',label:'US MARKET · OPEN',detail:cal.early.has(key)?'Early close 1:00 PM ET':'Closes 4:00 PM ET'};if(mins>=240&&mins<570)return {code:'extended',label:'US MARKET · PRE-MARKET',detail:'Regular open 9:30 AM ET'};if(mins>=close&&mins<1200)return {code:'extended',label:'US MARKET · AFTER-HOURS',detail:'Extended session to 8:00 PM ET'};return {code:'closed',label:'US MARKET · CLOSED',detail:'Next regular session pending'}}
+// Local-time display: market status still follows New York hours, but every time shown is in the viewer's own timezone.
+const localClockFmt = new Intl.DateTimeFormat(undefined, {weekday:'short', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit', timeZoneName:'short'});
+const localEventFmt = new Intl.DateTimeFormat(undefined, {weekday:'short', hour:'numeric', minute:'2-digit'});
+const localTimeFmt = new Intl.DateTimeFormat(undefined, {hour:'numeric', minute:'2-digit'});
+// Converts a New York wall-clock time to the real instant (handles EDT/EST automatically).
+function etWall(y,m,d,h,min){const want=Date.UTC(y,m-1,d,h,min);let t=want;for(let i=0;i<3;i++){const p=etParts(new Date(t));t-=Date.UTC(p.y,p.m-1,p.d,p.h,p.min)-want}return new Date(t)}
+// Next regular-session boundary: today's close while open, otherwise the next trading-day open.
+function nextMarketEvent(now=new Date()){
+  const p=etParts(now),key=ymd(p),cal0=marketCalendar(p.y);
+  if(!(p.wd==='Sat'||p.wd==='Sun')&&!cal0.closed.has(key)){
+    const early=cal0.early.has(key),cm=early?780:960,open=etWall(p.y,p.m,p.d,9,30),close=etWall(p.y,p.m,p.d,Math.floor(cm/60),cm%60);
+    if(now>=open&&now<close)return {kind:'close',at:close,early};
+  }
+  for(let i=0;i<=10;i++){
+    const x=new Date(Date.UTC(p.y,p.m-1,p.d+i)),y=x.getUTCFullYear(),m=x.getUTCMonth()+1,d=x.getUTCDate(),wd=x.getUTCDay();
+    if(wd===0||wd===6)continue;
+    if(marketCalendar(y).closed.has(`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`))continue;
+    const open=etWall(y,m,d,9,30);
+    if(open>now)return {kind:'open',at:open};
+  }
+  return null;
+}
+function fmtLocalEvent(d,now){return d.toDateString()===now.toDateString()?localTimeFmt.format(d):localEventFmt.format(d)}
+function fmtDur(ms){const m=Math.max(0,Math.floor(ms/60000)),d=Math.floor(m/1440),h=Math.floor(m%1440/60);return d?`${d}d ${h}h`:`${h}h ${m%60}m`}
+function updateMarketClock(){
+  const now=new Date(),phase=marketPhase(now),led=$('#market-led'),state=$('#market-state'),time=$('#market-time'),next=$('#market-next'),box=$('#us-market-clock');
+  if(!led||!state||!time||!next)return;
+  led.className='market-led '+phase.code;
+  state.textContent=phase.label;
+  state.style.color=phase.code==='open'?'var(--green)':phase.code==='extended'?'var(--amber)':'var(--red)';
+  time.textContent=localClockFmt.format(now);
+  const ev=nextMarketEvent(now),note=(phase.detail==='Weekend'||phase.detail==='Market holiday')?phase.detail+' · ':'';
+  next.textContent=ev?`${note}${ev.kind==='close'?'Closes':'Opens'} ${fmtLocalEvent(ev.at,now)}${ev.early?' (early)':''} · in ${fmtDur(ev.at-now)}`:phase.detail;
+  if(box)box.title='U.S. equities session (holiday and early-close aware) · times shown in your local time · New York now: '+etClockFmt.format(now);
+}
+
+// Initial Boot
+migrateLivePos();
+render();
+ping();
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { refresh(); updateLiveStrikesTA(); } });
+updateMarketClock();
+setInterval(updateMarketClock, 1000);
+setInterval(ping, 10000);
+setInterval(refresh, 3000);
+setInterval(updateLiveStrikesTA, 15000);
+setTimeout(()=>{if(scannerCanRun())scan();},2500);
+setInterval(()=>{if(scannerCanRun())scan();}, AUTO_PICK_POLICY.scanMs);
+</script>
+</body>
+</html>
