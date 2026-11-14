@@ -1,0 +1,2877 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AlphaPulse | Pro Options Terminal - $500 Single-Leg & All-Regime Sniper</title>
+<style>
+:root {
+  --bg: #0b0f17;
+  --surface: #111723;
+  --surface-raised: #182234;
+  --surface2: #151d2c;
+  --border: #223048;
+  --border-focus: #3b82f6;
+  --accent: #3b82f6;
+  --tx-main: #f1f5f9;
+  --tx: #f1f5f9;
+  --tx-muted: #8494ab;
+  --tx-faint: #4c5d77;
+  --green: #10b981;
+  --green-bg: rgba(16, 185, 129, 0.12);
+  --red: #ef4444;
+  --red-bg: rgba(239, 68, 68, 0.12);
+  --blue: #3b82f6;
+  --blue-bg: rgba(59, 130, 246, 0.14);
+  --amber: #f59e0b;
+  --amber-bg: rgba(245, 158, 11, 0.14);
+  --purple: #a855f7;
+  --purple-bg: rgba(168, 85, 247, 0.14);
+  --mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Menlo, Consolas, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f4f6fa;
+    --surface: #ffffff;
+    --surface-raised: #f8fafc;
+    --surface2: #f1f5f9;
+    --border: #dbe2ea;
+    --border-focus: #2563eb;
+    --accent: #2563eb;
+    --tx-main: #0f172a;
+    --tx: #0f172a;
+    --tx-muted: #64748b;
+    --tx-faint: #94a3b8;
+    --green: #059669;
+    --green-bg: #ecfdf5;
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+    --blue: #2563eb;
+    --blue-bg: #eff6ff;
+    --amber: #d97706;
+    --amber-bg: #fffbeb;
+    --purple: #7c3aed;
+    --purple-bg: #f5f3ff;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: auto; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-y: scroll;
+  background: var(--bg);
+  color: var(--tx-main);
+  font: 13px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+}
+.brand-badge {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+nav { display: flex; gap: 6px; flex-wrap: wrap; }
+.btn {
+  background: var(--surface-raised);
+  color: var(--tx-main);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 12px;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:hover { background: var(--border); }
+.btn.on, .btn.pri {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
+.btn.sm { padding: 3px 8px; font-size: 11px; }
+.btn.danger { color: var(--red); border-color: rgba(239,68,68,0.3); }
+.btn.danger:hover { background: var(--red-bg); }
+.status-pill {
+  font-size: 11px;
+  color: var(--tx-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 8px var(--red);
+}
+.dot.online {
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+}
+main {
+  padding: 18px 20px;
+  max-width: 1440px;
+  margin: auto;
+}
+.kpi-deck {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+.kpi-label { font-size: 11px; color: var(--tx-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi-val { font-size: 20px; font-weight: 700; font-family: var(--mono); margin-top: 4px; }
+.wrap {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+th, td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+  white-space: nowrap;
+}
+th {
+  background: var(--surface-raised);
+  color: var(--tx-muted);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+th:first-child, td:first-child { text-align: left; }
+.tag {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--mono);
+}
+.tag.Strict { background: var(--green-bg); color: var(--green); border: 1px solid rgba(16,185,129,0.25); }
+.tag.Balanced { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(59,130,246,0.25); }
+.tag.Aggressive { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
+.tag.Strategy { background: var(--purple-bg); color: var(--purple); border: 1px solid rgba(168,85,247,0.3); }
+.tag.Buy { background: var(--green-bg); color: var(--green); border: 1px solid rgba(16,185,129,0.25); }
+.tag.Sell { background: var(--red-bg); color: var(--red); border: 1px solid rgba(239,68,68,0.25); }
+.sym-name { font-weight: 700; color: var(--tx-main); }
+.sym-sub { font-size: 11px; color: var(--tx-muted); }
+.g { color: var(--green); }
+.r { color: var(--red); }
+.amber { color: var(--amber); }
+.mu { color: var(--tx-muted); }
+.mono { font-family: var(--mono); }
+input, select {
+  background: var(--surface-raised);
+  color: var(--tx-main);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 4px 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+input { width: 82px; text-align: right; }
+input:focus, select:focus { border-color: var(--border-focus); outline: none; }
+.set { background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border); }
+.set label { display: block; margin: 14px 0 4px; color: var(--tx-muted); font-size: 12px; font-weight: 600; }
+.set input { width: 100%; max-width: 500px; text-align: left; padding: 7px 10px; }
+.row { display: flex; gap: 8px; margin: 0 0 12px; flex-wrap: wrap; align-items: center; }
+.actions-cell { display: flex; gap: 4px; justify-content: flex-end; flex-wrap: wrap; }
+
+.header-right { display:flex; align-items:center; justify-content:flex-end; gap:14px; margin-left:auto; }
+.market-clock { display:flex; align-items:center; gap:9px; padding:6px 10px; border:1px solid var(--border); border-radius:7px; background:var(--surface-raised); min-width:270px; }
+.market-led { width:8px; height:8px; border-radius:50%; background:var(--tx-faint); box-shadow:0 0 7px var(--tx-faint); flex:0 0 auto; }
+.market-led.open { background:var(--green); box-shadow:0 0 8px var(--green); }
+.market-led.extended { background:var(--amber); box-shadow:0 0 8px var(--amber); }
+.market-led.closed { background:var(--red); box-shadow:0 0 8px var(--red); }
+.market-main { min-width:0; }
+.market-state { font:700 11px/1.25 var(--mono); letter-spacing:.35px; }
+.market-meta { color:var(--tx-muted); font:10px/1.35 var(--mono); white-space:nowrap; }
+@media (max-width:760px) { .header-right { width:100%; justify-content:space-between; } .market-clock { min-width:0; flex:1; } }
+
+/* Paper Trading Layout */
+.paper-view main#v { max-width:1280px; }
+.paper-intro { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:16px; flex-wrap:wrap; }
+.paper-intro h2 { margin:0 0 4px; font-size:22px; }
+.paper-toolbar { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; }
+.paper-section-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:16px 0 10px; flex-wrap:wrap; }
+.paper-section-title { font-size:14px; font-weight:800; letter-spacing:.4px; }
+.paper-view .wrap { overflow:visible; background:transparent; border:0; box-shadow:none; }
+.paper-view table, .paper-view tbody { display:block; width:100%; }
+.paper-view thead { display:none; }
+.paper-view tr { display:grid; grid-template-columns:minmax(230px,1.6fr) repeat(2,minmax(110px,.7fr)) minmax(90px,.5fr) minmax(140px,.8fr); gap:0; margin-bottom:12px; background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.08); }
+.paper-view td { min-width:0; padding:11px 13px; border:0; border-right:1px solid var(--border); border-bottom:1px solid var(--border); text-align:left; white-space:normal; overflow-wrap:anywhere; }
+.paper-view td:first-child { grid-row:span 2; }
+.paper-view td:last-child { border-right:0; }
+.paper-view td::before { content:attr(data-label); display:block; margin-bottom:5px; color:var(--tx-muted); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.45px; }
+.paper-view td:first-child::before { content:'Contract'; }
+.paper-view .actions-cell { justify-content:flex-start; flex-wrap:wrap; }
+.paper-view input { width:78px; max-width:100%; }
+@media (max-width:900px) {
+  .paper-view tr { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .paper-view td:first-child { grid-column:1/-1; grid-row:auto; }
+  .paper-intro { flex-direction:column; }
+  .paper-toolbar { justify-content:flex-start; }
+}
+@media (max-width:560px) {
+  header { padding:10px 12px; }
+  nav { width:100%; }
+  nav .btn { flex:1 1 auto; justify-content:center; }
+  main { padding:14px 12px; }
+  .paper-view tr { display:block; }
+  .paper-view td { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; border-right:0; }
+  .paper-view td::before { flex:0 0 108px; margin:0; }
+  .paper-view td:first-child { display:block; }
+  .paper-view td:first-child::before { margin-bottom:5px; }
+  .paper-view .kpi-deck { grid-template-columns:1fr 1fr; }
+}
+
+.paper-view-toggle.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+@media(min-width:901px){
+ body.paper-view.paper-compact .wrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px;background:var(--surface);max-height:62vh}
+ body.paper-view.paper-compact table{display:table;width:100%;min-width:1120px;table-layout:fixed;border-collapse:collapse}
+ body.paper-view.paper-compact thead{display:table-header-group;position:sticky;top:0;z-index:4}
+ body.paper-view.paper-compact tbody{display:table-row-group}
+ body.paper-view.paper-compact tr{display:table-row;background:transparent;box-shadow:none;border:0}
+ body.paper-view.paper-compact th,body.paper-view.paper-compact td{display:table-cell;padding:8px 7px;border:0;border-bottom:1px solid var(--border);border-right:1px solid var(--border);font-size:11px;vertical-align:middle}
+ body.paper-view.paper-compact td::before{display:none}
+ body.paper-view.paper-compact th{font-size:10px;text-align:left;background:var(--surface2);border-bottom:2px solid var(--accent)}
+ body.paper-view.paper-compact input,body.paper-view.paper-compact select{width:100%;min-width:0;padding:4px;font-size:11px}
+}
+
+.scanner-toggle.running { background:var(--green); color:#fff; border-color:var(--green); }
+.scanner-toggle.paused { background:var(--amber-bg); color:var(--amber); border-color:rgba(245,158,11,.45); }
+
+.regime-strip { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; margin:12px 0; }
+.regime-card { padding:11px 13px; border:1px solid var(--border); border-radius:8px; background:var(--surface); }
+.regime-card .rk { font-size:10px; color:var(--tx-muted); text-transform:uppercase; letter-spacing:.45px; }
+.regime-card .rv { font:800 15px var(--mono); margin-top:3px; }
+.regime-up { color:var(--green); }
+.regime-down { color:var(--red); }
+.regime-sideways { color:var(--amber); }
+.regime-mixed { color:var(--blue); }
+.quality-note { font-size:10px; color:var(--tx-muted); line-height:1.4; }
+
+/* LiveStrikes Tab Styles */
+.ls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; margin-bottom: 16px; }
+.ls-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+.ls-card h3 { margin: 0 0 8px; font-size: 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.ls-presets { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.ls-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(115px, 1fr)); gap: 10px; align-items: end; }
+.ls-form-field label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: var(--tx-muted); margin-bottom: 4px; }
+.ls-form-field input, .ls-form-field select { width: 100%; text-align: left; padding: 6px 8px; min-height: 32px; background: var(--surface-raised); color: var(--tx-main); border: 1px solid var(--border); border-radius: 5px; font-family: var(--mono); font-size: 12px; }
+.ls-preview-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed var(--border); font-size: 12px; gap: 8px; }
+.ls-preview-row:last-child { border-bottom: 0; }
+.ls-ta-pill { display: inline-block; padding: 2px 6px; border-radius: 4px; font: 10px var(--mono); margin: 2px 3px 2px 0; background: var(--surface-raised); border: 1px solid var(--border); }
+.ls-ta-pill.burn { background: var(--red-bg); color: var(--red); border-color: rgba(239,68,68,0.4); font-weight: 700; }
+.ls-signal-box { padding: 6px 9px; border-radius: 6px; font-weight: 700; font-size: 11px; font-family: var(--mono); display: inline-block; margin-bottom: 4px; }
+.ls-signal-box.keep { background: var(--green-bg); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
+.ls-signal-box.sell { background: var(--red-bg); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+.ls-signal-box.warn { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
+.ls-select-grade { display:inline-flex; align-items:center; gap:6px; padding:3px 7px; border-radius:5px; font:700 10px var(--mono); margin:2px 4px 2px 0; }
+.ls-select-grade.A { background:var(--green-bg); color:var(--green); }
+.ls-select-grade.B { background:var(--blue-bg); color:var(--blue); }
+.ls-select-grade.C { background:var(--amber-bg); color:var(--amber); }
+.ls-select-grade.D { background:var(--red-bg); color:var(--red); }
+.ls-selection-box { margin-top:7px; padding:8px; border:1px solid var(--border); border-radius:7px; background:var(--surface-raised); font-size:11px; line-height:1.45; }
+.ls-shortlist { margin-top:10px; display:grid; gap:7px; }
+.ls-short-row { display:grid; grid-template-columns:48px minmax(150px,1.4fr) repeat(5,minmax(62px,.7fr)) auto; gap:8px; align-items:center; padding:8px; border:1px solid var(--border); border-radius:7px; background:var(--surface-raised); font-size:11px; }
+.ls-short-row.best { border-color:rgba(34,197,94,.55); box-shadow:inset 3px 0 var(--green); }
+@media(max-width:900px){ .ls-short-row{grid-template-columns:44px 1fr 1fr} .ls-short-hide{display:none} }
+
+/* LiveStrikes Pro Order Flow redesign */
+.ofx-section{margin-top:16px}.ofx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(520px,1fr));gap:14px}.ofx-card{border:1px solid var(--border);border-radius:10px;background:var(--surface);padding:12px;min-width:0}.ofx-head,.ofx-line{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.ofx-title{font-weight:900}.ofx-banner{margin:8px 0;padding:9px 11px;border:1px solid;border-radius:7px;font:800 12px var(--mono)}.ofx-entry{color:var(--green);background:var(--green-bg)}.ofx-wait{color:var(--amber);background:var(--amber-bg)}.ofx-exit{color:var(--red);background:var(--red-bg)}.ofx-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:6px;margin:8px 0}.ofx-gates{display:flex;gap:5px;flex-wrap:wrap;margin:-2px 0 9px}.ofx-gate{padding:3px 6px;border:1px solid var(--border);border-radius:5px;font:9px/1.35 var(--mono);background:var(--surface-raised)}.ofx-gate-pass{color:var(--green);border-color:rgba(16,185,129,.35)}.ofx-gate-fail{color:var(--red);border-color:rgba(239,68,68,.42)}.ofx-blocked{margin:-1px 0 8px;padding:7px 9px;border-left:3px solid var(--amber);border-radius:5px;background:var(--amber-bg);color:var(--amber);font:10px/1.45 var(--mono)}.ofx-ready{border-left-color:var(--green);background:var(--green-bg);color:var(--green)}.ofx-metric{border:1px solid var(--border);background:var(--surface-raised);border-radius:7px;padding:7px}.ofx-label{font-size:9px;color:var(--tx-muted);text-transform:uppercase}.ofx-value{font:800 12px/1.35 var(--mono);margin-top:3px}.ofx-book{display:grid;grid-template-columns:1.25fr 1fr;gap:8px;margin:8px 0}.ofx-panel{border:1px solid var(--border);background:var(--surface-raised);border-radius:7px;padding:8px}.ofx-depth{height:13px;display:flex;border-radius:5px;overflow:hidden;margin:7px 0;background:var(--border)}.ofx-bid{background:var(--green)}.ofx-ask{background:var(--red)}.ofx-levels{display:grid;grid-template-columns:1fr 1fr;gap:8px;font:10px var(--mono)}.ofx-level{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px dotted var(--border)}.ofx-chart{height:350px;border:1px solid var(--border);border-radius:8px;background:var(--surface-raised);overflow:hidden}.ofx-canvas{width:100%;height:100%;display:block}.ofx-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:7px;color:var(--tx-muted);font-size:10px}.ofx-dot{width:8px;height:8px;display:inline-block;border-radius:2px;margin-right:4px}.ofx-alerts{border:1px solid var(--border);border-radius:7px;margin-top:8px;overflow:hidden}.ofx-alert{padding:6px 8px;border-top:1px solid var(--border);font:10px/1.4 var(--mono)}.ofx-help{font-size:10px;color:var(--tx-muted);line-height:1.5;margin-top:7px}.ofx-invalid{color:var(--red)}.ofx-toast{position:fixed;right:14px;bottom:14px;z-index:9999;max-width:360px;background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--green);border-radius:8px;padding:10px 12px;box-shadow:0 8px 30px #0008;font:11px/1.45 var(--mono)}
+@media(max-width:900px){.ofx-metrics{grid-template-columns:repeat(3,1fr)}.ofx-book{grid-template-columns:1fr}}@media(max-width:580px){.ofx-grid{grid-template-columns:1fr}.ofx-metrics{grid-template-columns:repeat(2,1fr)}.ofx-chart{height:300px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <span>AlphaPulse</span>
+    <span class="brand-badge">$500 SNIPER PRO</span>
+  </div>
+  <nav>
+    <button type="button" class="btn on" id="btn-picks" onclick="setTab('picks')">⚡ Auto-Picks</button>
+    <button type="button" class="btn" id="btn-paper" onclick="setTab('paper')">💼 Paper Trading</button>
+    <button type="button" class="btn" id="btn-strat" onclick="setTab('strat')">🧭 Auto-picks Strategy</button>
+    <button type="button" class="btn" id="btn-stratPaper" onclick="setTab('stratPaper')">📈 Paper trading for Strategy</button>
+    <button type="button" class="btn" id="btn-live" onclick="setTab('live')">🎯 LiveStrikes ($500)</button>
+    <button type="button" class="btn" id="btn-set" onclick="setTab('set')">⚙️ Settings</button>
+  </nav>
+  <div class="header-right">
+    <div class="market-clock" id="us-market-clock" title="U.S. equities session · times shown in your local time" aria-live="off">
+      <span class="market-led closed" id="market-led"></span>
+      <div class="market-main">
+        <div class="market-state" id="market-state">US MARKET · CHECKING</div>
+        <div class="market-meta" id="market-time">--:--:--</div>
+        <div class="market-meta" id="market-next">Loading session</div>
+      </div>
+    </div>
+    <div class="status-pill">
+      <span class="dot" id="dot"></span>
+      <span id="bs">BRIDGE OFFLINE</span>
+    </div>
+  </div>
+</header>
+
+<main id="v"></main>
+
+<main class="mu" style="padding-top:0; font-size:11px;">
+  Market data delayed by ~15m when routing via Yahoo fallback. Auto-sync occurs every 15s. Realized P&amp;L records net of commissions and OCC/ORF clearing fees.
+</main>
+
+<script type="text/plain" id="bridge">
+const http = require('http'), PORT = process.env.PORT || 8787, UA = { 'User-Agent': 'Mozilla/5.0' };
+let cookie = '', crumb = '';
+let moomoo = { key: process.env.MOOMOO_KEY || '', secret: process.env.MOOMOO_SECRET || '', host: '127.0.0.1', port: 33333 };
+async function auth() {
+  const r = await fetch('https://fc.yahoo.com', { headers: UA, redirect: 'manual' });
+  cookie = (r.headers.getSetCookie?.() || []).map(c => c.split(';')[0]).join('; ');
+  crumb = await (await fetch('https://query1.finance.yahoo.com/v1/test/getcrumb', { headers: { ...UA, cookie } })).text();
+}
+async function yf(path) {
+  for (let i = 0; i < 2; i++) {
+    if (!crumb) await auth();
+    const r = await fetch('https://query2.finance.yahoo.com' + path + (path.includes('?') ? '&' : '?') + 'crumb=' + encodeURIComponent(crumb), { headers: { ...UA, cookie } });
+    if (r.ok) return r.json();
+    crumb = '';
+  }
+  throw new Error('Yahoo request failed');
+}
+
+let mm = null, mmReady = false, mmErr = '', subd = new Set(), mmTimer = null;
+function pbInit(ab) {
+  const u = new Uint8Array(ab), o = {}; let i = 0;
+  const vi = () => { let r = 0n, s = 0n, b; do { b = u[i++]; r |= BigInt(b & 127) << s; s += 7n; } while (b & 128); return r; };
+  while (i < u.length) {
+    const t = Number(vi()), f = t >> 3, w = t & 7;
+    if (w === 0) { const v = vi(); if (f === 1) o.retType = Number(BigInt.asIntN(32, v)); if (f === 3) o.errCode = Number(BigInt.asIntN(32, v)); }
+    else if (w === 2) { const n = Number(vi()); if (f === 2) o.retMsg = Buffer.from(u.subarray(i, i + n)).toString('utf8'); i += n; }
+    else if (w === 1) i += 8; else if (w === 5) i += 4; else break;
+  }
+  return o;
+}
+function mmClose() {
+  clearTimeout(mmTimer);
+  try { if (mm && typeof mm.stop === 'function') mm.stop(); } catch (e) {}
+  mm = null; mmReady = false;
+}
+function mmConnect() {
+  mmClose();
+  let M;
+  try { M = require('moomoo-api'); }
+  catch (e) { mmErr = 'moomoo-api not installed. Run: npm i moomoo-api'; return; }
+  try {
+    const C = M.default || M, me = new C();
+    let refusal = null;
+    mm = me; subd.clear(); mmErr = 'connecting';
+    me.onlogin = (ret, msg) => {
+      if (mm !== me) return;
+      clearTimeout(mmTimer);
+      mmReady = !!ret;
+      if (ret) mmErr = '';
+      else if (refusal) mmErr = 'OpenD refused: ' + (refusal.retMsg || 'no message') + ' (code ' + refusal.retType + ')';
+      else mmErr = 'OpenD login failed: ' + (msg || 'check WebSocket key and port');
+    };
+    me.start(moomoo.host, +moomoo.port, false, moomoo.key);
+    const wb = me.websock;
+    if (wb && typeof wb.sendBuff === 'function') {
+      const orig = wb.sendBuff.bind(wb);
+      wb.sendBuff = (cmd, buf, t) => {
+        const p = orig(cmd, buf, t);
+        return cmd !== 1 ? p : p.then(r => { try { if (r && r.buff) { const d = pbInit(r.buff); if (d.retType !== undefined && d.retType !== 0) refusal = d; } } catch (e) {} return r; });
+      };
+    }
+    mmTimer = setTimeout(() => {
+      if (mm === me && !mmReady && mmErr === 'connecting')
+        mmErr = 'No login response from OpenD at ' + moomoo.host + ':' + moomoo.port + ' after 8s.';
+    }, 8000);
+  } catch (e) { mm = null; mmErr = e.message; }
+}
+process.on('uncaughtException', e => { console.error('[bridge]', e.message); if (mm && !mmReady) mmErr = 'OpenD connection error: ' + e.message; });
+process.on('unhandledRejection', e => { console.error('[bridge]', e && e.message || e); if (mm && !mmReady) mmErr = 'OpenD connection error: ' + (e && e.message || e); });
+
+function toMoomooOptionCodes(raw) {
+  const s = String(raw || '').toUpperCase().trim().replace(/^US[.:]/, '').replace(/-US$/, '').replace(/\s+/g, '');
+  const m = /^([A-Z]{1,6})(\d{6}[CP])(\d{1,8})$/.exec(s);
+  if (!m) return null;
+  const root = m[1], ymdcp = m[2], d = m[3];
+  const strikeMill = d.length === 8 ? parseInt(d, 10) : (d.length >= 5 ? parseInt(d, 10) : parseInt(d, 10) * 1000);
+  const compact = `${root}${ymdcp}${strikeMill}`;
+  const occ = `${root}${ymdcp}${String(strikeMill).padStart(8, '0')}`;
+  return { compact, occ, candidates: compact === occ ? [compact] : [compact, occ] };
+}
+async function moomooQuote(code) {
+  const parsed = toMoomooOptionCodes(code);
+  if (!parsed || !mm || !mmReady) return null;
+  for (const c of parsed.candidates) {
+    const sec = { market: 11, code: c };
+    try {
+      if (!subd.has(sec.code)) {
+        await mm.Sub({ c2s: { securityList: [sec], subTypeList: [1, 2], isSubOrUnSub: true, isRegOrUnRegPush: false } });
+        subd.add(sec.code);
+      }
+      const res = await mm.GetBasicQot({ c2s: { securityList: [sec] } });
+      const q = res?.s2c?.basicQotList?.[0];
+      if (q && (Number(q.curPrice) > 0 || Number(q.lastClosePrice) > 0 || Number(q.openPrice) > 0)) {
+        let bid = 0, ask = 0;
+        try {
+          const ob = (await mm.GetOrderBook({ c2s: { security: sec, num: 1 } }))?.s2c;
+          bid = Number(ob?.orderBookBidList?.[0]?.price || 0);
+          ask = Number(ob?.orderBookAskList?.[0]?.price || 0);
+        } catch (e) {}
+        const last = Number(q.curPrice) > 0 ? Number(q.curPrice) : (bid > 0 && ask > 0 ? +((bid + ask) / 2).toFixed(2) : Number(q.lastClosePrice) || 0);
+        if (last > 0) return {
+          last, curPrice: Number(q.curPrice || 0), bid, ask, volume: Number(q.volume || 0),
+          oi: Number(q.optionExData?.openInterest || 0), oiIncrement: Number(q.optionExData?.netOpenInterest || 0),
+          iv: Number(q.optionExData?.impliedVolatility || 0) / 100,
+          delta: Number(q.optionExData?.delta || 0), theta: Number(q.optionExData?.theta || 0),
+          gamma: Number(q.optionExData?.gamma || 0), vega: Number(q.optionExData?.vega || 0),
+          code: c, occ: parsed.occ
+        };
+      }
+    } catch (e) { mmErr = e.message; }
+  }
+  return null;
+}
+
+async function moomooOrderFlow(code){const p=toMoomooOptionCodes(code);if(!p||!mm||!mmReady)return{code,ticks:[],error:mmErr||'Moomoo OpenD not connected'};for(const c of p.candidates){const sec={market:11,code:c};try{const sk='T:'+c;if(!subd.has(sk)){await mm.Sub({c2s:{securityList:[sec],subTypeList:[4],isSubOrUnSub:true,isRegOrUnRegPush:false}});subd.add(sk)}const r=await mm.GetTicker({c2s:{security:sec,maxRetNum:1000}}),a=r?.s2c?.tickerList||[];const ticks=a.map(x=>({seq:String(x.sequence||''),time:String(x.time||''),price:+x.price||0,volume:+x.volume||0,direction:x.dir??x.tickerDirection??x.direction??0})).filter(x=>x.price>0&&x.volume>0);if(ticks.length)return{code:c,ticks,at:Date.now()}}catch(e){mmErr=e.message}}return{code,ticks:[],error:mmErr||'No tick data'}}
+async function moomooOrderBook(code){const p=toMoomooOptionCodes(code);if(!p||!mm||!mmReady)return{code,bids:[],asks:[],error:mmErr||'Moomoo OpenD not connected'};for(const c of p.candidates){const sec={market:11,code:c};try{const sk='B:'+c;if(!subd.has(sk)){await mm.Sub({c2s:{securityList:[sec],subTypeList:[2],isSubOrUnSub:true,isRegOrUnRegPush:false}});subd.add(sk)}const r=await mm.GetOrderBook({c2s:{security:sec,num:10}}),x=r?.s2c||r||{},norm=a=>(a||[]).map(z=>({price:+(z.price??z[0])||0,volume:+(z.volume??z[1])||0,orders:+(z.orderCount??z.orderNum??z[2])||0})).filter(z=>z.price>0);const bids=norm(x.orderBookBidList||x.bidList||x.Bid),asks=norm(x.orderBookAskList||x.askList||x.Ask);if(bids.length||asks.length)return{code:c,bids,asks,at:Date.now()}}catch(e){mmErr=e.message}}return{code,bids:[],asks:[],error:mmErr||'No order book data'}}
+if (moomoo.key) mmConnect();
+
+const E = encodeURIComponent;
+const routes = {
+  '/api/chain': q => yf(`/v7/finance/options/${E(q.symbol)}` + (q.date ? `?date=${q.date}` : '')),
+  '/api/quote': q => yf(`/v7/finance/quote?symbols=${E(q.symbols)}`),
+  '/api/chart': q => yf(`/v8/finance/chart/${E(q.symbol)}?range=${q.range || '6mo'}&interval=${q.interval || '1d'}`),
+  '/api/moomoo/quote': async q => ({ quote: await moomooQuote(q.code) }),
+  '/api/moomoo/orderflow': q => moomooOrderFlow(q.code),
+  '/api/moomoo/orderbook': q => moomooOrderBook(q.code),
+  '/api/moomoo/status': async () => ({ configured: !!moomoo.key, connected: mmReady, error: mmErr, host: moomoo.host, port: moomoo.port })
+};
+
+http.createServer(async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'content-type');
+  if (req.method === 'OPTIONS') return res.end();
+  const u = new URL(req.url, 'http://x'), q = Object.fromEntries(u.searchParams);
+  const send = (c, o) => { res.writeHead(c, { 'Content-Type': 'application/json' }); res.end(JSON.stringify(o)); };
+  try {
+    if (req.method === 'POST' && u.pathname === '/api/moomoo/config') {
+      let b = ''; for await (const chunk of req) b += chunk; const c = JSON.parse(b || '{}');
+      for (const k of ['key', 'secret', 'host', 'port']) if (c[k] !== undefined && c[k] !== '' && c[k] !== null) moomoo[k] = c[k];
+      mmConnect();
+      return send(200, { ok: true });
+    }
+    const h = routes[u.pathname];
+    if (!h) return send(404, { error: 'not found' });
+    send(200, await h(q));
+  } catch (e) { send(500, { error: e.message }); }
+}).listen(PORT, '127.0.0.1', () => console.log('Bridge on http://127.0.0.1:' + PORT));
+</script>
+
+<script>
+const $ = s => document.querySelector(s);
+
+function clampNum(v, min, max, def, o = {}) {
+  let n = Number(v);
+  if (!Number.isFinite(n) || (!n && !o.allowZero)) n = def;
+  n = Math.min(max, Math.max(min, n));
+  return o.round ? Math.round(n) : n;
+}
+
+// Single authoritative Sniper Policy (80%+ win-rate threshold)
+const AUTO_PICK_POLICY = Object.freeze({
+  premiumMin: 0.50,
+  premiumMax: 5.00,
+  strictMin: 85,
+  balancedMin: 78,
+  maxSpreadPct: 0.05,
+  minVolume: 300,
+  minOI: 500,
+  scanMs: 30000
+});
+
+let cfg = {
+  bridge: 'http://localhost:8787',
+  uni: 'SPY,QQQ,IWM,AAPL,MSFT,NVDA,TSLA,AMZN,META',
+  fee: 0.69,
+  strictRR: 1.5,
+  balancedRR: 1.5,
+  stopPct: 20,
+  maxOpenPos: 3,
+  cooldownMins: 30,
+  onePerSymbol: true,
+  breakevenTrail: true,
+  eodSquareOff: true,
+  rthOnly: true,
+  accountSize: 500,
+  riskPct: 5.0,
+  maxDailyLossPct: 10.0,
+  maxTradesDay: 5,
+  maxLossesDay: 2,
+  maxClusterPositions: 2,
+  pos: [],
+  closed: [],
+  stratPos: [],
+  stratClosed: [],
+  stratAutoRoute: true,
+  livePos: [],
+  autoPickExecuted: {},
+  stratAutoExecuted: {},
+  superAgent: { enabled: true, history: [], blocked: 0 },
+  scannerPaused: false,
+  geminiFilter: {
+    enabled: true,
+    engineMode: 'local',
+    apiKey: '',
+    model: 'gemini-2.5-pro',
+    atmOnly: true,
+    atmMaxDistPct: 1.5,
+    minOI: 500,
+    maxIVPct: 90,
+    minConfluencePct: 85
+  },
+  geminiDecisions: {},
+  prevOI: {},
+  quantGuard: {
+    maxQuoteAgeSec: 15,
+    strictSpreadPct: 5,
+    balancedSpreadPct: 7,
+    minRvol: 1.5,
+    minAdx: 25,
+    blockSidewaysWithoutPattern: false
+  },
+  signalJournal: []
+};
+
+try {
+  const stored = JSON.parse(localStorage.getItem('opt') || '{}');
+  cfg = Object.assign(cfg, stored);
+  if (!Array.isArray(cfg.pos)) cfg.pos = [];
+  if (!Array.isArray(cfg.closed)) cfg.closed = [];
+  if (!Array.isArray(cfg.stratPos)) cfg.stratPos = [];
+  if (!Array.isArray(cfg.stratClosed)) cfg.stratClosed = [];
+  if (!Array.isArray(cfg.livePos)) cfg.livePos = [];
+  if (!Array.isArray(cfg.signalJournal)) cfg.signalJournal = [];
+  if (!cfg.autoPickExecuted || typeof cfg.autoPickExecuted !== 'object') cfg.autoPickExecuted = {};
+  if (!cfg.stratAutoExecuted || typeof cfg.stratAutoExecuted !== 'object') cfg.stratAutoExecuted = {};
+  if (typeof cfg.stratAutoRoute !== 'boolean') cfg.stratAutoRoute = true;
+  cfg.quantGuard = Object.assign({
+    maxQuoteAgeSec: 15, strictSpreadPct: 5, balancedSpreadPct: 7, minRvol: 1.5, minAdx: 25, blockSidewaysWithoutPattern: false
+  }, cfg.quantGuard);
+  cfg.geminiFilter = Object.assign({
+    enabled: true, engineMode: 'local', apiKey: '', model: 'gemini-2.5-pro', atmOnly: true, atmMaxDistPct: 1.5, minOI: 500, maxIVPct: 90, minConfluencePct: 85
+  }, cfg.geminiFilter);
+} catch (e) {}
+
+function normalizeCfg() {
+  cfg.strictRR = clampNum(cfg.strictRR, 0.1, 10, 1.5);
+  cfg.balancedRR = clampNum(cfg.balancedRR, 0.1, 10, 1.5);
+  cfg.stopPct = clampNum(cfg.stopPct, 5, 60, 20);
+  cfg.maxOpenPos = clampNum(cfg.maxOpenPos, 1, 20, 3, { round: true });
+  cfg.cooldownMins = clampNum(cfg.cooldownMins, 0, 240, 30, { round: true, allowZero: true });
+}
+normalizeCfg();
+
+const save = () => { try { localStorage.setItem('opt', JSON.stringify(cfg)); } catch (e) {} };
+
+const api = async (p, opts = {}) => {
+  const timeoutMs = opts.timeoutMs || 8000;
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  try {
+    const fetchOpts = { method: opts.method || 'GET', signal: ctrl.signal };
+    if (opts.body) {
+      fetchOpts.headers = { 'Content-Type': 'application/json' };
+      fetchOpts.body = typeof opts.body === 'string' ? opts.body : JSON.stringify(opts.body);
+    }
+    const r = await fetch(cfg.bridge + p, fetchOpts);
+    clearTimeout(timer);
+    if (!r.ok) throw new Error(r.status);
+    return await r.json();
+  } catch (e) {
+    clearTimeout(timer);
+    throw e;
+  }
+};
+
+const tierForScore = s => s >= AUTO_PICK_POLICY.strictMin ? 'Strict' : s >= AUTO_PICK_POLICY.balancedMin ? 'Balanced' : null;
+const tierRR = tier => tier === 'Strict' ? cfg.strictRR : cfg.balancedRR;
+function riskPlan(mid, tier, intraday) {
+  const slMult = 1 - cfg.stopPct / 100;
+  const stop = +(mid * (intraday ? slMult : Math.min(slMult, 0.70))).toFixed(2);
+  const rr = tierRR(tier);
+  return { stop, rr, tgt: +(mid + (mid - stop) * rr).toFixed(2) };
+}
+
+let tab = 'picks', mode = 'intraday', tier = 'All', regimeFilter = 'All';
+let picks = [], strategyPicks = [], msg = '', busy = false, autoTradeMsg = 'Sniper 80%+ Engine Armed';
+const taCache5m = {}; // Stores latest 5m ATR & TA per symbol for LiveStrikes ATR noise checks
+
+window.setTab = function(t) {
+  tab = t;
+  render();
+  if (t === 'paper' || t === 'stratPaper' || t === 'live') refresh();
+  if (t === 'live' && typeof updateLiveStrikesTA === 'function') updateLiveStrikesTA();
+};
+
+window.setMode = function(m) { mode = m; render(); };
+window.setTier = function(t) { tier = t; render(); };
+window.setRegimeFilter = function(r) { regimeFilter = r; render(); };
+
+// --- Contract Parsing & Formatting ---
+const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+function contractFromParts(root, y, mo, d, call, strike) {
+  if (!root || !(y >= 2000 && y <= 2100) || !(mo >= 1 && mo <= 12) || !(d >= 1 && d <= 31) || !Number.isFinite(strike) || !(strike > 0)) return null;
+  const mid = new Date(Date.UTC(y, mo - 1, d));
+  if (mid.getUTCMonth() !== mo - 1 || mid.getUTCDate() !== d) return null;
+  const z = n => String(n).padStart(2, '0');
+  const close = etWall(y, mo, d, 16, 0);
+  return {
+    root, y, m: mo, d, call, strike,
+    occ: `${root}${z(y % 100)}${z(mo)}${z(d)}${call ? 'C' : 'P'}${String(Math.round(strike * 1000)).padStart(8, '0')}`,
+    expMidTs: Math.floor(mid.getTime() / 1000),
+    dte: Math.max(0, (close.getTime() - Date.now()) / 864e5),
+    label: `${root} ${z(d)} ${MONTHS[mo - 1]} ${y} $${+strike.toFixed(3)} ${call ? 'CALL' : 'PUT'}`
+  };
+}
+
+function parseExpiryText(txt, refTs) {
+  const ref = Number(refTs) || Date.now();
+  let y, mo, d, m;
+  if ((m = /^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})$/.exec(txt))) { y = +m[1]; mo = +m[2]; d = +m[3]; }
+  else if ((m = /^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4}|\d{2})$/.exec(txt))) { mo = +m[1]; d = +m[2]; y = +m[3]; if (y < 100) y += 2000; }
+  else if ((m = /^(\d{1,2})[-\/.](\d{1,2})$/.exec(txt))) { mo = +m[1]; d = +m[2]; }
+  else if ((m = /^(\d{4})(\d{2})(\d{2})$/.exec(txt))) { y = +m[1]; mo = +m[2]; d = +m[3]; }
+  else if ((m = /^(\d{2})(\d{2})(\d{2})$/.exec(txt))) { y = 2000 + +m[1]; mo = +m[2]; d = +m[3]; }
+  else if ((m = /^([A-Z]{3})[A-Z]*\.? (\d{1,2})(?:,? (\d{4}))?$/.exec(txt))) { mo = MONTHS.indexOf(m[1]) + 1; d = +m[2]; if (m[3]) y = +m[3]; }
+  else if ((m = /^(\d{1,2}) ([A-Z]{3})[A-Z]*\.?(?:,? (\d{4}))?$/.exec(txt))) { d = +m[1]; mo = MONTHS.indexOf(m[2]) + 1; if (m[3]) y = +m[3]; }
+  else return null;
+  if (!(mo >= 1)) return null;
+  if (y == null) {
+    y = new Date(ref).getUTCFullYear();
+    if (Date.UTC(y, mo - 1, d, 21) < ref - 3 * 864e5) y++;
+  }
+  return { y, mo, d };
+}
+
+function parseContractInput(raw, refTs) {
+  const s = String(raw || '').toUpperCase().trim().replace(/^US[.:]/, '').replace(/-US$/, '').replace(/\s+/g, ' ');
+  if (!s) return null;
+  let m = /^([A-Z]{1,6})(\d{2})(\d{2})(\d{2})([CP])(\d{1,8})$/.exec(s.replace(/ /g, ''));
+  if (m) {
+    const digits = m[6];
+    return contractFromParts(m[1], 2000 + +m[2], +m[3], +m[4], m[5] === 'C', digits.length >= 5 ? parseInt(digits, 10) / 1000 : parseInt(digits, 10));
+  }
+  let root, dateTxt, strikeTxt, typeTxt;
+  if ((m = /^([A-Z]{1,6}) (.+?) ?(\d+(?:\.\d+)?) ?(CALL|PUT|C|P)$/.exec(s))) [, root, dateTxt, strikeTxt, typeTxt] = m;
+  else if ((m = /^([A-Z]{1,6}) (.+?) (CALL|PUT|C|P) ?(\d+(?:\.\d+)?)$/.exec(s))) [, root, dateTxt, typeTxt, strikeTxt] = m;
+  else return null;
+  const dt = parseExpiryText(dateTxt.trim(), refTs);
+  return dt ? contractFromParts(root, dt.y, dt.mo, dt.d, typeTxt[0] === 'C', parseFloat(strikeTxt)) : null;
+}
+
+function parseOccMeta(code) {
+  const c = parseContractInput(code);
+  if (!c) return null;
+  return { root: c.root, expiryTs: c.expMidTs, dte: c.dte, call: c.call, strike: c.strike };
+}
+
+function getMoomooUrl(code) {
+  const c = parseContractInput(code);
+  if (!c) return null;
+  const z = n => String(n).padStart(2, '0');
+  return `https://www.moomoo.com/options/${c.root}${z(c.y % 100)}${z(c.m)}${z(c.d)}${c.call ? 'C' : 'P'}${Math.round(c.strike * 1000)}-US`;
+}
+
+function openMoomooChart(code) {
+  const url = getMoomooUrl(code);
+  if (!url) { alert(`Cannot build Moomoo link for "${code}".`); return; }
+  window.open(url, '_blank', 'noopener');
+}
+
+// --- Math & Greeks ---
+const N = x => {
+  const t = 1 / (1 + .2316419 * Math.abs(x)),
+        p = .3989423 * Math.exp(-x*x/2) * t * (.3193815 + t*(-.3565638 + t*(1.781478 + t*(-1.821256 + t*1.330274))));
+  return x > 0 ? 1 - p : p;
+};
+
+function greeks(S, K, T, iv, call) {
+  const r = .045, sd = iv * Math.sqrt(T);
+  if (sd <= 0 || T <= 0 || S <= 0 || K <= 0) return { d:0, ga:0, th:0, ve:0 };
+  const d1 = (Math.log(S/K) + (r + iv*iv/2)*T) / sd,
+        d2 = d1 - sd,
+        pdf = .3989423 * Math.exp(-d1*d1/2);
+  return {
+    d: call ? N(d1) : N(d1) - 1,
+    ga: pdf / (S * iv * Math.sqrt(T)),
+    th: (-S * pdf * iv / (2 * Math.sqrt(T)) - (call ? 1 : -1) * r * K * Math.exp(-r*T) * N(call ? d2 : -d2)) / 365,
+    ve: S * pdf * Math.sqrt(T) / 100
+  };
+}
+
+const ema = (a, n) => { const k = 2 / (n + 1); return a.reduce((e, x, i) => i ? x*k + e*(1-k) : x, a[0]); };
+const emaSeries = (arr, period) => {
+  if (!arr || !arr.length) return [];
+  const k = 2 / (period + 1), out = [arr[0]];
+  for (let i = 1; i < arr.length; i++) out.push(arr[i] * k + out[i - 1] * (1 - k));
+  return out;
+};
+const rsi = (c, n=14) => {
+  if (c.length <= n) return 50;
+  let g = 0, l = 0;
+  for (let i = c.length - n; i < c.length; i++) { const d = c[i] - c[i-1]; d > 0 ? g += d : l -= d; }
+  return l ? 100 - 100 / (1 + g/l) : 100;
+};
+const hv = c => {
+  if (c.length < 2) return 0.2;
+  const r = c.slice(-21).map((x, i, a) => i ? Math.log(x / a[i-1]) : 0).slice(1);
+  const m = r.reduce((a, b) => a + b, 0) / r.length;
+  return Math.sqrt(r.reduce((a, b) => a + (b - m)**2, 0) / Math.max(1, r.length - 1)) * Math.sqrt(252);
+};
+const cl = (x, a=0, z=1) => Math.max(a, Math.min(z, x));
+const escapeHtml = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dt = e => new Date(e * 1000).toISOString().slice(5, 10);
+const lbl = p => p.isMultiLeg ? `${p.sym} ${dt(p.exp)} ${p.strategyLabel}` : `${p.sym} ${dt(p.exp)} ${p.k}${p.call ? 'C' : 'P'}`;
+const sideOf = p => String(p.side || 'BUY').toUpperCase() === 'SELL' ? 'SELL' : 'BUY';
+const tsFmt = new Intl.DateTimeFormat(undefined, {day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit'});
+const fmtTs = ts => { if (!ts) return '--'; const d = new Date(ts); return isNaN(d) ? '--' : tsFmt.format(d); };
+
+function macdCalc(closes) {
+  if (!closes || closes.length < 26) return { macd: 0, signal: 0, hist: 0 };
+  const e12 = emaSeries(closes, 12), e26 = emaSeries(closes, 26);
+  const macdLine = closes.map((_, i) => e12[i] - e26[i]);
+  const sigLine = emaSeries(macdLine, 9);
+  const macd = macdLine.at(-1) || 0, signal = sigLine.at(-1) || 0;
+  return { macd, signal, hist: macd - signal };
+}
+
+function vwapCalc(highs, lows, closes, vols) {
+  if (!closes || !closes.length) return 0;
+  let pv = 0, vTot = 0;
+  for (let i = 0; i < closes.length; i++) {
+    const c = closes[i], h = highs?.[i] ?? c, l = lows?.[i] ?? c, v = vols?.[i] ?? 0;
+    if (c == null || !(v > 0)) continue;
+    pv += ((h + l + c) / 3) * v;
+    vTot += v;
+  }
+  return vTot > 0 ? pv / vTot : closes.at(-1);
+}
+
+function detectIntradayPattern(opens, highs, lows, closes) {
+  const n = closes.length;
+  if (n < 4) return 'Neutral Bar';
+  const o = opens[n - 1], h = highs[n - 1], l = lows[n - 1], c = closes[n - 1];
+  const po = opens[n - 2], ph = highs[n - 2], pl = lows[n - 2], pc = closes[n - 2];
+  const body = Math.abs(c - o);
+  const upperWick = h - Math.max(o, c), lowerWick = Math.min(o, c) - l;
+  if (c > o && pc < po && c >= po && o <= pc) return 'Bullish Engulfing';
+  if (c < o && pc > po && c <= po && o >= pc) return 'Bearish Engulfing';
+  if (lowerWick > body * 2 && upperWick < body * 0.8) return 'Bullish Hammer / Pinbar';
+  if (upperWick > body * 2 && lowerWick < body * 0.8) return 'Shooting Star (Rejection)';
+  if (c > ph && pc > highs[n - 3]) return 'Momentum Breakout';
+  if (c < pl && pc < lows[n - 3]) return 'Support Breakdown';
+  return c >= o ? 'Bullish Continuation' : 'Bearish Pullback';
+}
+
+function computeIntradayTA(res) {
+  const ts = res.timestamp || [], q = res.indicators?.quote?.[0] || {};
+  const off = Number(res.meta?.gmtoffset), gmt = Number.isFinite(off) ? off : -14400;
+  const bars = [];
+  ts.forEach((t, i) => {
+    const c = q.close?.[i];
+    if (c == null || !Number.isFinite(c)) return;
+    bars.push({ t, day: Math.floor((t + gmt) / 86400), o: q.open?.[i] ?? c, h: q.high?.[i] ?? c, l: q.low?.[i] ?? c, c, v: q.volume?.[i] ?? 0 });
+  });
+  if (bars.length < 6) return null;
+  const last = bars.at(-1), session = bars.filter(b => b.day === last.day);
+  const closes = bars.map(b => b.c), mc = macdCalc(closes);
+  const vs = session.map(b => b.v || 0);
+  const recentVol = vs.slice(-3).reduce((a, b) => a + b, 0) / Math.max(1, Math.min(3, vs.length));
+  const baseVol = vs.slice(0, -3).reduce((a, b) => a + b, 0) / Math.max(1, vs.length - 3);
+  const rvol = baseVol ? recentVol / baseVol : 1.0;
+
+  // 14-bar 5m ATR for underlying noise estimation
+  const z = bars.slice(-15);
+  const atr = z.slice(1).reduce((a, b, i) => a + Math.max(b.h - b.l, Math.abs(b.h - z[i].c), Math.abs(b.l - z[i].c)), 0) / Math.max(1, z.length - 1);
+
+  return {
+    lastUnderlying: last.c,
+    e5: ema(closes, 5), e9: ema(closes, 9), e10: ema(closes, 10), e20: ema(closes, 20), e21: ema(closes, 21), e50: ema(closes, 50),
+    vwap: vwapCalc(session.map(b => b.h), session.map(b => b.l), session.map(b => b.c), session.map(b => b.v)),
+    rsi: rsi(closes, 14),
+    macd: mc.macd, macdSig: mc.signal, macdHist: mc.hist,
+    pattern: detectIntradayPattern(bars.map(b => b.o), bars.map(b => b.h), bars.map(b => b.l), closes),
+    barAt: last.t * 1000, sessionBars: session.length, bars: bars.slice(-60),
+    rvol, atr
+  };
+}
+
+// --- All-Regime Sniper Quant Regime Engine ---
+function quantRegime(ta) {
+  if (!ta) return { name: 'Mixed', confidence: 50, adx: 20, bbw: 0.02, pattern: 'Neutral', rvol: 1.0, vwap: 0 };
+  const bars = ta.bars || [], C = bars.map(x => x.c), n = Math.min(20, C.length), w = C.slice(-n);
+  const mean = w.reduce((a, b) => a + b, 0) / Math.max(1, n);
+  const sd = Math.sqrt(w.reduce((a, b) => a + (b - mean) ** 2, 0) / Math.max(1, n));
+  const bbw = mean ? (4 * sd) / mean : 0;
+
+  let tr = 0, plus = 0, minus = 0;
+  for (let i = Math.max(1, bars.length - 14); i < bars.length; i++) {
+    const x = bars[i], z = bars[i - 1];
+    const t = Math.max(x.h - x.l, Math.abs(x.h - z.c), Math.abs(x.l - z.c));
+    const up = x.h - z.h, dn = z.l - x.l;
+    tr += t;
+    if (up > dn && up > 0) plus += up;
+    if (dn > up && dn > 0) minus += dn;
+  }
+  const pdi = tr ? 100 * plus / tr : 0, mdi = tr ? 100 * minus / tr : 0;
+  const adx = pdi + mdi ? 100 * Math.abs(pdi - mdi) / (pdi + mdi) : 0;
+  const S = Number(ta.lastUnderlying || 0);
+  const minAdx = Number(cfg.quantGuard.minAdx || 25);
+
+  let name = 'Sideways';
+  if (adx >= minAdx && S > ta.vwap && ta.e5 > ta.e10 && ta.e10 > ta.e20) {
+    name = 'Uptrend';
+  } else if (adx >= minAdx && S < ta.vwap && ta.e5 < ta.e10 && ta.e10 < ta.e20) {
+    name = 'Downtrend';
+  } else if (adx >= 18) {
+    name = 'Mixed';
+  }
+
+  const pattern = ta.pattern || 'Neutral';
+  const confidence = Math.round(Math.min(100, adx * 1.5 + (Number(ta.rvol || 0) >= 1.5 ? 20 : 0) + (name === 'Uptrend' || name === 'Downtrend' ? 20 : 10)));
+  return { name, confidence, adx, bbw, pattern, rvol: Number(ta.rvol || 0), vwap: ta.vwap };
+}
+
+let marketRegimeNow = { name: 'All-Regime Ready', confidence: 0, basis: 'SPY/QQQ/IWM', updatedAt: 0, counts: {} };
+function updateMarketRegimeFromPicks(rows) {
+  const latest = {};
+  (rows || []).forEach(p => { if (p.quantRegime) latest[p.sym] = p.quantRegime; });
+  const bench = ['SPY','QQQ','IWM'].map(x => latest[x]).filter(Boolean);
+  const src = bench.length ? bench : Object.values(latest);
+  const counts = { Uptrend: 0, Downtrend: 0, Sideways: 0, Mixed: 0 };
+  src.forEach(x => { counts[x.name] = (counts[x.name] || 0) + 1; });
+  const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+  marketRegimeNow = {
+    name: top && top[1] ? top[0] : 'Scanning',
+    confidence: src.length ? Math.round(top[1] / src.length * 100) : 0,
+    basis: bench.length ? 'SPY/QQQ/IWM' : 'Universe',
+    updatedAt: Date.now(),
+    counts
+  };
+}
+function regimeClass(n) {
+  return n === 'Uptrend' ? 'regime-up' : n === 'Downtrend' ? 'regime-down' : n === 'Sideways' ? 'regime-sideways' : 'regime-mixed';
+}
+
+// --- Sniper 80%+ Local Profitable Filter ---
+function evaluateLocalProfitableFilter(geminiPayload) {
+  const c = geminiPayload?.contract || {}, m = geminiPayload?.moomoo_options_data || {};
+  const ta = geminiPayload?.intraday_ta_5m || {}, gf = cfg.geminiFilter || {};
+
+  const isCall = c.type === 'CALL';
+  const spot = Number(c.underlyingPrice || ta.ema5 || 0);
+  const absDelta = Math.abs(Number(m.delta || 0));
+  const spreadPct = Number(m.spreadPct || 0);
+  const oi = Number(m.openInterest || 0);
+  const ivPct = Number(m.impliedVolatility || 0) * 100;
+  const rvol = Number(ta.rvol || 1.5);
+  const macdHist = Number(ta.macdHist || 0);
+  const regime = c.regime || 'Mixed';
+
+  if (spreadPct > (cfg.quantGuard.strictSpreadPct || 5.0)) {
+    return { approved: false, source: 'Sniper Quant', score: 0, reasoning: `Rejected: Spread ${spreadPct.toFixed(1)}% exceeds ${cfg.quantGuard.strictSpreadPct || 5.0}% limit.` };
+  }
+  if (absDelta < 0.42 || absDelta > 0.68) {
+    return { approved: false, source: 'Sniper Quant', score: 0, reasoning: `Rejected: Delta ${absDelta.toFixed(2)} outside 0.42-0.68 sweet spot.` };
+  }
+  if (oi < (gf.minOI || 500)) {
+    return { approved: false, source: 'Sniper Quant', score: 0, reasoning: `Rejected: OI ${oi} below ${gf.minOI || 500}.` };
+  }
+  if (ivPct > (gf.maxIVPct || 90)) {
+    return { approved: false, source: 'Sniper Quant', score: 0, reasoning: `Rejected: IV ${ivPct.toFixed(0)}% exceeds ${gf.maxIVPct || 90}% cap.` };
+  }
+
+  let score = 50;
+  const reasons = [];
+  const vwap = Number(ta.vwap || spot);
+
+  if (regime === 'Sideways' || regime === 'Mixed') {
+    if (isCall && ta.rsi <= 46 && macdHist >= -0.02) {
+      score += 25; reasons.push(`Range Support Reversal Call (RSI ${ta.rsi.toFixed(0)})`);
+    } else if (!isCall && ta.rsi >= 54 && macdHist <= 0.02) {
+      score += 25; reasons.push(`Range Resistance Rejection Put (RSI ${ta.rsi.toFixed(0)})`);
+    } else if (isCall && spot > vwap && macdHist > 0) {
+      score += 20; reasons.push('Mixed Breakout Above VWAP');
+    } else if (!isCall && spot < vwap && macdHist < 0) {
+      score += 20; reasons.push('Mixed Breakdown Below VWAP');
+    } else {
+      return { approved: false, source: 'Sniper Quant', score: 45, reasoning: `Rejected: No clean range edge or breakout in ${regime} regime.` };
+    }
+  } else if (isCall) {
+    if (spot > vwap && ta.ema5 > ta.ema10) { score += 20; reasons.push('VWAP + EMA5>10 Bullish'); }
+    else return { approved: false, source: 'Sniper Quant', score: 35, reasoning: 'Rejected: Call setup below VWAP or EMA5.' };
+    if (macdHist >= 0) { score += 10; reasons.push('MACD Bullish'); }
+    else return { approved: false, source: 'Sniper Quant', score: 40, reasoning: 'Rejected: Negative MACD Hist on Call.' };
+    if (ta.rsi > 72) return { approved: false, source: 'Sniper Quant', score: 45, reasoning: 'Rejected: RSI Overbought (>72).' };
+    score += 10;
+  } else {
+    if (spot < vwap && ta.ema5 < ta.ema10) { score += 20; reasons.push('VWAP + EMA5<10 Bearish'); }
+    else return { approved: false, source: 'Sniper Quant', score: 35, reasoning: 'Rejected: Put setup above VWAP or EMA5.' };
+    if (macdHist <= 0) { score += 10; reasons.push('MACD Bearish'); }
+    else return { approved: false, source: 'Sniper Quant', score: 40, reasoning: 'Rejected: Positive MACD Hist on Put.' };
+    if (ta.rsi < 28) return { approved: false, source: 'Sniper Quant', score: 45, reasoning: 'Rejected: RSI Oversold (<28).' };
+    score += 10;
+  }
+
+  if (rvol >= (cfg.quantGuard.minRvol || 1.5)) {
+    score += 10; reasons.push(`RVOL ${rvol.toFixed(1)}x`);
+  } else if (rvol >= 1.15) {
+    score += 5; reasons.push(`RVOL ${rvol.toFixed(1)}x`);
+  } else {
+    return { approved: false, source: 'Sniper Quant', score: 60, reasoning: `Rejected: RVOL ${rvol.toFixed(2)}x too low.` };
+  }
+
+  const minReq = Number(gf.minConfluencePct || 85);
+  const approved = score >= minReq;
+  return {
+    approved,
+    source: 'Sniper Quant',
+    score,
+    at: Date.now(),
+    reasoning: `${approved ? 'A+ Sniper Approved' : 'Below Sniper Bar'} (${score}%): Δ${absDelta.toFixed(2)} | ${reasons.join(', ')}`
+  };
+}
+
+function buildGeminiPayload(p) {
+  const e = p.evidence || {};
+  const livePx = Number(p.live) > 0 ? Number(p.live) : Number(p.mid || 0);
+  return {
+    contract: {
+      symbol: p.sym, code: p.code, strike: p.k,
+      underlyingPrice: +(e.underlying || 0).toFixed(2),
+      type: p.call ? 'CALL' : 'PUT',
+      mode: p.m || 'intraday',
+      regime: p.quantRegime?.name || 'Mixed'
+    },
+    moomoo_options_data: {
+      impliedVolatility: +(p.iv || 0).toFixed(4),
+      openInterest: p.oi || 0,
+      volume: p.v || 0,
+      bid: p.bid || 0, ask: p.ask || 0,
+      livePrice: livePx,
+      spreadPct: +(e.spreadPct || 0).toFixed(2),
+      delta: +(p.d || 0).toFixed(3),
+      theta: +(p.th || 0).toFixed(4)
+    },
+    intraday_ta_5m: {
+      ema5: +(e.ema5 || 0).toFixed(2),
+      ema10: +(e.ema10 || 0).toFixed(2),
+      ema20: +(e.ema20 || 0).toFixed(2),
+      vwap: +(e.vwap || 0).toFixed(2),
+      rsi: +(e.rsi || p.R || 50).toFixed(1),
+      macdHist: +(e.macdHist || 0).toFixed(4),
+      rvol: +(p.quantRegime?.rvol || 1.5).toFixed(2),
+      pattern: e.pattern5m || 'Neutral'
+    }
+  };
+}
+
+// --- Option Chain Strike Evaluator ---
+function pick(o, S, T, call, m, b, fs, H, ed, ta5m, sym) {
+  const iv = o.impliedVolatility || 0, bid = o.bid || 0, ask = o.ask || 0, mid = (bid + ask) / 2;
+  const lastPx = Number(o.lastPrice) || 0;
+  const live = lastPx > 0 ? lastPx : mid;
+  if (!(bid > 0) || !(ask > 0) || !(iv > 0)) return null;
+  if ((o.openInterest || 0) < AUTO_PICK_POLICY.minOI) return null;
+  if ((o.volume || 0) < AUTO_PICK_POLICY.minVolume) return null;
+  if (live < AUTO_PICK_POLICY.premiumMin || live > AUTO_PICK_POLICY.premiumMax) return null;
+
+  const sp = (ask - bid) / mid;
+  if (sp > AUTO_PICK_POLICY.maxSpreadPct) return null;
+
+  const g = greeks(S, o.strike, T, iv, call);
+  const absD = Math.abs(g.d);
+  if (absD < 0.42 || absD > 0.68) return null;
+
+  const id = m === 'intraday', tg = id ? 0.50 : 0.48;
+  const qr = quantRegime(ta5m);
+  const directionOk = (call && qr.name === 'Uptrend') || (!call && qr.name === 'Downtrend') || (qr.name === 'Sideways' || qr.name === 'Mixed');
+  const patternOk = call ? /Bullish|Breakout|Hammer|Continuation/i.test(qr.pattern) : /Bearish|Breakdown|Shooting|Pullback/i.test(qr.pattern);
+
+  let s = 25 * cl(Math.abs(b) / 70)
+        + 20 * cl(1 - Math.abs(absD - tg) / 0.25)
+        + 20 * cl(1 - sp / 0.08)
+        + 12 * cl((o.volume || 0) / 600)
+        + 10 * cl(1.25 - iv / (H || 0.25))
+        + 8 * fs
+        + (directionOk ? 10 : 0)
+        + (patternOk ? 6 : 0);
+
+  s = s - (ed < (id ? 1 : 10) ? 8 : 0);
+  const score = Math.round(Math.min(99, s));
+  const tier = tierForScore(score);
+  if (!tier) return null;
+
+  const plan = riskPlan(live, tier, id);
+  const distPct = S > 0 ? Math.abs(o.strike - S) / S * 100 : 0;
+
+  return {
+    id: o.contractSymbol, code: o.contractSymbol, k: o.strike, bid, ask, mid, live,
+    src: lastPx > 0 ? 'Yahoo Live' : 'Yahoo Mid', iv, d: g.d, ga: g.ga, th: g.th, ve: g.ve,
+    oi: o.openInterest || 0, v: o.volume || 0, distPct: +distPct.toFixed(2),
+    isATM: distPct <= 1.5, quantRegime: qr, score, tier, earn: ed < (id ? 1 : 10),
+    stop: plan.stop, tgt: plan.tgt,
+    evidence: {
+      underlying: S, dte: T * 365, bias: Math.round(b), fundamental: fs, hv: H,
+      earningsDays: ed, spreadPct: sp * 100, delta: g.d, gamma: g.ga, theta: g.th, vega: g.ve,
+      iv, oi: o.openInterest || 0, volume: o.volume || 0, bid, ask, mid, live, score, tier, mode: m
+    }
+  };
+}
+
+// --- All-Regime Underlying Analyzer ---
+async function analyze(sym) {
+  const E = encodeURIComponent(sym);
+  const [ch, qt, c0, ch5m] = await Promise.all([
+    api('/api/chart?symbol=' + E),
+    api('/api/quote?symbols=' + E),
+    api('/api/chain?symbol=' + E),
+    api('/api/chart?symbol=' + E + '&range=5d&interval=5m').catch(() => null)
+  ]);
+
+  const c = ch.chart.result[0].indicators.quote[0].close.filter(x => x != null);
+  const q = qt.quoteResponse.result[0] || {};
+  const S = c.at(-1);
+  const ta5m = ch5m?.chart?.result?.[0] ? computeIntradayTA(ch5m.chart.result[0]) : null;
+  if (ta5m) taCache5m[sym] = ta5m;
+  const qr = quantRegime(ta5m);
+
+  const e20 = ema(c, 20), e50 = ema(c, 50), R = rsi(c), H = hv(c), chg = q.regularMarketChangePercent || 0;
+  let b = (S > e20 ? 20 : -20) + (e20 > e50 ? 25 : -25) + (S > e50 ? 10 : -10) + (R > 55 ? 15 : R < 45 ? -15 : 0) + (chg > 0.3 ? 15 : chg < -0.3 ? -15 : 0);
+
+  let scanDirections = [];
+  if (qr.name === 'Uptrend' || b >= 25) {
+    scanDirections = [{ call: true, strategyName: 'Long Call (Momentum)', biasVal: Math.max(45, Math.abs(b)) }];
+  } else if (qr.name === 'Downtrend' || b <= -25) {
+    scanDirections = [{ call: false, strategyName: 'Long Put (Breakdown)', biasVal: Math.max(45, Math.abs(b)) }];
+  } else {
+    const r5m = ta5m?.rsi ?? R;
+    if (r5m <= 48) scanDirections.push({ call: true, strategyName: 'Range Support Call', biasVal: 42 });
+    if (r5m >= 52) scanDirections.push({ call: false, strategyName: 'Range Resistance Put', biasVal: 42 });
+    if (!scanDirections.length) scanDirections.push({ call: true, strategyName: 'Breakout Call Leg', biasVal: 40 });
+  }
+
+  const ed = q.earningsTimestamp ? (q.earningsTimestamp * 1000 - Date.now()) / 864e5 : 99;
+  const dte = e => (e * 1000 + 864e5 - Date.now()) / 864e5;
+  const ex = c0.optionChain.result[0].expirationDates;
+  const out = [];
+
+  for (const m of ['intraday', 'swing']) {
+    const e = ex.find(e => m === 'intraday' ? dte(e) > 0 && dte(e) <= 3 : dte(e) >= 5 && dte(e) <= 14);
+    if (!e) continue;
+    const res = (await api(`/api/chain?symbol=${E}&date=${e}`)).optionChain.result[0];
+    const op = res.options[0];
+    const S2 = res.quote.regularMarketPrice || S;
+
+    for (const dir of scanDirections) {
+      const chainSide = dir.call ? op.calls : op.puts;
+      const fs = 0.75;
+      const qualified = chainSide
+        .map(o => pick(o, S2, Math.max(dte(e), 0.05) / 365, dir.call, m, dir.biasVal, fs, H, ed, ta5m, sym))
+        .filter(Boolean)
+        .map(p => {
+          const enriched = {
+            ...p,
+            sym, m, call: dir.call, exp: e, b: Math.round(dir.biasVal), R: Math.round(ta5m?.rsi ?? R),
+            ta5m,
+            strategyName: dir.strategyName,
+            evidence: {
+              ...p.evidence,
+              symbol: sym, expiry: e, rsi: ta5m?.rsi ?? R,
+              ema5: ta5m?.e5 ?? S2, ema10: ta5m?.e10 ?? S2, ema20: ta5m?.e20 ?? e20,
+              vwap: ta5m?.vwap ?? S2, macdHist: ta5m?.macdHist ?? 0,
+              pattern5m: ta5m?.pattern ?? 'Neutral', optionType: dir.call ? 'CALL' : 'PUT'
+            }
+          };
+          enriched.gemini = evaluateLocalProfitableFilter(buildGeminiPayload(enriched));
+          cfg.geminiDecisions[p.code] = enriched.gemini;
+          return enriched;
+        });
+      out.push(...qualified);
+    }
+
+    // Long Straddle candidate when regime is Mixed/Sideways
+    if ((qr.name === 'Sideways' || qr.name === 'Mixed') && m === 'intraday') {
+      const atmCall = [...(op.calls || [])].sort((a, b) => Math.abs(a.strike - S2) - Math.abs(b.strike - S2))[0];
+      const atmPut = [...(op.puts || [])].sort((a, b) => Math.abs(a.strike - S2) - Math.abs(b.strike - S2))[0];
+      if (atmCall && atmPut && atmCall.bid > 0 && atmCall.ask > 0 && atmPut.bid > 0 && atmPut.ask > 0) {
+        const cMid = (atmCall.bid + atmCall.ask) / 2;
+        const pMid = (atmPut.bid + atmPut.ask) / 2;
+        const comboLive = +(cMid + pMid).toFixed(2);
+        const comboSp = ((atmCall.ask - atmCall.bid) + (atmPut.ask - atmPut.bid)) / comboLive;
+        if (comboLive >= 0.80 && comboLive <= 8.00 && comboSp <= 0.08 && (atmCall.openInterest || 0) >= 300 && (atmPut.openInterest || 0) >= 300) {
+          const plan = riskPlan(comboLive, 'Strict', true);
+          strategyPicks.push({
+            id: `STRAD-${atmCall.contractSymbol}-${atmPut.contractSymbol}`,
+            code: `${atmCall.contractSymbol}+${atmPut.contractSymbol}`,
+            callCode: atmCall.contractSymbol,
+            putCode: atmPut.contractSymbol,
+            sym, m: 'intraday', exp: e, k: atmCall.strike,
+            isMultiLeg: true,
+            strategyLabel: `${atmCall.strike}C + ${atmPut.strike}P Straddle`,
+            strategyName: 'Long Straddle (Volatility Breakout)',
+            regime: qr.name,
+            quantRegime: qr,
+            bid: +(atmCall.bid + atmPut.bid).toFixed(2),
+            ask: +(atmCall.ask + atmPut.ask).toFixed(2),
+            mid: comboLive,
+            live: comboLive,
+            iv: +((((atmCall.impliedVolatility || 0.25) + (atmPut.impliedVolatility || 0.25)) / 2)).toFixed(4),
+            d: 0.02,
+            th: -0.08,
+            oi: Math.min(atmCall.openInterest || 0, atmPut.openInterest || 0),
+            v: Math.min(atmCall.volume || 0, atmPut.volume || 0),
+            score: 86,
+            tier: 'Strict',
+            stop: plan.stop,
+            tgt: plan.tgt,
+            src: 'Yahoo Live'
+          });
+        }
+      }
+    }
+  }
+  return out;
+}
+
+function buildStrategyPicksFromQualified() {
+  const singleLegStrategies = picks
+    .filter(p => !p.gemini || p.gemini.approved)
+    .map(p => ({
+      ...p,
+      isMultiLeg: false,
+      strategyLabel: `${p.k}${p.call ? 'C' : 'P'} (${p.strategyName})`,
+      regime: p.quantRegime?.name || 'Mixed'
+    }));
+
+  const combined = [...strategyPicks, ...singleLegStrategies];
+  const seen = new Set();
+  strategyPicks = combined.filter(item => {
+    if (seen.has(item.code)) return false;
+    seen.add(item.code);
+    return true;
+  }).sort((a, b) => b.score - a.score);
+}
+
+// --- Paper Order Execution ---
+function isAutoPickEligible(p) { return !!(p && p.tier && p.tier === tierForScore(p.score)); }
+
+function createPaperOrder(p, source = 'Manual Auto-Picks') {
+  if (!isAutoPickEligible(p)) return { ok: false, reason: 'Below Sniper threshold' };
+  if (cfg.pos.some(x => x.code === p.code)) return { ok: false, reason: 'Already open' };
+
+  const isAuto = source === 'Auto-Picks Sniper';
+  if (isAuto) {
+    if (cfg.rthOnly !== false && marketPhase().code !== 'open') return { ok: false, retry: true, reason: 'RTH market closed' };
+    if (cfg.pos.length >= (Number(cfg.maxOpenPos) || 3)) return { ok: false, retry: true, reason: 'Max open positions reached' };
+    if (cfg.onePerSymbol !== false && cfg.pos.some(x => x.sym === p.sym)) return { ok: false, retry: true, reason: `Position open for ${p.sym}` };
+  }
+
+  const entry = +(Number(p.live) > 0 ? p.live : p.mid).toFixed(2);
+  const plan = riskPlan(entry, p.tier, (p.m || 'intraday') === 'intraday');
+  cfg.pos.push({
+    id: Date.now() + cfg.pos.length,
+    sym: p.sym, code: p.code, k: p.k, call: p.call, side: 'BUY', exp: p.exp,
+    qty: 1, entry, live: entry, src: p.src || 'Auto-Picks',
+    stop: plan.stop, initialStop: plan.stop, tgt: plan.tgt,
+    autoClose: true, m: p.m, rr: tierRR(p.tier), tier: p.tier, score: p.score,
+    autoEntered: isAuto, entrySource: source, openedAt: Date.now(),
+    highWater: entry, profitStage: 0
+  });
+  return { ok: true };
+}
+
+function createStrategyPaperOrder(sp, source = 'Auto-picks Strategy') {
+  if (!sp) return { ok: false, reason: 'Invalid strategy' };
+  if (cfg.stratPos.some(x => x.code === sp.code)) return { ok: false, reason: 'Strategy already open' };
+
+  const isAuto = source === 'Auto-picks Strategy';
+  if (isAuto) {
+    if (cfg.rthOnly !== false && marketPhase().code !== 'open') return { ok: false, retry: true, reason: 'RTH market closed' };
+    if (cfg.stratPos.length >= (Number(cfg.maxOpenPos) || 3)) return { ok: false, retry: true, reason: 'Max strategy positions reached' };
+  }
+
+  const entry = +(Number(sp.live) > 0 ? sp.live : sp.mid).toFixed(2);
+  const plan = riskPlan(entry, sp.tier || 'Strict', (sp.m || 'intraday') === 'intraday');
+  const legMultiplier = sp.isMultiLeg ? 2 : 1;
+
+  cfg.stratPos.push({
+    id: Date.now() + cfg.stratPos.length + 1000,
+    sym: sp.sym, code: sp.code, callCode: sp.callCode || null, putCode: sp.putCode || null,
+    isMultiLeg: !!sp.isMultiLeg, legMultiplier,
+    strategyName: sp.strategyName || (sp.call ? 'Long Call' : 'Long Put'),
+    strategyLabel: sp.strategyLabel || lbl(sp),
+    regime: sp.regime || sp.quantRegime?.name || 'Mixed',
+    k: sp.k, call: sp.call, side: 'BUY', exp: sp.exp,
+    qty: 1, entry, live: entry, src: sp.src || 'Strategy Engine',
+    stop: plan.stop, initialStop: plan.stop, tgt: plan.tgt,
+    autoClose: true, m: sp.m || 'intraday', rr: tierRR(sp.tier || 'Strict'),
+    tier: sp.tier || 'Strict', score: sp.score || 85,
+    autoEntered: isAuto, openedAt: Date.now(), highWater: entry, profitStage: 0
+  });
+  return { ok: true };
+}
+
+async function executeEligibleAutoPicks() {
+  const eligible = picks.filter(p => isAutoPickEligible(p) && (!p.gemini || p.gemini.approved));
+  let added = 0, stratAdded = 0, waiting = 0, waitReason = '';
+
+  for (const p of eligible) {
+    if (cfg.autoPickExecuted[p.code]) continue;
+    const res = createPaperOrder(p, 'Auto-Picks Sniper');
+    if (res.ok) { added++; cfg.autoPickExecuted[p.code] = Date.now(); }
+    else if (res.retry) { waiting++; waitReason = res.reason; }
+  }
+
+  if (cfg.stratAutoRoute !== false) {
+    for (const sp of strategyPicks) {
+      if (cfg.stratAutoExecuted[sp.code]) continue;
+      const sRes = createStrategyPaperOrder(sp, 'Auto-picks Strategy');
+      if (sRes.ok) { stratAdded++; cfg.stratAutoExecuted[sp.code] = Date.now(); }
+      else if (sRes.retry) { waiting++; waitReason = sRes.reason; }
+    }
+  }
+
+  save();
+  autoTradeMsg = `Sniper: ${added} single-leg · ${stratAdded} strategy added` + (waiting ? ` · Waiting (${waitReason})` : '');
+  return added + stratAdded;
+}
+
+// --- Scanner Loop ---
+function scannerCanRun() { return !cfg.scannerPaused && !document.hidden; }
+window.toggleScanner = function() {
+  cfg.scannerPaused = !cfg.scannerPaused;
+  save();
+  render();
+  if (!cfg.scannerPaused && !busy) setTimeout(() => { if (scannerCanRun()) scan(); }, 150);
+};
+
+async function scan(manual = false) {
+  if (busy) return;
+  if (cfg.scannerPaused && !manual) { msg = 'Scanner paused'; render(); return; }
+  busy = true;
+  picks = [];
+  strategyPicks = [];
+  msg = 'Scanning all regimes (Uptrend / Downtrend / Sideways)...';
+  if (tab === 'picks' || tab === 'strat') render();
+
+  for (const s of [...new Set(cfg.uni.split(',').map(x => x.trim().toUpperCase()).filter(Boolean))]) {
+    msg = `Sniper scanning ${s}…`;
+    if (tab === 'picks' || tab === 'strat') render();
+    try {
+      picks.push(...await analyze(s));
+    } catch (e) {
+      console.warn('Scan error for ' + s, e.message);
+    }
+  }
+
+  picks.sort((a, b) => b.score - a.score);
+  buildStrategyPicksFromQualified();
+  updateMarketRegimeFromPicks([...picks, ...strategyPicks]);
+  busy = false;
+
+  const added = await executeEligibleAutoPicks();
+  msg = (picks.length || strategyPicks.length)
+    ? `Synced ${new Date().toLocaleTimeString()} · ${picks.length} Sniper picks · ${strategyPicks.length} Strategy setups · ${added} auto-routed`
+    : 'No A+ Sniper setups met 80%+ confluence right now (or bridge offline).';
+  render();
+}
+
+// --- Profit Shield & Auto-Close Engine ---
+function updateProfitShield(p) {
+  const risk = Math.max(0.01, p.entry - Number(p.initialStop || p.stop));
+  const r = (p.live - p.entry) / risk;
+  p.highWater = Math.max(Number(p.highWater || p.entry), p.live);
+  let sl = Number(p.stop), stage = p.profitStage || 0;
+  if (r >= 0.6 && stage < 1) { sl = Math.max(sl, p.entry + risk * 0.10); stage = 1; }
+  if (r >= 1.0 && stage < 2) { sl = Math.max(sl, p.entry + risk * 0.40); stage = 2; }
+  if (r >= 1.5) {
+    const trail = p.highWater - Math.max(risk * 0.30, (p.highWater - p.entry) * 0.35);
+    sl = Math.max(sl, trail, p.entry + risk * 0.80);
+    stage = 3;
+  }
+  if (sl > p.stop) { p.stop = +sl.toFixed(2); p.profitStage = stage; }
+}
+
+function closePos(i, reason = 'Manual close') {
+  const p = cfg.pos[i];
+  if (!p) return;
+  const exitPx = Number(p.live) || p.entry;
+  const feeTotal = 2 * cfg.fee * p.qty;
+  const realizedPL = (exitPx - p.entry) * 100 * p.qty - feeTotal;
+  cfg.closed.unshift({
+    ...p, exitPrice: exitPx, realizedPL, feeTotal, closedAt: Date.now(), closeReason: reason, autoClosed: reason !== 'Manual close'
+  });
+  cfg.pos.splice(i, 1);
+  save();
+  render();
+}
+
+function closeStratPos(i, reason = 'Manual close') {
+  const p = cfg.stratPos[i];
+  if (!p) return;
+  const exitPx = Number(p.live) || p.entry;
+  const mult = p.legMultiplier || (p.isMultiLeg ? 2 : 1);
+  const feeTotal = 2 * cfg.fee * p.qty * mult;
+  const realizedPL = (exitPx - p.entry) * 100 * p.qty - feeTotal;
+  cfg.stratClosed.unshift({
+    ...p, exitPrice: exitPx, realizedPL, feeTotal, closedAt: Date.now(), closeReason: reason, autoClosed: reason !== 'Manual close'
+  });
+  cfg.stratPos.splice(i, 1);
+  save();
+  render();
+}
+
+let quoteRefreshBusy = false;
+async function refresh() {
+  if (quoteRefreshBusy || document.hidden) return;
+  if (!cfg.pos.length && !cfg.stratPos.length && !cfg.livePos.length) return;
+  quoteRefreshBusy = true;
+  try {
+    for (const p of cfg.pos) {
+      try {
+        const q = (await api('/api/moomoo/quote?code=' + encodeURIComponent(p.code))).quote;
+        if (q && q.last > 0) { p.live = q.last; p.src = 'Moomoo'; }
+      } catch (e) {}
+    }
+    for (const p of cfg.stratPos) {
+      try {
+        if (p.isMultiLeg && p.callCode && p.putCode) {
+          const [qc, qp] = await Promise.all([
+            api('/api/moomoo/quote?code=' + encodeURIComponent(p.callCode)).catch(() => null),
+            api('/api/moomoo/quote?code=' + encodeURIComponent(p.putCode)).catch(() => null)
+          ]);
+          if (qc?.quote?.last > 0 && qp?.quote?.last > 0) {
+            p.live = +(qc.quote.last + qp.quote.last).toFixed(2);
+            p.src = 'Moomoo Combo';
+          }
+        } else {
+          const q = (await api('/api/moomoo/quote?code=' + encodeURIComponent(p.code))).quote;
+          if (q && q.last > 0) { p.live = q.last; p.src = 'Moomoo'; }
+        }
+      } catch (e) {}
+    }
+    for (const p of (cfg.livePos || [])) {
+      try {
+        if (!p.exp || !p.sym) {
+          const c = parseContractInput(p.code);
+          if (c) { p.sym = p.sym || c.root; p.exp = p.exp || c.expMidTs; p.code = c.occ; }
+        }
+        const q = (await api('/api/moomoo/quote?code=' + encodeURIComponent(p.code))).quote;
+        if (q && q.last > 0) {
+          p.live = q.last;
+          p.src = 'Moomoo';
+          p.optionQuote = { bid:Number(q.bid||0), ask:Number(q.ask||0), oi:Number(q.oi||0), iv:Number(q.iv||0), delta:Number(q.delta||0), theta:Number(q.theta||0), volume:Number(q.volume||0), at:Date.now() };
+          if (p.live > (p.highestSeen || p.entry)) p.highestSeen = p.live;
+          evaluateLiveStrikeDecision(p);
+        } else if (p.sym && p.exp) {
+          const o = (await api(`/api/chain?symbol=${encodeURIComponent(p.sym)}&date=${p.exp}`)).optionChain.result[0]?.options?.[0];
+          if (o) {
+            const c = [...(o.calls || []), ...(o.puts || [])].find(x => x.contractSymbol === p.code);
+            if (c) {
+              const b = c.bid || 0, a = c.ask || 0, l = c.lastPrice || 0;
+              p.live = l > 0 ? l : ((b > 0 && a > 0) ? +((b + a) / 2).toFixed(2) : p.live);
+              p.src = l > 0 ? 'Yahoo Live' : 'Yahoo Mid';
+              const occ = parseOccMeta(p.code);
+              const T = Math.max(0.05, occ ? occ.dte : 3) / 365;
+              const S = Number(p.ta?.lastUnderlying || occ?.strike || 100);
+              const g = greeks(S, p.k || occ?.strike || S, T, Number(c.impliedVolatility || 0.35), p.call !== false);
+              p.optionQuote = { bid:b, ask:a, oi:Number(c.openInterest||0), iv:Number(c.impliedVolatility||0), delta:g.d, theta:g.th, volume:Number(c.volume||0), at:Date.now() };
+              if (p.live > (p.highestSeen || p.entry)) p.highestSeen = p.live;
+              evaluateLiveStrikeDecision(p);
+            }
+          }
+        }
+      } catch (e) {}
+    }
+
+    const isRthOpen = marketPhase().code === 'open';
+    const etNow = etParts();
+    const closeMins = marketCalendar(etNow.y).early.has(ymd(etNow)) ? 780 : 960;
+    const nowMins = etNow.h * 60 + etNow.min;
+    const isEodWindow = isRthOpen && nowMins >= (closeMins - 5) && nowMins < closeMins;
+
+    const exits = [];
+    cfg.pos.forEach((p, i) => {
+      if (p.autoClose === false || !(p.live > 0)) return;
+      if (cfg.rthOnly !== false && !isRthOpen) return;
+      updateProfitShield(p);
+      if (p.tgt > 0 && p.live >= p.tgt) exits.push({ i, reason: 'Auto-close: Target hit' });
+      else if (p.stop > 0 && p.live <= p.stop) exits.push({ i, reason: p.profitStage ? 'Auto-close: Profit Shield hit' : 'Auto-close: Stop loss hit' });
+      else if (cfg.eodSquareOff !== false && (p.m || 'intraday') === 'intraday' && isEodWindow) exits.push({ i, reason: 'Auto-close: EOD square-off' });
+    });
+    exits.sort((a, b) => b.i - a.i).forEach(x => closePos(x.i, x.reason));
+
+    const stratExits = [];
+    cfg.stratPos.forEach((p, i) => {
+      if (p.autoClose === false || !(p.live > 0)) return;
+      if (cfg.rthOnly !== false && !isRthOpen) return;
+      updateProfitShield(p);
+      if (p.tgt > 0 && p.live >= p.tgt) stratExits.push({ i, reason: 'Auto-close: Strategy Target hit' });
+      else if (p.stop > 0 && p.live <= p.stop) stratExits.push({ i, reason: p.profitStage ? 'Auto-close: Profit Shield hit' : 'Auto-close: Stop loss hit' });
+      else if (cfg.eodSquareOff !== false && (p.m || 'intraday') === 'intraday' && isEodWindow) stratExits.push({ i, reason: 'Auto-close: EOD square-off' });
+    });
+    stratExits.sort((a, b) => b.i - a.i).forEach(x => closeStratPos(x.i, x.reason));
+
+    save();
+    if (tab === 'paper' || tab === 'stratPaper') render();
+    if (tab === 'live') renderLiveMonitor();
+  } finally { quoteRefreshBusy = false; }
+}
+
+// --- Auto-Picks View ---
+function regimeStrip() {
+  const m = marketRegimeNow, c = m.counts || {};
+  return `<div class="regime-strip">
+    <div class="regime-card">
+      <div class="rk">Active Market Regime</div>
+      <div class="rv ${regimeClass(m.name)}">${m.name}${m.confidence ? ' · ' + m.confidence + '%' : ''}</div>
+      <div class="quality-note">All-Regime Sniper Active (Up / Down / Sideways)</div>
+    </div>
+    <div class="regime-card">
+      <div class="rk">Regime Distribution</div>
+      <div class="rv">↑ ${c.Uptrend || 0} · ↓ ${c.Downtrend || 0} · ↔ ${c.Sideways || 0} · Mixed ${c.Mixed || 0}</div>
+    </div>
+    <div class="regime-card">
+      <div class="rk">Sniper 80%+ Quality Bar</div>
+      <div class="rv">ADX ≥ ${cfg.quantGuard.minAdx} · RVOL ≥ ${cfg.quantGuard.minRvol}x</div>
+      <div class="quality-note">Spread ≤ ${cfg.quantGuard.strictSpreadPct}% · Delta 0.42–0.68 · OI ≥ ${AUTO_PICK_POLICY.minOI}</div>
+    </div>
+  </div>`;
+}
+
+function rPicks() {
+  const L = picks.filter(p => p.m === mode && (tier === 'All' || p.tier === tier));
+  return `
+  ${regimeStrip()}
+  <div class="row" style="justify-content:space-between;">
+    <div class="row" style="margin:0">
+      ${[['intraday','Intraday (0-3 DTE)'],['swing','Swing (5-14 DTE)']].map(([m,t])=>`<button type="button" class="btn ${mode===m?'on':''}" onclick="setMode('${m}')">${t}</button>`).join('')}
+      <span class="mu" style="margin-left:8px;">Tier:</span>
+      ${['All','Strict','Balanced'].map(t=>`<button type="button" class="btn ${tier===t?'on':''}" onclick="setTier('${t}')">${t}</button>`).join('')}
+    </div>
+    <div class="row" style="margin:0">
+      <button type="button" class="btn pri" onclick="scan(true)">⚡ Scan Now</button>
+      <button type="button" class="btn" onclick="refresh()">↻ Sync Quotes</button>
+      <button type="button" class="btn scanner-toggle ${cfg.scannerPaused?'paused':'running'}" onclick="toggleScanner()">${cfg.scannerPaused?'▶ Resume Scanner':'⏸ Pause Scanner'}</button>
+      <span class="mu mono" style="font-size:11px;">${msg}</span>
+    </div>
+  </div>
+  <div class="row" style="justify-content:space-between;padding:9px 12px;background:var(--blue-bg);border:1px solid rgba(59,130,246,.25);border-radius:7px;">
+    <span><b>Sniper 80%+ Engine</b> · All Regimes Enabled (Uptrend Calls, Downtrend Puts, Sideways Reversals) · SL ${cfg.stopPct}% · Strict ${AUTO_PICK_POLICY.strictMin}+</span>
+    <span class="mono mu">${autoTradeMsg}</span>
+  </div>
+  <div class="wrap"><table>
+    <thead>
+      <tr>
+        <th>Underlying &amp; Strike</th>
+        <th>Regime</th>
+        <th>Live (Mid)</th>
+        <th>Bid / Ask</th>
+        <th>Delta</th>
+        <th>IV</th>
+        <th>OI / Vol</th>
+        <th>Sniper Tier</th>
+        <th>Stop → Target</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${L.map(p => {
+        const livePx = Number(p.live) > 0 ? Number(p.live) : Number(p.mid);
+        return `<tr>
+          <td>
+            <div class="sym-name">${lbl(p)} <span class="tag Strategy" style="font-size:10px">${escapeHtml(p.strategyName || '')}</span></div>
+            <div class="sym-sub mono">${p.code}</div>
+            ${p.gemini ? `<div class="sym-sub ${p.gemini.approved ? 'g' : 'r'}">${escapeHtml(p.gemini.reasoning)}</div>` : ''}
+          </td>
+          <td class="mono ${regimeClass(p.quantRegime?.name)}">${p.quantRegime?.name || '--'}</td>
+          <td class="mono"><b>${livePx.toFixed(2)}</b> <span class="mu">(${p.mid.toFixed(2)})</span></td>
+          <td class="mono mu">${p.bid.toFixed(2)} / ${p.ask.toFixed(2)}</td>
+          <td class="mono">${p.d.toFixed(2)}</td>
+          <td class="mono">${(p.iv * 100).toFixed(0)}%</td>
+          <td class="mono mu">${p.oi} / ${p.v}</td>
+          <td><span class="tag ${p.tier}">${p.tier} ${p.score}</span></td>
+          <td class="mono"><span class="r">${p.stop.toFixed(2)}</span> → <span class="g">${p.tgt.toFixed(2)}</span></td>
+          <td>
+            <div class="actions-cell">
+              <button type="button" class="btn sm pri" onclick="add('${p.code}')">+ Paper</button>
+              <button type="button" class="btn sm" onclick="addStrat('${p.code}')">+ Strategy</button>
+              <button type="button" class="btn sm" onclick="sendPickToLive('${p.code}')">+ LiveStrikes</button>
+              <button type="button" class="btn sm" onclick="openMoomooChart('${p.code}')">Chart ↗</button>
+            </div>
+          </td>
+        </tr>`;
+      }).join('') || `<tr><td colspan="10" class="mu" style="text-align:center;padding:32px;">${busy ? 'Scanning option chains across all market regimes...' : 'No A+ Sniper strikes matched yet. Click <b>⚡ Scan Now</b>.'}</td></tr>`}
+    </tbody>
+  </table></div>`;
+}
+
+window.sendPickToLive = function(code) {
+  const p = picks.find(x => x.code === code);
+  if (!p) return;
+  const livePx = Number(p.live) > 0 ? Number(p.live) : Number(p.mid);
+  lsDraft.code = p.code;
+  lsDraft.entry = +livePx.toFixed(2);
+  lsDraft.qty = lsFitQty(lsDraft.entry, lsAvailableCash(), lsDraft.maxRisk || 25, lsDraft.stopPct || 20);
+  setTab('live');
+};
+
+window.add = function(code) {
+  const p = picks.find(x => x.code === code);
+  if (!p) return;
+  const res = createPaperOrder(p, 'Manual Auto-Picks');
+  if (!res.ok) { alert(res.reason); return; }
+  cfg.autoPickExecuted[code] = Date.now();
+  save();
+  setTab('paper');
+};
+
+window.addStrat = function(code) {
+  const sp = strategyPicks.find(x => x.code === code) || picks.find(x => x.code === code);
+  if (!sp) return;
+  const res = createStrategyPaperOrder(sp, 'Manual Strategy Pick');
+  if (!res.ok) { alert(res.reason); return; }
+  cfg.stratAutoExecuted[code] = Date.now();
+  save();
+  setTab('stratPaper');
+};
+
+window.toggleStratAutoRoute = function() {
+  cfg.stratAutoRoute = cfg.stratAutoRoute === false;
+  save();
+  render();
+};
+
+// --- Dedicated Tab 1: Auto-picks Strategy ---
+function rStrat() {
+  const filtered = strategyPicks.filter(sp => regimeFilter === 'All' || (sp.regime || '').toLowerCase() === regimeFilter.toLowerCase());
+  return `
+  <div class="paper-intro">
+    <div>
+      <h2>🧭 Auto-picks Strategy (All-Regime Call &amp; Put Buyer)</h2>
+      <div class="mu">Automatically maps market regime (<b>Uptrend</b> → Long Call, <b>Downtrend</b> → Long Put, <b>Mixed/Sideways</b> → Range Reversal Call/Put or Volatility Straddle) and routes qualified setups to <b>Paper trading for Strategy</b>.</div>
+    </div>
+    <div class="paper-toolbar">
+      <button type="button" class="btn ${cfg.stratAutoRoute !== false ? 'on' : ''}" onclick="toggleStratAutoRoute()">
+        ${cfg.stratAutoRoute !== false ? '⚡ Auto-Route to Strategy Paper: ON' : '⏸ Auto-Route to Strategy Paper: OFF'}
+      </button>
+      <button type="button" class="btn pri" onclick="scan(true)">⚡ Scan Regimes &amp; Strategies</button>
+    </div>
+  </div>
+  ${regimeStrip()}
+  <div class="row">
+    <span class="mu">Filter by Market Regime:</span>
+    ${['All','Uptrend','Downtrend','Sideways','Mixed'].map(r => `<button type="button" class="btn ${regimeFilter===r?'on':''}" onclick="setRegimeFilter('${r}')">${r}</button>`).join('')}
+  </div>
+  <div class="wrap"><table>
+    <thead>
+      <tr>
+        <th>Underlying &amp; Strategy</th>
+        <th>Market Regime</th>
+        <th>Contract / Legs</th>
+        <th>Entry / Live ($)</th>
+        <th>Delta / IV</th>
+        <th>OI / Vol</th>
+        <th>Sniper Score</th>
+        <th>Stop → Target</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${filtered.map(sp => {
+        const livePx = Number(sp.live) > 0 ? Number(sp.live) : Number(sp.mid);
+        return `<tr>
+          <td>
+            <div class="sym-name">${sp.sym} · <span class="tag Strategy">${escapeHtml(sp.strategyName)}</span></div>
+            <div class="sym-sub">${sp.isMultiLeg ? 'Multi-Leg Volatility Breakout (Call + Put)' : 'Single-Leg Directional Option Buy'}</div>
+          </td>
+          <td class="mono ${regimeClass(sp.regime)}"><b>${sp.regime}</b></td>
+          <td class="mono">${escapeHtml(sp.strategyLabel)}<div class="sym-sub">${sp.code}</div></td>
+          <td class="mono"><b>$${livePx.toFixed(2)}</b> <span class="mu">(Bid $${sp.bid.toFixed(2)} / Ask $${sp.ask.toFixed(2)})</span></td>
+          <td class="mono">Δ ${Number(sp.d || 0).toFixed(2)} · ${(Number(sp.iv || 0) * 100).toFixed(0)}%</td>
+          <td class="mono mu">${sp.oi} / ${sp.v}</td>
+          <td><span class="tag ${sp.tier || 'Strict'}">${sp.tier || 'Strict'} ${sp.score}</span></td>
+          <td class="mono"><span class="r">$${sp.stop.toFixed(2)}</span> → <span class="g">$${sp.tgt.toFixed(2)}</span></td>
+          <td>
+            <div class="actions-cell">
+              <button type="button" class="btn sm pri" onclick="addStrat('${sp.code}')">+ Paper Strategy</button>
+              ${!sp.isMultiLeg ? `<button type="button" class="btn sm" onclick="openMoomooChart('${sp.code}')">Chart ↗</button>` : ''}
+            </div>
+          </td>
+        </tr>`;
+      }).join('') || `<tr><td colspan="9" class="mu" style="text-align:center;padding:32px;">No strategy setups queued yet. Click <b>⚡ Scan Regimes &amp; Strategies</b> to analyze Uptrend, Downtrend, and Sideways markets.</td></tr>`}
+    </tbody>
+  </table></div>`;
+}
+
+// --- Dedicated Tab 2: Paper trading for Strategy ---
+function renderPaperDesk(opts) {
+  const { title, subtitle, list, closedList, isStrategy } = opts;
+  let activeTot = 0, closedTot = 0, totalFees = 0;
+
+  const activeRows = list.map((p, i) => {
+    const mult = p.legMultiplier || (p.isMultiLeg ? 2 : 1);
+    const fee = 2 * cfg.fee * p.qty * mult;
+    const pl = (p.live - p.entry) * 100 * p.qty - fee;
+    const capital = p.entry * 100 * p.qty;
+    const plPct = capital > 0 ? (pl / capital) * 100 : 0;
+    activeTot += pl;
+    totalFees += fee;
+
+    const editFn = isStrategy ? 'edStrat' : 'ed';
+    const rrFn = isStrategy ? 'setStratRR' : 'setRR';
+    const autoFn = isStrategy ? 'toggleStratAutoClose' : 'toggleAutoClose';
+    const closeFn = isStrategy ? 'closeStratPos' : 'closePos';
+    const delFn = isStrategy ? `cfg.stratPos.splice(${i},1);save();render()` : `cfg.pos.splice(${i},1);save();render()`;
+
+    return `<tr>
+      <td data-label="Contract / Strategy">
+        <div class="sym-name">${lbl(p)} ${isStrategy ? `<span class="tag Strategy">${escapeHtml(p.strategyName || 'Strategy')}</span>` : ''}</div>
+        <div class="sym-sub mono">${p.code} ${p.regime ? `· Regime: <b>${p.regime}</b>` : ''}</div>
+        <div class="sym-sub mono">Opened ${fmtTs(p.openedAt || p.id)}</div>
+      </td>
+      <td data-label="Side"><span class="tag Buy">BUY</span></td>
+      <td data-label="Tier"><span class="tag ${p.tier || 'Strict'}">${p.tier || 'Strict'} ${p.score || 85}</span></td>
+      <td data-label="Qty"><input type="number" min="1" value="${p.qty}" onchange="${editFn}(${i},'qty',this.value)"></td>
+      <td data-label="Entry ($)"><input type="number" step="0.01" value="${p.entry}" onchange="${editFn}(${i},'entry',this.value)"></td>
+      <td data-label="Stop → Target · R:R">
+        <input type="number" step="0.01" value="${p.stop}" onchange="${editFn}(${i},'stop',this.value)">
+        <span class="mu">→</span>
+        <input type="number" step="0.01" value="${p.tgt}" onchange="${editFn}(${i},'tgt',this.value)">
+        <select onchange="${rrFn}(${i},this.value)" style="margin-left:4px;">
+          <option value="1" ${+(p.rr || 1.5) === 1 ? 'selected' : ''}>1:1</option>
+          <option value="1.5" ${+(p.rr || 1.5) === 1.5 ? 'selected' : ''}>1:1.5</option>
+          <option value="2" ${+(p.rr || 1.5) === 2 ? 'selected' : ''}>1:2</option>
+        </select>
+      </td>
+      <td data-label="Live Price" class="mono">
+        <b>${Number(p.live).toFixed(2)}</b> <span class="mu" style="font-size:10px">[${p.src || 'Live'}]</span>
+      </td>
+      <td data-label="Auto-Close">
+        <button type="button" class="btn sm ${p.autoClose !== false ? 'on' : ''}" onclick="${autoFn}(${i})">
+          ${p.autoClose !== false ? 'Auto-Close: ON' : 'Auto-Close: OFF'}
+        </button>
+      </td>
+      <td data-label="Net P&L (After Fee)" class="mono ${pl >= 0 ? 'g' : 'r'}" style="font-weight:700">
+        ${pl >= 0 ? '+' : ''}$${pl.toFixed(2)} (${plPct >= 0 ? '+' : ''}${plPct.toFixed(1)}%)
+      </td>
+      <td data-label="Fees" class="mono mu">$${fee.toFixed(2)}</td>
+      <td data-label="Actions">
+        <div class="actions-cell">
+          <button type="button" class="btn sm pri" onclick="${closeFn}(${i})">Close</button>
+          ${!p.isMultiLeg ? `<button type="button" class="btn sm" onclick="openMoomooChart('${p.code}')">Chart ↗</button>` : ''}
+          <button type="button" class="btn sm danger" onclick="${delFn}">✕</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  const closedRows = closedList.map((p, i) => {
+    const mult = p.legMultiplier || (p.isMultiLeg ? 2 : 1);
+    const fee = p.feeTotal != null ? p.feeTotal : (2 * cfg.fee * p.qty * mult);
+    const pl = Number(p.realizedPL || 0);
+    const capital = p.entry * 100 * p.qty;
+    const plPct = capital > 0 ? (pl / capital) * 100 : 0;
+    closedTot += pl;
+    totalFees += fee;
+    const delClosedFn = isStrategy ? `cfg.stratClosed.splice(${i},1);save();render()` : `cfg.closed.splice(${i},1);save();render()`;
+
+    return `<tr>
+      <td data-label="Contract / Strategy">
+        <div class="sym-name">${lbl(p)} ${isStrategy ? `<span class="tag Strategy">${escapeHtml(p.strategyName || 'Strategy')}</span>` : ''}</div>
+        <div class="sym-sub mono">Closed ${fmtTs(p.closedAt)} · ${escapeHtml(p.closeReason || 'Closed')}</div>
+      </td>
+      <td data-label="Side"><span class="tag Buy">BUY</span></td>
+      <td data-label="Tier"><span class="tag ${p.tier || 'Strict'}">${p.tier || 'Strict'} ${p.score || 85}</span></td>
+      <td data-label="Qty" class="mono">${p.qty}</td>
+      <td data-label="Entry" class="mono">$${Number(p.entry).toFixed(2)}</td>
+      <td data-label="Exit" class="mono">$${Number(p.exitPrice).toFixed(2)}</td>
+      <td data-label="Realized Net P&L" class="mono ${pl >= 0 ? 'g' : 'r'}" style="font-weight:700">
+        ${pl >= 0 ? '+' : ''}$${pl.toFixed(2)} (${plPct >= 0 ? '+' : ''}${plPct.toFixed(1)}%)
+      </td>
+      <td data-label="Fees Paid" class="mono mu">$${fee.toFixed(2)}</td>
+      <td data-label="Actions"><button type="button" class="btn sm danger" onclick="${delClosedFn}">✕</button></td>
+    </tr>`;
+  }).join('');
+
+  const grandTot = activeTot + closedTot;
+  const closedWins = closedList.filter(x => Number(x.realizedPL) > 0).length;
+  const winRate = closedList.length ? (closedWins / closedList.length) * 100 : 0;
+
+  return `
+  <div class="paper-intro">
+    <div>
+      <h2>${title}</h2>
+      <div class="mu">${subtitle}</div>
+    </div>
+    <div class="paper-toolbar">
+      <button type="button" class="btn" onclick="refresh()">↻ Refresh Live Prices</button>
+      <button type="button" class="btn pri" onclick="exportCsv(${isStrategy})">Export CSV</button>
+    </div>
+  </div>
+  <div class="kpi-deck">
+    <div class="kpi-card">
+      <div class="kpi-label">Combined Net P&amp;L (After Fees)</div>
+      <div class="kpi-val ${grandTot >= 0 ? 'g' : 'r'}">${grandTot >= 0 ? '+' : ''}$${grandTot.toFixed(2)}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Active Unrealized P&amp;L</div>
+      <div class="kpi-val ${activeTot >= 0 ? 'g' : 'r'}">${activeTot >= 0 ? '+' : ''}$${activeTot.toFixed(2)}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Closed Realized P&amp;L</div>
+      <div class="kpi-val ${closedTot >= 0 ? 'g' : 'r'}">${closedTot >= 0 ? '+' : ''}$${closedTot.toFixed(2)}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Total Fees (Moomoo Roundtrip)</div>
+      <div class="kpi-val mu">$${totalFees.toFixed(2)}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Win Rate</div>
+      <div class="kpi-val ${winRate >= 80 ? 'g' : ''}">${winRate.toFixed(1)}% <span class="mu" style="font-size:12px">(${closedWins}/${closedList.length})</span></div>
+    </div>
+  </div>
+
+  <div class="paper-section-head">
+    <div class="paper-section-title">Open Positions (${list.length})</div>
+    <button type="button" id="paperViewBtn" class="btn sm paper-view-toggle" onclick="togglePaperView()">Compact Table</button>
+  </div>
+  <div class="wrap"><table>
+    <thead>
+      <tr>
+        <th>Contract</th><th>Side</th><th>Tier</th><th>Qty</th><th>Entry</th><th>Stop → Target · R:R</th><th>Live</th><th>Auto-Close</th><th>Net P&amp;L</th><th>Fees</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${activeRows || `<tr><td colspan="11" class="mu" style="text-align:center;padding:24px;">No active positions open.</td></tr>`}
+    </tbody>
+  </table></div>
+
+  ${closedList.length ? `
+  <div class="paper-section-head" style="margin-top:24px;">
+    <div class="paper-section-title">Closed Positions (${closedList.length})</div>
+    <button type="button" class="btn sm danger" onclick="if(confirm('Clear closed history?')){${isStrategy ? 'cfg.stratClosed=[]' : 'cfg.closed=[]'};save();render();}">Clear History</button>
+  </div>
+  <div class="wrap"><table>
+    <thead>
+      <tr><th>Contract</th><th>Side</th><th>Tier</th><th>Qty</th><th>Entry</th><th>Exit</th><th>Realized Net P&amp;L</th><th>Fees</th><th>Actions</th></tr>
+    </thead>
+    <tbody>${closedRows}</tbody>
+  </table></div>` : ''}`;
+}
+
+function rPaper() {
+  return renderPaperDesk({
+    title: '💼 Paper Trading (Single-Leg)',
+    subtitle: 'Automated single-leg Call/Put execution with Profit Shield trailing stops, Auto-Close, and net P&L after Moomoo fees.',
+    list: cfg.pos,
+    closedList: cfg.closed,
+    isStrategy: false
+  });
+}
+
+function rStratPaper() {
+  return renderPaperDesk({
+    title: '📈 Paper trading for Strategy',
+    subtitle: 'Dedicated strategy execution desk fed automatically by Auto-picks Strategy (Long Call, Long Put, Range Reversals, and Long Straddles) with full Auto-Close & net P&L after fees.',
+    list: cfg.stratPos,
+    closedList: cfg.stratClosed,
+    isStrategy: true
+  });
+}
+
+window.ed = function(i, k, v) { if (cfg.pos[i]) { cfg.pos[i][k] = Math.max(0, +v); save(); render(); } };
+window.edStrat = function(i, k, v) { if (cfg.stratPos[i]) { cfg.stratPos[i][k] = Math.max(0, +v); save(); render(); } };
+window.setRR = function(i, r) {
+  const p = cfg.pos[i]; if (!p) return;
+  p.rr = +r; p.tgt = +(p.entry + Math.max(0, p.entry - p.stop) * p.rr).toFixed(2); save(); render();
+};
+window.setStratRR = function(i, r) {
+  const p = cfg.stratPos[i]; if (!p) return;
+  p.rr = +r; p.tgt = +(p.entry + Math.max(0, p.entry - p.stop) * p.rr).toFixed(2); save(); render();
+};
+window.toggleAutoClose = function(i) { if (cfg.pos[i]) { cfg.pos[i].autoClose = cfg.pos[i].autoClose === false; save(); render(); } };
+window.toggleStratAutoClose = function(i) { if (cfg.stratPos[i]) { cfg.stratPos[i].autoClose = cfg.stratPos[i].autoClose === false; save(); render(); } };
+
+let paperViewMode = localStorage.getItem('alphaPaperView') || 'cards';
+function syncPaperView() {
+  const compact = paperViewMode === 'compact' && innerWidth > 900;
+  document.body.classList.toggle('paper-compact', compact);
+  const b = document.getElementById('paperViewBtn');
+  if (b) { b.classList.toggle('active', compact); b.textContent = compact ? 'Card View' : 'Compact Table'; }
+}
+window.togglePaperView = function() {
+  paperViewMode = paperViewMode === 'compact' ? 'cards' : 'compact';
+  localStorage.setItem('alphaPaperView', paperViewMode);
+  syncPaperView();
+};
+
+window.exportCsv = function(isStrategy) {
+  const openList = isStrategy ? cfg.stratPos : cfg.pos;
+  const closedList = isStrategy ? cfg.stratClosed : cfg.closed;
+  const rows = [['Status','Symbol','Strategy','Contract','Qty','Entry','Live/Exit','Stop','Target','Net P&L','Fees','Close Reason']];
+  openList.forEach(p => {
+    const mult = p.legMultiplier || (p.isMultiLeg ? 2 : 1);
+    const fee = 2 * cfg.fee * p.qty * mult;
+    const pl = (p.live - p.entry) * 100 * p.qty - fee;
+    rows.push(['Open', p.sym, p.strategyName || 'Single Leg', p.code, p.qty, p.entry, p.live, p.stop, p.tgt, pl.toFixed(2), fee.toFixed(2), '']);
+  });
+  closedList.forEach(p => {
+    const mult = p.legMultiplier || (p.isMultiLeg ? 2 : 1);
+    const fee = p.feeTotal ?? (2 * cfg.fee * p.qty * mult);
+    rows.push(['Closed', p.sym, p.strategyName || 'Single Leg', p.code, p.qty, p.entry, p.exitPrice, p.stop, p.tgt, Number(p.realizedPL).toFixed(2), fee.toFixed(2), p.closeReason || '']);
+  });
+  if (rows.length === 1) { alert('No trades to export.'); return; }
+  const csv = '\uFEFF' + rows.map(r => r.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',')).join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+  a.download = `AlphaPulse_${isStrategy ? 'Strategy' : 'SingleLeg'}_Trades_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+};
+
+// --- $500 SINGLE-LEG OPTIMIZED LIVESTRIKES CALCULATOR, SHORTLISTER & TA MONITOR ---
+let lsDraft = {
+  code: 'SPY261113C00595000',
+  entry: 1.25,
+  qty: 1,
+  budget: 500,
+  maxRisk: 25,
+  profile: 'budget500',
+  stopPct: 18,
+  tgtPct: 30,
+  trailPct: 12,
+  limitBufPct: 3
+};
+
+const LS_PROFILES = {
+  budget500: {
+    label: '$500 Single-Leg Sweet-Spot (-18% / +30%)',
+    stopPct: 18, tgtPct: 30, trailPct: 12, limitBufPct: 3, maxRisk: 25, minNetRR: 1.35,
+    desc: 'Tailored for $500 bankroll: $0.80–$2.20 premium sweet spot, max $200/trade (40%), $25 max loss cap, and +15% T1 breakeven lock.'
+  },
+  intermediate: {
+    label: 'Intraday Trend (-20% / +40%)',
+    stopPct: 20, tgtPct: 40, trailPct: 14, limitBufPct: 3, maxRisk: 35, minNetRR: 1.50,
+    desc: '20% initial stop, 40% target, +15% T1 breakeven lock, and 14% high-water trail.'
+  },
+  advanced: {
+    label: '0DTE / Momentum Runner (-22% / +50%)',
+    stopPct: 22, tgtPct: 50, trailPct: 16, limitBufPct: 4, maxRisk: 45, minNetRR: 1.75,
+    desc: '22% initial stop, 50% stretch target, +15% T1 breakeven lock, and 16% trail.'
+  }
+};
+
+function lsDeployedCapital() {
+  return (cfg.livePos || []).reduce((sum, p) => sum + (Number(p.entry || 0) * 100 * Number(p.qty || 1)), 0);
+}
+function lsAvailableCash(budget = lsDraft.budget || 500) {
+  return Math.max(0, Number(budget) - lsDeployedCapital());
+}
+
+window.setLsProfile = function(prof) {
+  const p = LS_PROFILES[prof];
+  if (!p) return;
+  lsDraft.profile = prof;
+  lsDraft.stopPct = p.stopPct;
+  lsDraft.tgtPct = p.tgtPct;
+  lsDraft.trailPct = p.trailPct;
+  lsDraft.limitBufPct = p.limitBufPct;
+  lsDraft.maxRisk = p.maxRisk;
+  const elStop = $('#lsStopPct'), elTgt = $('#lsTgtPct'), elTrail = $('#lsTrailPct'), elLim = $('#lsLimPct'), elRisk = $('#lsMaxRisk');
+  if (elStop) elStop.value = p.stopPct;
+  if (elTgt) elTgt.value = p.tgtPct;
+  if (elTrail) elTrail.value = p.trailPct;
+  if (elLim) elLim.value = p.limitBufPct;
+  if (elRisk) elRisk.value = p.maxRisk;
+  updateLsCalculatorPreview();
+  document.querySelectorAll('.ls-prof-btn').forEach(b => b.classList.toggle('on', b.dataset.prof === prof));
+};
+
+// Sizes quantity respecting Available Cash, 40% single-trade cap ($200 on $500), and Max Dollar Risk ($25)
+function lsFitQty(entry, availableCash, maxRisk, stopPct) {
+  const maxSingleTradeCap = (lsDraft.budget || 500) * 0.40;
+  const effectiveCap = Math.min(availableCash, maxSingleTradeCap);
+  const costPerContract = entry * 100 + cfg.fee;
+  const riskPerContract = entry * 100 * (stopPct / 100) + (2 * cfg.fee);
+  return Math.max(1, Math.min(Math.floor(effectiveCap / costPerContract), Math.floor(maxRisk / riskPerContract)));
+}
+
+window.autoFitLsQty = function() {
+  const entry = Math.max(0.01, +($('#lsEntry')?.value || lsDraft.entry || 1));
+  const budget = Math.max(50, +($('#lsBudget')?.value || lsDraft.budget || 500));
+  const maxRisk = Math.max(5, +($('#lsMaxRisk')?.value || lsDraft.maxRisk || 25));
+  const stopPct = Math.max(1, +($('#lsStopPct')?.value || lsDraft.stopPct || 18));
+  const avail = lsAvailableCash(budget);
+  const qty = lsFitQty(entry, avail, maxRisk, stopPct);
+  lsDraft.qty = qty;
+  const qEl = $('#lsQty');
+  if (qEl) qEl.value = qty;
+  updateLsCalculatorPreview();
+};
+
+// One-click helper to snap Stop Loss % to the exact $25 Max Dollar Risk cap
+window.applyDollarCappedStop = function() {
+  const entry = Math.max(0.01, +($('#lsEntry')?.value || lsDraft.entry || 1));
+  const qty = Math.max(1, Math.round(+($('#lsQty')?.value || lsDraft.qty || 1)));
+  const maxRisk = Math.max(5, +($('#lsMaxRisk')?.value || lsDraft.maxRisk || 25));
+  const roundtripFee = 2 * cfg.fee * qty;
+  const allowableLossOnOption = Math.max(1, maxRisk - roundtripFee);
+  const cappedStopPct = Math.max(5, Math.min(60, Math.floor((allowableLossOnOption / (entry * 100 * qty)) * 100)));
+  lsDraft.stopPct = cappedStopPct;
+  const elStop = $('#lsStopPct');
+  if (elStop) elStop.value = cappedStopPct;
+  updateLsCalculatorPreview();
+};
+
+let lsShortlist = { loading: false, error: '', rows: [], at: 0 };
+function contextualSpreadCap(mid, dte) {
+  return mid < 0.75 ? 12 : (dte < 0.8 && mid < 1.50 ? 10 : 8);
+}
+
+function renderLsShortlist() {
+  const el = $('#lsShortlist');
+  if (!el) return;
+  if (lsShortlist.loading) { el.innerHTML = '<div class="mu">Scanning chain for $0.80–$2.20 sweet-spot single-leg contracts...</div>'; return; }
+  if (lsShortlist.error) { el.innerHTML = `<div class="r">${escapeHtml(lsShortlist.error)}</div>`; return; }
+  if (!lsShortlist.rows.length) { el.innerHTML = '<div class="mu">Enter a symbol/expiry (e.g. <code>SPY 11-13 595C</code>) and click <b>Auto-rank $500 Sweet-Spot</b>.</div>'; return; }
+  el.innerHTML = '<div class="mu">Ranked for $500 Single-Leg Account ($0.80–$2.20 premium sweet spot, Delta 0.45–0.60, low fee drag, tight spread):</div>' + lsShortlist.rows.map((r, i) => `
+    <div class="ls-short-row ${i === 0 ? 'best' : ''}">
+      <span class="ls-select-grade ${r.grade}">#${i + 1} ${r.grade}</span><b>${r.code}</b>
+      <span>Strike $${r.strike}</span><span>Delta ${r.delta.toFixed(2)}</span><span>Spread ${r.spread.toFixed(1)}%</span><span class="ls-short-hide">OI ${r.oi}</span><span class="ls-short-hide">FeeDrag ${r.feeDragPct.toFixed(1)}%</span>
+      <button type="button" class="btn sm ${i === 0 ? 'pri' : ''}" onclick="useShortlistedStrike(${i})">Use</button>
+      <div class="mu" style="grid-column:2/-1">Score ${r.score}/100 · Mid <b>$${r.mid.toFixed(2)}</b> ($${(r.mid*100).toFixed(0)}/contract) · ${r.dte.toFixed(1)} DTE · ${escapeHtml(r.note)}</div>
+    </div>`).join('');
+}
+
+window.useShortlistedStrike = function(i) {
+  const r = lsShortlist.rows[i];
+  if (!r) return;
+  lsDraft.code = r.code;
+  lsDraft.entry = +r.mid.toFixed(2);
+  lsDraft.qty = lsFitQty(lsDraft.entry, lsAvailableCash(), lsDraft.maxRisk, lsDraft.stopPct);
+  const ce = $('#lsCode'), ee = $('#lsEntry'), qe = $('#lsQty');
+  if (ce) ce.value = r.code;
+  if (ee) ee.value = lsDraft.entry;
+  if (qe) qe.value = lsDraft.qty;
+  updateLsCalculatorPreview();
+};
+
+window.buildLiveStrikeShortlist = async function() {
+  updateLsCalculatorPreview();
+  const c = parseContractInput(lsDraft.code);
+  if (!c) { alert('Enter a contract including symbol, expiry and C/P first, e.g. SPY 11-13 595C.'); return; }
+  lsShortlist = { loading: true, error: '', rows: [], at: Date.now() };
+  renderLsShortlist();
+  try {
+    const res = (await api(`/api/chain?symbol=${encodeURIComponent(c.root)}&date=${c.expMidTs}`)).optionChain.result[0];
+    const q = res.quote || {}, spot = Number(q.regularMarketPrice || q.postMarketPrice || 0), side = c.call ? 'calls' : 'puts', opts = res.options?.[0]?.[side] || [];
+    const now = Date.now() / 1000, dte = Math.max(0, (c.expMidTs - now) / 86400), T = Math.max(1 / 365, dte / 365);
+    const availCash = lsAvailableCash();
+    const maxSingleCap = (lsDraft.budget || 500) * 0.40; // $200 cap on $500 account
+
+    const rows = opts.map(o => {
+      const bid = Number(o.bid || 0), ask = Number(o.ask || 0), mid = bid > 0 && ask > 0 ? (bid + ask) / 2 : Number(o.lastPrice || 0), iv = Number(o.impliedVolatility || 0);
+      if (!(mid > 0) || !(spot > 0)) return null;
+      const cost = mid * 100;
+      if (cost > availCash || mid < 0.50 || mid > 3.50) return null; // Filter out unaffordable/toxic contracts for $500
+
+      const delta = Math.abs(greeks(spot, Number(o.strike), T, iv || 0.35, c.call).d);
+      const spread = bid > 0 && ask > 0 ? (ask - bid) / mid * 100 : 99;
+      const oi = Number(o.openInterest || 0), vol = Number(o.volume || 0), cap = contextualSpreadCap(mid, dte);
+      const feeDragPct = ((2 * cfg.fee) / cost) * 100;
+      const inSweetSpot = mid >= 0.80 && mid <= 2.20;
+
+      let score = 0;
+      // Sweet spot premium ($0.80 - $2.20) gets highest priority
+      score += inSweetSpot ? 28 : (mid >= 0.65 && mid <= 2.50 ? 15 : 4);
+      // Ideal single-leg Delta (0.45 - 0.60)
+      score += delta >= 0.45 && delta <= 0.60 ? 28 : delta >= 0.38 && delta <= 0.68 ? 18 : 6;
+      // Tight spread
+      score += spread <= 4 ? 18 : spread <= cap ? 12 : 4;
+      // Liquidity
+      score += oi >= 1000 ? 12 : oi >= 300 ? 8 : 3;
+      score += vol >= 250 ? 8 : vol >= 75 ? 5 : 2;
+      // Sweet spot DTE (2 - 7 DTE avoids extreme 0DTE Theta crush)
+      score += dte >= 2 && dte <= 7 ? 10 : dte >= 1 ? 6 : 2;
+      // Single-trade cap check ($200 max on $500)
+      if (cost > maxSingleCap) score -= 12;
+
+      score = Math.max(0, Math.min(100, Math.round(score)));
+      const grade = score >= 82 ? 'A' : score >= 70 ? 'B' : score >= 58 ? 'C' : 'D';
+      const note = inSweetSpot
+        ? `Sweet Spot ($${cost.toFixed(0)} <= $${maxSingleCap.toFixed(0)} cap, Fee drag ${feeDragPct.toFixed(1)}%)`
+        : (mid < 0.80 ? `High fee drag (${feeDragPct.toFixed(1)}%)` : `Above $200 single-trade cap ($${cost.toFixed(0)})`);
+
+      return { code: o.contractSymbol, strike: o.strike, delta, spread, oi, vol, mid, dte, score, grade, note, feeDragPct };
+    }).filter(Boolean).filter(r => r.spread <= 15).sort((a, b) => b.score - a.score || a.spread - b.spread).slice(0, 5);
+
+    if (!rows.length) throw new Error(`No contracts found within your $${availCash.toFixed(0)} available cash & $0.50–$3.50 range.`);
+    lsShortlist = { loading: false, error: '', rows, at: Date.now() };
+  } catch (e) {
+    lsShortlist = { loading: false, error: e.message || String(e), rows: [], at: Date.now() };
+  }
+  renderLsShortlist();
+};
+
+function lsMetrics(d) {
+  const { entry, qty, budget, stopPct, tgtPct, trailPct, limitBufPct } = d;
+  const maxRisk = d.maxRisk || 25;
+  const capital = entry * 100 * qty;
+  const roundtripFee = 2 * cfg.fee * qty;
+  const totalOutlay = capital + (cfg.fee * qty);
+  const deployed = lsDeployedCapital();
+  const availableCash = Math.max(0, budget - deployed);
+  const maxSingleAllocation = budget * 0.40; // 40% cap ($200 on $500)
+  const feeDragPct = capital > 0 ? (roundtripFee / capital) * 100 : 0;
+
+  // Standard % Stop & Target
+  const slTrigger = +(entry * (1 - stopPct / 100)).toFixed(2);
+  const slLimit = +(slTrigger * (1 - limitBufPct / 100)).toFixed(2);
+  const t1Trigger = +(entry * 1.15).toFixed(2); // Mandatory +15% T1 Breakeven Lock trigger
+  const beLockStop = +(entry + (roundtripFee / (100 * qty)) + 0.01).toFixed(2);
+  const tpLimit = +(entry * (1 + tgtPct / 100)).toFixed(2);
+
+  // Dollar-Capped Stop Loss (guarantees max net loss <= maxRisk, e.g. $25)
+  const allowableOptionDrop = Math.max(0.01, (maxRisk - roundtripFee) / (100 * qty));
+  const dollarCappedStop = +Math.max(0.01, entry - allowableOptionDrop).toFixed(2);
+  const dollarCappedStopPct = entry > 0 ? ((entry - dollarCappedStop) / entry) * 100 : 0;
+
+  const trailDrop = +(entry * (trailPct / 100)).toFixed(2);
+  const trailFloorInit = +(entry - trailDrop).toFixed(2);
+  const breakevenPx = +(entry + (roundtripFee / (100 * qty))).toFixed(2);
+  const netProfitAtTp = (tpLimit - entry) * 100 * qty - roundtripFee;
+  const netProfitPct = capital > 0 ? (netProfitAtTp / capital) * 100 : 0;
+  const netLossAtSl = (slTrigger - entry) * 100 * qty - roundtripFee;
+  const netLossPct = capital > 0 ? (netLossAtSl / capital) * 100 : 0;
+  const worstLoss = (slLimit - entry) * 100 * qty - roundtripFee;
+  const rr = Math.abs(netLossAtSl) > 0 ? Math.abs(netProfitAtTp / netLossAtSl) : 0;
+  const prof = LS_PROFILES[d.profile] || {};
+  const minRR = prof.minNetRR || 0;
+  const riskPctOfBudget = budget > 0 ? Math.abs(netLossAtSl) / budget * 100 : 0;
+  const occ = parseOccMeta(d.code);
+
+  // Check 5m ATR noise vs Dollar-Capped Stop if cached TA exists
+  const symTa = occ ? taCache5m[occ.root] : null;
+  const est5mOptionNoise = symTa && symTa.atr ? +(symTa.atr * 0.50).toFixed(2) : null;
+  const stopDistance = +(entry - slTrigger).toFixed(2);
+
+  const warnings = [];
+  if (totalOutlay > availableCash) {
+    warnings.push(`Outlay $${totalOutlay.toFixed(2)} exceeds Available Cash $${availableCash.toFixed(2)} ($${deployed.toFixed(0)} already deployed).`);
+  }
+  if (capital > maxSingleAllocation) {
+    warnings.push(`Single-trade allocation $${capital.toFixed(0)} exceeds 40% cap ($${maxSingleAllocation.toFixed(0)} max on $${budget} budget).`);
+  }
+  if (entry < 0.80) {
+    warnings.push(`Premium $${entry.toFixed(2)} is below $0.80 sweet spot — Moomoo's $${roundtripFee.toFixed(2)} fee causes ${feeDragPct.toFixed(1)}% immediate fee drag.`);
+  } else if (entry > 2.20) {
+    warnings.push(`Premium $${entry.toFixed(2)} is above $2.20 sweet spot — ${stopPct}% stop risks $${Math.abs(netLossAtSl).toFixed(2)} (over $${maxRisk} cap).`);
+  }
+  if (maxRisk > 0 && Math.abs(netLossAtSl) > maxRisk + 0.50) {
+    warnings.push(`Stop loss risks $${Math.abs(netLossAtSl).toFixed(2)} (above $${maxRisk} cap). Click "Apply $${maxRisk}-Cap Stop" ($${dollarCappedStop.toFixed(2)}).`);
+  }
+  if (est5mOptionNoise && stopDistance < est5mOptionNoise * 0.85) {
+    warnings.push(`5m ATR noise (~$${est5mOptionNoise.toFixed(2)}/bar) is wider than your $${stopDistance.toFixed(2)} stop — high risk of noise stop-out; pick a cheaper strike (~$1.00–$1.25).`);
+  }
+  if (minRR && rr < minRR - 0.05) {
+    warnings.push(`Net R:R 1:${rr.toFixed(2)} is below minimum 1:${minRR.toFixed(1)}.`);
+  }
+  if (occ && occ.dte < 1.5) {
+    warnings.push(`Only ${occ.dte.toFixed(1)} DTE — high Theta decay risk; prefer 2–7 DTE.`);
+  }
+
+  return {
+    capital, roundtripFee, totalOutlay, deployed, availableCash, maxSingleAllocation, feeDragPct,
+    slTrigger, slLimit, t1Trigger, beLockStop, tpLimit, dollarCappedStop, dollarCappedStopPct,
+    trailDrop, trailFloorInit, breakevenPx, netProfitAtTp, netProfitPct, netLossAtSl, netLossPct,
+    worstLoss, rr, minRR, riskPctOfBudget, maxRisk, est5mOptionNoise, warnings
+  };
+}
+
+window.updateLsCalculatorPreview = function() {
+  const code = ($('#lsCode')?.value || lsDraft.code || '').toUpperCase().trim();
+  const entry = Math.max(0.01, +($('#lsEntry')?.value || lsDraft.entry || 0));
+  const qty = Math.max(1, Math.round(+($('#lsQty')?.value || lsDraft.qty || 1)));
+  const budget = Math.max(50, +($('#lsBudget')?.value || lsDraft.budget || 500));
+  const maxRisk = Math.max(5, +($('#lsMaxRisk')?.value ?? lsDraft.maxRisk ?? 25));
+  const stopPct = Math.max(1, +($('#lsStopPct')?.value || lsDraft.stopPct || 18));
+  const tgtPct = Math.max(1, +($('#lsTgtPct')?.value || lsDraft.tgtPct || 30));
+  const trailPct = Math.max(1, +($('#lsTrailPct')?.value || lsDraft.trailPct || 12));
+  const limitBufPct = Math.max(0.5, +($('#lsLimPct')?.value || lsDraft.limitBufPct || 3));
+
+  Object.assign(lsDraft, { code, entry, qty, budget, maxRisk, stopPct, tgtPct, trailPct, limitBufPct });
+  const m = lsMetrics(lsDraft);
+  const box = $('#lsCalcPreview');
+  if (!box) return;
+  const overAvail = m.totalOutlay > m.availableCash;
+  const overCap = m.capital > m.maxSingleAllocation;
+  const riskOk = Math.abs(m.netLossAtSl) <= m.maxRisk + 0.50;
+  const sweetOk = entry >= 0.80 && entry <= 2.20;
+  const pc = parseContractInput(code);
+
+  box.innerHTML = `
+    ${pc
+      ? `<div class="ls-preview-row"><span>Contract Recognised</span><span class="mono g"><b>${pc.label}</b> → ${pc.occ}</span></div>`
+      : `<div class="ls-preview-row"><span class="r">⚠ Enter valid OCC code (SPY261113C00595000) or text (SPY 11-13 595C).</span></div>`}
+    <div class="ls-preview-row"><span>Available Bankroll Cash</span><span class="mono ${overAvail ? 'r' : 'g'}"><b>$${m.availableCash.toFixed(2)}</b> / $${budget.toFixed(0)} ($${m.deployed.toFixed(0)} deployed)</span></div>
+    <div class="ls-preview-row"><span>Position Outlay vs 40% Cap ($${m.maxSingleAllocation.toFixed(0)})</span><span class="mono ${overCap ? 'amber' : 'g'}"><b>$${m.totalOutlay.toFixed(2)}</b> (${((m.capital/budget)*100).toFixed(0)}% of budget)</span></div>
+    <div class="ls-preview-row"><span>Premium Sweet Spot ($0.80–$2.20) &amp; Fee Drag</span><span class="mono ${sweetOk ? 'g' : 'amber'}">$${entry.toFixed(2)} · Fee Drag <b>${m.feeDragPct.toFixed(2)}%</b> ($${m.roundtripFee.toFixed(2)})</span></div>
+    <div class="ls-preview-row"><span><b>T1 Breakeven Lock (+15% Trigger)</b></span><span class="mono" style="color:var(--blue)">At <b>$${m.t1Trigger.toFixed(2)}</b> → Lock Stop at <b>$${m.beLockStop.toFixed(2)}</b> (Covers Fees)</span></div>
+    <div class="ls-preview-row"><span><b>Target Limit Order (TP +${tgtPct}%)</b></span><span class="mono g"><b>$${m.tpLimit.toFixed(2)}</b> → Net <b>+$${m.netProfitAtTp.toFixed(2)} (+${m.netProfitPct.toFixed(1)}%)</b></span></div>
+    <div class="ls-preview-row"><span><b>Active Stop-Limit (-${stopPct}% / Lim -${limitBufPct}%)</b></span><span class="mono r">Stop <b>$${m.slTrigger.toFixed(2)}</b> · Lim <b>$${m.slLimit.toFixed(2)}</b> → Net <b>$${m.netLossAtSl.toFixed(2)}</b></span></div>
+    <div class="ls-preview-row">
+      <span><b>$${m.maxRisk}-Capped Stop (${m.dollarCappedStopPct.toFixed(0)}% drop)</b></span>
+      <span class="mono ${riskOk ? 'g' : 'r'}"><b>$${m.dollarCappedStop.toFixed(2)}</b> <button type="button" class="btn sm" onclick="applyDollarCappedStop()">Apply $${m.maxRisk}-Cap</button></span>
+    </div>
+    <div class="ls-preview-row"><span>Net Risk : Reward (After Fees)</span><span class="mono ${m.rr >= 1.3 ? 'g' : 'r'}"><b>1 : ${m.rr.toFixed(2)}</b></span></div>
+    ${m.warnings.length
+      ? m.warnings.map(w => `<div class="ls-preview-row"><span class="r">⚠ ${w}</span></div>`).join('')
+      : `<div class="ls-preview-row"><span class="g">✓ Optimal $500 Single-Leg Setup (Sweet-spot premium, ≤40% allocation, ≤$${m.maxRisk} risk)</span></div>`}
+  `;
+};
+
+window.addLiveStrike = function() {
+  updateLsCalculatorPreview();
+  const { code: typedCode, entry, qty, budget, stopPct, tgtPct, trailPct, limitBufPct, profile } = lsDraft;
+  const c = parseContractInput(typedCode);
+  if (!c) {
+    alert('Contract not recognised. Use an OCC code (SPY261113C00595000) or text like "SPY 11-13 595C".');
+    return;
+  }
+  if (!(entry > 0) || !(qty >= 1)) {
+    alert('Please enter a valid entry premium and quantity.');
+    return;
+  }
+  const code = c.occ, sym = c.root, call = c.call, k = c.strike, exp = c.expMidTs;
+  const m = lsMetrics(lsDraft);
+  if (m.warnings.length) {
+    if (!confirm('$500 Risk Guard Warnings:\n\n- ' + m.warnings.join('\n- ') + '\n\nAdd to LiveStrikes Monitor anyway?')) return;
+  }
+
+  const slPrice = +(entry * (1 - stopPct / 100)).toFixed(2);
+  const slLimit = +(slPrice * (1 - limitBufPct / 100)).toFixed(2);
+  const tgtPrice = +(entry * (1 + tgtPct / 100)).toFixed(2);
+
+  cfg.livePos.unshift({
+    id: Date.now(), code, sym, call, k, exp, entry, live: entry, highestSeen: entry,
+    qty, budget, maxRisk: lsDraft.maxRisk, profile, stopPct, tgtPct, trailPct, limitBufPct,
+    slPrice, slLimit, tgtPrice, t1Locked: false, src: 'Manual', openedAt: Date.now(),
+    ofx:{ticks:[],bars:[],book:{bids:[],asks:[]},alerts:[],updatedAt:0},
+    ta: {
+      e5: 0, e10: 0, e20: 0, vwap: 0, rsi: 50, macd: 0, macdSig: 0, macdHist: 0,
+      pattern: 'Scanning 5m chart…', action: 'ANALYZING…', tone: 'warn',
+      reason: 'Fetching live 5m EMA 5/10/20, VWAP, RSI & MACD…', updatedAt: null
+    }
+  });
+  save();
+  render();
+  refresh();
+  updateLiveStrikesTA();
+  updateProOrderFlow();
+};
+
+window.updateLiveStrikeField = function(i, field, val) {
+  const p = cfg.livePos[i];
+  if (!p) return;
+  const num = Math.max(0.01, +val || 0);
+  p[field] = num;
+  if (field === 'entry' || field === 'stopPct' || field === 'tgtPct' || field === 'limitBufPct') {
+    p.slPrice = +(p.entry * (1 - p.stopPct / 100)).toFixed(2);
+    p.slLimit = +(p.slPrice * (1 - (p.limitBufPct || 3) / 100)).toFixed(2);
+    p.tgtPrice = +(p.entry * (1 + p.tgtPct / 100)).toFixed(2);
+  }
+  if (field === 'live' && num > (p.highestSeen || p.entry)) p.highestSeen = num;
+  evaluateLiveStrikeDecision(p);
+  save();
+  render();
+};
+
+const TA_STALE_MS = 30 * 60 * 1000;
+const taIsStale = t => !!(t && t.barAt) && (Date.now() - t.barAt) > TA_STALE_MS;
+
+function lsMinutesToClose() {
+  try {
+    const x = etParts(), cal = marketCalendar(x.y), close = cal.early.has(ymd(x)) ? 780 : 960;
+    return Math.max(0, close - (x.h * 60 + x.min));
+  } catch (e) { return 390; }
+}
+
+function adaptiveLivePlan(p) {
+  const t = p.ta || {}, occ = parseOccMeta(p.code), dte = occ ? occ.dte : 7;
+  const mins = lsMinutesToClose(), stale = taIsStale(t), rvol = Number(t.rvol || 0);
+  const isCall = p.call !== false, S = Number(t.lastUnderlying || 0);
+  const trend = isCall
+    ? (S > t.vwap && t.e5 > t.e10 && t.e10 >= t.e20 && Number(t.macdHist) >= 0)
+    : (S < t.vwap && t.e5 < t.e10 && t.e10 <= t.e20 && Number(t.macdHist) <= 0);
+  const against = isCall
+    ? (S < t.vwap && t.e5 < t.e20 && Number(t.macdHist) < 0)
+    : (S > t.vwap && t.e5 > t.e20 && Number(t.macdHist) > 0);
+  let finalPct = Number(p.tgtPct || 30);
+  if (dte < 0.8) finalPct = Math.min(finalPct, 25);
+  else if (dte < 2) finalPct = Math.min(finalPct, 30);
+  if (mins < 90) finalPct = Math.min(finalPct, 22);
+  if (mins < 35) finalPct = Math.min(finalPct, 15);
+  if (!trend || rvol < 1.0) finalPct = Math.min(finalPct, 20);
+  if (trend && rvol >= 1.25 && mins >= 90 && !stale) finalPct = Math.min(Number(p.tgtPct || 30), finalPct + 5);
+  if (against) finalPct = Math.min(finalPct, 10);
+  finalPct = Math.max(8, Math.round(finalPct));
+
+  const t1Pct = 15; // Mandatory +15% T1 Breakeven Lock threshold
+  const t1Price = +(p.entry * 1.15).toFixed(2);
+  const roundtripFee = 2 * cfg.fee * Math.max(1, p.qty || 1);
+  const beLockStop = +(p.entry + (roundtripFee / (100 * Math.max(1, p.qty || 1))) + 0.01).toFixed(2);
+  const finalPrice = +(p.entry * (1 + finalPct / 100)).toFixed(2);
+  const progress = finalPrice > p.entry ? cl((p.live - p.entry) / (finalPrice - p.entry), 0, 1) * 100 : 0;
+
+  // Daily Theta Burn Ratio (|Theta| / Live Price * 100)
+  const q = p.optionQuote || {};
+  const estTheta = q.theta ? Math.abs(Number(q.theta)) : Math.abs(greeks(S || p.k || 100, p.k || 100, Math.max(0.05, dte) / 365, Number(q.iv || 0.35), isCall).th);
+  const thetaBurnPct = p.live > 0 ? (estTheta / p.live) * 100 : 0;
+
+  return { dte, mins, trend, against, stale, rvol, t1Pct, t1Price, beLockStop, finalPct, finalPrice, progress, estTheta, thetaBurnPct };
+}
+
+function liveStrikeSelection(p) {
+  const q = p.optionQuote || {}, t = p.ta || {}, occ = parseOccMeta(p.code), dte = occ ? occ.dte : 0;
+  const spot = Number(t.lastUnderlying || 0), strike = Number(p.k || occ?.strike || 0), absDelta = Math.abs(Number(q.delta || 0));
+  const bid = Number(q.bid || 0), ask = Number(q.ask || 0), mid = bid > 0 && ask > 0 ? (bid + ask) / 2 : 0;
+  const spreadPct = mid > 0 ? (ask - bid) / mid * 100 : 99, oi = Number(q.oi || 0), vol = Number(q.volume || 0);
+  const cost = Number(p.entry || 0) * 100;
+  const inSweetSpot = p.entry >= 0.80 && p.entry <= 2.20;
+
+  let score = 0, risks = [];
+  if (inSweetSpot) score += 25; else risks.push(`$${p.entry.toFixed(2)} outside $0.80–$2.20 sweet spot`);
+  if (cost <= 200) score += 15; else risks.push(`$${cost.toFixed(0)} exceeds $200 (40%) single-trade cap`);
+  if (absDelta >= 0.45 && absDelta <= 0.62) score += 25;
+  else if (absDelta >= 0.38 && absDelta <= 0.70) score += 16;
+  else { score += 5; risks.push(`delta ${absDelta ? absDelta.toFixed(2) : '--'} outside 0.45–0.62`); }
+  if (spreadPct <= 5) score += 15; else if (spreadPct <= 8) score += 10; else risks.push('wide spread');
+  if (oi >= 500) score += 10; else if (oi >= 200) score += 6;
+  if (dte >= 2 && dte <= 7) score += 10; else if (dte >= 1) score += 6; else risks.push(`${dte.toFixed(1)} DTE high Theta burn`);
+
+  score = Math.max(0, Math.min(100, Math.round(score)));
+  const grade = score >= 82 ? 'A' : score >= 70 ? 'B' : score >= 58 ? 'C' : 'D';
+  const verdict = grade === 'A' ? 'OPTIMAL $500 STRIKE' : grade === 'B' ? 'ACCEPTABLE WITH TIGHT STOP' : grade === 'C' ? 'SUBOPTIMAL FOR $500 BUDGET' : 'AVOID · HIGH FEE/THETA DRAG';
+  const alternative = 'Target $0.80–$2.20 ATM contracts (2–7 DTE, |delta| 0.45–0.60, spread ≤5%) to keep risk ≤$25.';
+  return { score, grade, verdict, absDelta, spreadPct, oi, vol, dte, risks, alternative };
+}
+
+function evaluateLiveStrikeDecision(p) {
+  const t = p.ta || {};
+  const peak = Math.max(p.entry, p.highestSeen || p.entry, p.live || p.entry);
+  p.highestSeen = peak;
+  const trailStopPx = +(peak * (1 - (p.trailPct || 12) / 100)).toFixed(2);
+  const isCall = p.call !== false;
+  const ap = adaptiveLivePlan(p);
+  const closedNow = marketPhase().code !== 'open';
+  const closedNote = closedNow ? ' (US market closed; using last quote).' : '';
+  const sellNow = closedNow ? 'SELL AT OPEN' : 'SELL NOW';
+
+  // Trigger Mandatory +15% T1 Breakeven Lock
+  if (p.live >= ap.t1Price && !p.t1Locked) {
+    p.t1Locked = true;
+    if (p.slPrice < ap.beLockStop) {
+      p.slPrice = ap.beLockStop;
+      p.slLimit = +(ap.beLockStop * 0.98).toFixed(2);
+    }
+  }
+
+  if (p.live <= p.slPrice) {
+    t.action = p.t1Locked ? `${sellNow} · BREAKEVEN LOCK HIT ($${p.slPrice.toFixed(2)})` : `${sellNow} · STOP LOSS HIT`;
+    t.tone = p.t1Locked ? 'warn' : 'sell';
+    t.reason = p.t1Locked
+      ? `Protected principal + Moomoo fees at $${p.slPrice.toFixed(2)} after reaching +15% T1.`
+      : `Live premium ($${p.live.toFixed(2)}) breached -${p.stopPct}% Stop Loss ($${p.slPrice.toFixed(2)}).${closedNote}`;
+    p.ta = t; return;
+  }
+  if (p.live >= ap.finalPrice) {
+    t.action = closedNow ? 'SELL AT OPEN · TARGET HIT' : 'SELL / LOCK PROFIT · TARGET HIT';
+    t.tone = 'sell';
+    t.reason = `Live premium ($${p.live.toFixed(2)}) reached +${ap.finalPct}% target ($${ap.finalPrice.toFixed(2)}).${closedNote}`;
+    p.ta = t; return;
+  }
+  if (p.t1Locked && p.live < ap.finalPrice) {
+    t.action = `MOVE STOP TO BREAKEVEN ($${ap.beLockStop.toFixed(2)}) · T1 +15% HIT`;
+    t.tone = 'keep';
+    t.reason = `T1 (+15% / $${ap.t1Price.toFixed(2)}) hit! Stop raised to $${ap.beLockStop.toFixed(2)} (covers $1.38 Moomoo roundtrip fee). Trail remaining move toward $${ap.finalPrice.toFixed(2)}.`;
+    p.ta = t; return;
+  }
+  if (peak > p.entry * 1.08 && p.live <= trailStopPx) {
+    t.action = closedNow ? 'SELL AT OPEN · TRAILING STOP HIT' : 'SELL · TRAILING STOP TRIGGERED';
+    t.tone = 'sell';
+    t.reason = `Pulled back ${p.trailPct}% from peak ($${peak.toFixed(2)}) to trailing stop ($${trailStopPx.toFixed(2)}).${closedNote}`;
+    p.ta = t; return;
+  }
+
+  if (!t.e20 || !t.vwap) {
+    t.tone = 'warn';
+    t.action = t.status === 'error' ? 'NO CHART DATA · SEE REASON' : 'HOLD · LOADING 5M CHART…';
+    t.reason = t.error || 'Fetching 5m bars for EMA 5/10/20, VWAP, RSI & MACD…';
+    p.ta = t; return;
+  }
+
+  let bullPts = 0, bearPts = 0;
+  const S = t.lastUnderlying || t.e5;
+  if (t.e5 > t.e10 && t.e10 > t.e20) bullPts += 2;
+  else if (t.e5 < t.e10 && t.e10 < t.e20) bearPts += 2;
+  else if (t.e5 > t.e10) bullPts += 1;
+  else bearPts += 1;
+
+  if (S > t.vwap) bullPts += 2; else bearPts += 2;
+  if (t.rsi >= 53 && t.rsi <= 74) bullPts += 1;
+  else if (t.rsi <= 47 && t.rsi >= 26) bearPts += 1;
+  if (t.macdHist > 0) bullPts += 1; else bearPts += 1;
+  if (/Bullish|Breakout|Hammer/.test(t.pattern)) bullPts += 1;
+  if (/Bearish|Breakdown|Shooting/.test(t.pattern)) bearPts += 1;
+
+  const favorPts = isCall ? bullPts : bearPts;
+  const againstPts = isCall ? bearPts : bullPts;
+  const burnNote = ap.thetaBurnPct > 10 ? ` ⚠ HIGH THETA BURN (${ap.thetaBurnPct.toFixed(1)}%/day) — exit quickly if stalled.` : '';
+
+  if (favorPts >= 5) {
+    t.action = ap.thetaBurnPct > 10 ? 'HOLD · HIGH THETA BURN WATCH' : 'KEEP / HOLD STRIKE (STRONG TREND)';
+    t.tone = 'keep';
+    t.reason = `${isCall ? 'Bullish' : 'Bearish'} alignment: EMA 5/10/20 stacked with VWAP ($${t.vwap.toFixed(2)}), MACD ${t.macdHist >= 0 ? '+' : ''}${t.macdHist.toFixed(3)}, RSI ${t.rsi.toFixed(0)}.${burnNote}`;
+  } else if (againstPts >= 5) {
+    t.action = 'SELL STRIKE (TA REVERSAL)';
+    t.tone = 'sell';
+    t.reason = `Trend flipped against ${isCall ? 'CALL' : 'PUT'}: EMA 5/10 crossed against VWAP ($${t.vwap.toFixed(2)}), RSI ${t.rsi.toFixed(0)}. Protect your $500 bankroll.`;
+  } else {
+    t.action = ap.against ? 'REDUCE / EXIT · MOMENTUM FAILED' : 'WAIT · NO NEW ADD (MIXED)';
+    t.tone = 'warn';
+    t.reason = `Mixed signals (${favorPts} pro vs ${againstPts} against). T1 Breakeven Lock at $${ap.t1Price.toFixed(2)} (+15%).${burnNote}`;
+  }
+  p.ta = t;
+}
+
+let taBusy = false;
+async function updateLiveStrikesTA() {
+  if (taBusy || !cfg.livePos || !cfg.livePos.length || document.hidden) return;
+  taBusy = true;
+  try {
+    const bySym = {};
+    cfg.livePos.forEach(p => (bySym[p.sym] ??= []).push(p));
+    for (const sym of Object.keys(bySym)) {
+      try {
+        const ch = await api(`/api/chart?symbol=${encodeURIComponent(sym)}&range=5d&interval=5m`);
+        const res = ch?.chart?.result?.[0];
+        if (!res) throw new Error(`No chart data returned for ${sym}.`);
+        const ta = computeIntradayTA(res);
+        if (!ta) throw new Error(`Fewer than 6 five-minute bars for ${sym}.`);
+        taCache5m[sym] = ta;
+        bySym[sym].forEach(p => { p.ta = { ...(p.ta || {}), ...ta, status: 'ok', error: null, updatedAt: Date.now() }; evaluateLiveStrikeDecision(p); });
+      } catch (e) {
+        bySym[sym].forEach(p => { p.ta = { ...(p.ta || {}), status: 'error', error: String(e.message || e) }; evaluateLiveStrikeDecision(p); });
+      }
+    }
+    save();
+    if (tab === 'live') renderLiveMonitor();
+  } finally { taBusy = false; }
+}
+
+
+function ofxDir(v){const x=String(v??'').toUpperCase();if(x==='1'||x.includes('BUY')||x.includes('UP'))return 1;if(x==='2'||x.includes('SELL')||x.includes('DOWN'))return-1;return 0}
+function ofxBars(ticks){const m=new Map();(ticks||[]).forEach(t=>{let z=Date.parse(String(t.time||'').replace(' ','T'));if(!Number.isFinite(z))z=+t.time;if(!z)return;const k=Math.floor(z/300000)*300000;let b=m.get(k)||{t:k,o:t.price,h:t.price,l:t.price,c:t.price,buy:0,sell:0,neutral:0,volume:0};b.h=Math.max(b.h,t.price);b.l=Math.min(b.l,t.price);b.c=t.price;const v=+t.volume||0,d=ofxDir(t.direction);b.volume+=v;d>0?b.buy+=v:d<0?b.sell+=v:b.neutral+=v;m.set(k,b)});let cum=0;return[...m.values()].sort((a,b)=>a.t-b.t).slice(-30).map(b=>(b.delta=b.buy-b.sell,b.cum=cum+=b.delta,b))}
+function ofxBook(o){const bids=o?.bids||[],asks=o?.asks||[],w=a=>a.slice(0,5).reduce((n,x,i)=>n+x.volume*(5-i),0),bd=w(bids),ad=w(asks),bid=bids[0]?.price||0,ask=asks[0]?.price||0,mid=bid&&ask?(bid+ask)/2:0,spread=bid&&ask?ask-bid:0,spreadPct=mid?spread/mid*100:0,valid=!!(bid&&ask&&ask>=bid);return{bids,asks,bd,ad,bid,ask,spread,spreadPct,valid,imb:valid&&bd+ad?(bd-ad)/(bd+ad)*100:0}}
+function ofxAnalysis(p){
+ const bars=p.ofx?.bars||[],done=bars.filter(b=>b.t+300000<Date.now()-2000),a=(done.length?done:bars).slice(-3),last=a.at(-1)||{};
+ const buy=a.reduce((n,b)=>n+b.buy,0),sell=a.reduce((n,b)=>n+b.sell,0),dir=buy+sell,dom=dir?(buy-sell)/dir*100:0;
+ const prev=(done.length?done:bars).slice(-4,-1),avg=prev.length?prev.reduce((n,b)=>n+b.volume,0)/prev.length:(last.volume||1),pulse=avg?(last.volume||0)/avg:0,bk=ofxBook(p.ofx?.book);
+ const lastTwo=a.slice(-2),two=lastTwo.length===2&&lastTwo.every(b=>b.delta>0),pricePct=last.o?(last.c-last.o)/last.o*100:0;
+ let lastPattern='Mixed Auction';if(pricePct>0&&last.delta>0)lastPattern='Buyer Confirmation';else if(pricePct<0&&last.delta<0)lastPattern='Seller Confirmation';else if(pricePct<0&&last.delta>0)lastPattern='Buyer Absorption';else if(pricePct>0&&last.delta<0)lastPattern='Seller Absorption';
+ let score=Math.round(Math.max(0,Math.min(100,50+dom*.7+(two?12:0)+(pulse>=1?8:-6)+(last.delta>0?7:-7)+(bk.valid?Math.max(-12,Math.min(12,bk.imb*.35)):-12))));
+ const gates=[
+  {key:'score',label:'Score ≥75',pass:score>=75,value:String(score)},
+  {key:'flow',label:'Flow ≥+15%',pass:dom>=15,value:(dom>=0?'+':'')+dom.toFixed(1)+'%'},
+  {key:'bars',label:'2 positive bars',pass:two,value:two?'PASS':'FAIL'},
+  {key:'pulse',label:'Pulse ≥1.00x',pass:pulse>=1,value:pulse.toFixed(2)+'x'},
+  {key:'book',label:'Book ≥+15%',pass:bk.valid&&bk.imb>=15,value:bk.valid?(bk.imb>=0?'+':'')+bk.imb.toFixed(1)+'%':'INVALID'},
+  {key:'spread',label:'Spread ≤8%',pass:bk.valid&&bk.spreadPct<=8,value:bk.valid?bk.spreadPct.toFixed(1)+'%':'INVALID'},
+  {key:'last',label:'Buyer confirmation',pass:lastPattern==='Buyer Confirmation',value:lastPattern}
+ ];
+ const blockers=gates.filter(g=>!g.pass),entryReady=blockers.length===0;
+ let action='NO-TRADE / BALANCED',cls='ofx-wait';if(entryReady){action='FRESH ENTRY CONFIRMED';cls='ofx-entry'}else if(score>=58&&dom>0){action='HOLD / WAIT FOR CONFIRMATION';cls='ofx-wait'}else if(score<=38||dom<=-15||(bk.valid&&bk.imb<=-15)){action='EXIT / AVOID';cls='ofx-exit'}
+ return{bars,done,last,dom,pulse,bk,score,action,cls,delta:buy-sell,session:bars.reduce((n,b)=>n+b.delta,0),two,pricePct,lastPattern,gates,blockers,entryReady}
+}
+let ofxBusy=false,ofxSound=localStorage.getItem('ofxSound')==='1';
+window.ofxToggleSound=function(){ofxSound=!ofxSound;localStorage.setItem('ofxSound',ofxSound?'1':'0');renderLiveMonitor()}
+function ofxNotify(p,e){if(!ofxSound)return;try{const ac=new(window.AudioContext||window.webkitAudioContext)(),o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);g.gain.value=.03;o.frequency.value=e==='ENTRY'?880:330;o.start();o.stop(ac.currentTime+.15)}catch(x){}const d=document.createElement('div');d.className='ofx-toast';d.style.borderLeftColor=e==='ENTRY'?'var(--green)':'var(--red)';d.textContent=`${p.code} · ${e} alert`;document.body.appendChild(d);setTimeout(()=>d.remove(),8000)}
+async function updateProOrderFlow(){if(ofxBusy||!cfg.livePos?.length||document.hidden)return;ofxBusy=true;try{for(const p of cfg.livePos){p.ofx||={ticks:[],bars:[],book:{bids:[],asks:[]},alerts:[],updatedAt:0};try{const[r,b]=await Promise.all([api('/api/moomoo/orderflow?code='+encodeURIComponent(p.code),{timeoutMs:10000}),api('/api/moomoo/orderbook?code='+encodeURIComponent(p.code),{timeoutMs:10000})]);const m=new Map((p.ofx.ticks||[]).map(x=>[x.seq||`${x.time}-${x.price}-${x.volume}`,x]));(r.ticks||[]).forEach(x=>m.set(x.seq||`${x.time}-${x.price}-${x.volume}`,x));p.ofx.ticks=[...m.values()].slice(-12000);p.ofx.bars=ofxBars(p.ofx.ticks);p.ofx.book=b;p.ofx.updatedAt=Date.now();p.ofx.error=r.error||b.error||'';const q=ofxAnalysis(p),ev=q.action.startsWith('FRESH')?'ENTRY':q.action.startsWith('EXIT')?'EXIT':'NONE';if(ev!=='NONE'&&p.ofx.lastEvent!==ev){p.ofx.lastEvent=ev;p.ofx.alerts.unshift({t:Date.now(),ev,score:q.score,flow:q.dom,book:q.bk.imb,spread:q.bk.spreadPct});p.ofx.alerts=p.ofx.alerts.slice(0,6);ofxNotify(p,ev)}else if(ev==='NONE')p.ofx.lastEvent='NONE'}catch(e){p.ofx.error=e.message}}save();if(tab==='live')renderLiveMonitor()}finally{ofxBusy=false}}
+function ofxFmt(n){n=+n||0;const a=Math.abs(n);return(n<0?'-':'')+(a>=1000?(a/1000).toFixed(1)+'K':Math.round(a))}
+function renderProOrderFlow(){if(!cfg.livePos?.length)return'';return`<div class="ofx-section"><div class="paper-section-head"><div class="paper-section-title">Pro 5-Minute Contract Order Flow · Price, Volume, Book & Alerts</div><div class="mu">Fresh entry requires all 7 gates · score ≥75 · flow ≥+15% · 2 positive bars · pulse ≥1.0x · book ≥+15% · spread ≤8% · buyer-confirmed completed bar</div></div><div class="ofx-grid">${cfg.livePos.map((p,i)=>{const q=ofxAnalysis(p),b=q.bk,o=p.ofx||{},bp=b.bd+b.ad?b.bd/(b.bd+b.ad)*100:50,al=o.alerts||[];return`<div class="ofx-card"><div class="ofx-head"><div><div class="ofx-title">${escapeHtml(p.code)}</div><div class="mu">${q.bars.length} bars · ${q.done.length} completed · ${o.updatedAt?new Date(o.updatedAt).toLocaleTimeString():'waiting for Moomoo'}${o.error?' · '+escapeHtml(o.error):''}</div></div><button type="button" class="btn sm" onclick="ofxToggleSound()">${ofxSound?'🔊 Alerts ON':'🔇 Enable alerts'}</button></div><div class="ofx-banner ${q.cls}">${q.action} · SCORE ${q.score}/100</div><div class="ofx-blocked ${q.entryReady?'ofx-ready':''}"><b>${q.entryReady?'ENTRY READY':'ENTRY BLOCKED'}:</b> ${q.entryReady?'All seven confirmation gates passed':q.blockers.map(g=>`${g.label} (${g.value})`).join(' · ')}</div><div class="ofx-gates">${q.gates.map(g=>`<span class="ofx-gate ${g.pass?'ofx-gate-pass':'ofx-gate-fail'}">${g.pass?'✓':'✕'} ${g.label}: ${g.value}</span>`).join('')}</div><div class="ofx-metrics"><div class="ofx-metric"><div class="ofx-label">3-Bar Delta</div><div class="ofx-value ${q.delta>=0?'g':'r'}">${q.delta>=0?'+':''}${ofxFmt(q.delta)}</div></div><div class="ofx-metric"><div class="ofx-label">Flow Dominance</div><div class="ofx-value ${q.dom>=15?'g':q.dom<=-15?'r':''}">${q.dom>=0?'+':''}${q.dom.toFixed(1)}%</div><div class="mu" style="font:9px var(--mono);margin-top:3px">Entry gate ≥ +15%</div></div><div class="ofx-metric"><div class="ofx-label">Session Delta</div><div class="ofx-value ${q.session>=0?'g':'r'}">${q.session>=0?'+':''}${ofxFmt(q.session)}</div></div><div class="ofx-metric"><div class="ofx-label">Volume Pulse</div><div class="ofx-value">${q.pulse.toFixed(2)}x</div></div><div class="ofx-metric"><div class="ofx-label">Book Imbalance</div><div class="ofx-value ${b.valid?(b.imb>=0?'g':'r'):'ofx-invalid'}">${b.valid?(b.imb>=0?'+':'')+b.imb.toFixed(1)+'%':'INVALID'}</div></div><div class="ofx-metric"><div class="ofx-label">Spread</div><div class="ofx-value ${b.valid&&b.spreadPct<=5?'g':b.valid?'r':'ofx-invalid'}">${b.valid?'$'+b.spread.toFixed(2)+' · '+b.spreadPct.toFixed(1)+'%':'--'}</div></div><div class="ofx-metric"><div class="ofx-label">Last Completed Bar</div><div class="ofx-value ${q.lastPattern.includes('Buyer')?'g':q.lastPattern.includes('Seller')?'r':''}">${q.lastPattern}</div><div class="mu" style="font:9px var(--mono);margin-top:3px">Price ${q.pricePct>=0?'+':''}${q.pricePct.toFixed(1)}% · Δ ${q.last.delta>=0?'+':''}${ofxFmt(q.last.delta)}</div></div></div><div class="ofx-book"><div class="ofx-panel"><div class="ofx-line"><b>OPTION BOOK · TOP 5 WEIGHTED</b><b class="${b.valid?(b.imb>=0?'g':'r'):'r'}">${b.valid?(b.imb>=0?'+':'')+b.imb.toFixed(1)+'%':'CROSSED / STALE'}</b></div><div class="ofx-depth"><i class="ofx-bid" style="width:${bp}%"></i><i class="ofx-ask" style="width:${100-bp}%"></i></div><div class="ofx-line mu"><span>Bid ${ofxFmt(b.bd)}</span><span>Ask ${ofxFmt(b.ad)}</span><span>${b.bid?b.bid.toFixed(2):'--'} × ${b.ask?b.ask.toFixed(2):'--'}</span></div></div><div class="ofx-panel"><div class="ofx-line"><b>BEST LEVELS</b><span class="mu">Spread guard ≤8%</span></div><div class="ofx-levels"><div>${b.bids.slice(0,3).map(x=>`<div class="ofx-level g"><span>${x.price.toFixed(2)}</span><b>${ofxFmt(x.volume)}</b></div>`).join('')||'<span class="mu">No bids</span>'}</div><div>${b.asks.slice(0,3).map(x=>`<div class="ofx-level r"><span>${x.price.toFixed(2)}</span><b>${ofxFmt(x.volume)}</b></div>`).join('')||'<span class="mu">No asks</span>'}</div></div></div></div><div class="ofx-chart"><canvas id="ofxCanvas${i}" class="ofx-canvas"></canvas></div><div class="ofx-legend"><span><i class="ofx-dot" style="background:var(--green)"></i>Buyer volume</span><span><i class="ofx-dot" style="background:var(--red)"></i>Seller volume</span><span><i class="ofx-dot" style="background:var(--blue)"></i>Cumulative delta</span><span>Latest delta ${q.last.delta>=0?'+':''}${ofxFmt(q.last.delta)}</span></div><div class="ofx-alerts"><div class="ofx-alert"><b>ENTRY / EXIT ALERTS</b></div>${al.length?al.map(x=>`<div class="ofx-alert ${x.ev==='ENTRY'?'g':'r'}">${new Date(x.t).toLocaleTimeString()} · ${x.ev} · score ${x.score} · flow ${x.flow.toFixed(1)}% · book ${x.book.toFixed(1)}% · spread ${x.spread.toFixed(1)}%</div>`).join(''):'<div class="ofx-alert mu">Waiting for confirmed entry or exit transition</div>'}</div><div class="ofx-help"><b>Fresh entry:</b> only the green banner and a new ENTRY alert authorize a candidate. Amber means hold/wait, not a new buy. Red means exit/avoid. Crossed books are invalidated automatically. Last Completed Bar confirms whether option-premium price and aggressor delta agree.</div></div>`}).join('')}</div></div>`}
+function drawProOrderFlow(){cfg.livePos?.forEach((p,i)=>{const c=document.getElementById('ofxCanvas'+i);if(!c)return;const r=c.getBoundingClientRect(),d=Math.max(1,devicePixelRatio||1),x=c.getContext('2d'),bars=(p.ofx?.bars||[]).slice(-18),W=r.width,H=r.height,pad={l:44,r:44,t:20,b:28};c.width=W*d;c.height=H*d;x.scale(d,d);x.font='10px system-ui';const cs=getComputedStyle(document.body);x.fillStyle=cs.getPropertyValue('--tx-muted');if(!bars.length){x.textAlign='center';x.fillText('Waiting for Moomoo tick-by-tick price and volume…',W/2,H/2);return}const hi=Math.max(...bars.map(b=>b.h)),lo=Math.min(...bars.map(b=>b.l)),mv=Math.max(1,...bars.map(b=>b.volume)),mc=Math.max(1,...bars.map(b=>Math.abs(b.cum))),ph=(H-pad.t-pad.b)*.65,vt=pad.t+ph+8,vh=H-pad.b-vt,st=(W-pad.l-pad.r)/bars.length,yp=p=>pad.t+(hi-p)/Math.max(.001,hi-lo)*ph;x.strokeStyle=cs.getPropertyValue('--border');for(let g=0;g<5;g++){let y=pad.t+ph*g/4;x.beginPath();x.moveTo(pad.l,y);x.lineTo(W-pad.r,y);x.stroke()}bars.forEach((b,j)=>{let xx=pad.l+st*(j+.5),col=b.c>=b.o?'#10b981':'#ef4444',bw=Math.max(3,st*.3);x.strokeStyle=x.fillStyle=col;x.beginPath();x.moveTo(xx,yp(b.h));x.lineTo(xx,yp(b.l));x.stroke();x.fillRect(xx-bw/2,Math.min(yp(b.o),yp(b.c)),bw,Math.max(2,Math.abs(yp(b.o)-yp(b.c))));let vw=Math.max(2,st*.25),bh=b.buy/mv*vh,sh=b.sell/mv*vh;x.fillStyle='#10b981';x.fillRect(xx-vw-1,H-pad.b-bh,vw,bh);x.fillStyle='#ef4444';x.fillRect(xx+1,H-pad.b-sh,vw,sh);if(j%3===0||j===bars.length-1){x.fillStyle=cs.getPropertyValue('--tx-muted');x.textAlign='center';x.fillText(new Date(b.t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),xx,H-8)}});x.strokeStyle='#3b82f6';x.lineWidth=1.6;x.beginPath();bars.forEach((b,j)=>{let xx=pad.l+st*(j+.5),yy=vt+vh/2-b.cum/mc*vh*.4;j?x.lineTo(xx,yy):x.moveTo(xx,yy)});x.stroke();x.fillStyle=cs.getPropertyValue('--tx-muted');x.textAlign='right';x.fillText(hi.toFixed(2),pad.l-5,pad.t+4);x.fillText(lo.toFixed(2),pad.l-5,pad.t+ph)})}
+function liveMonitorParts() {
+  let totNetPL = 0, totCap = 0, totFees = 0, keepCount = 0, sellCount = 0, holdCount = 0;
+
+  const rows = (cfg.livePos || []).map((p, i) => {
+    evaluateLiveStrikeDecision(p);
+    const fee = 2 * cfg.fee * p.qty;
+    const cap = p.entry * 100 * p.qty;
+    const grossPL = (p.live - p.entry) * 100 * p.qty;
+    const netPL = grossPL - fee;
+    const netPLPct = cap > 0 ? (netPL / cap) * 100 : 0;
+    const peak = Math.max(p.entry, p.highestSeen || p.entry, p.live || p.entry);
+    const trailStopPx = +(peak * (1 - (p.trailPct || 12) / 100)).toFixed(2);
+    const slNetPL = (p.slPrice - p.entry) * 100 * p.qty - fee;
+
+    totNetPL += netPL;
+    totCap += cap;
+    totFees += fee;
+    const tone = p.ta?.tone;
+    if (tone === 'sell') sellCount++; else if (tone === 'keep') keepCount++; else holdCount++;
+
+    const t = p.ta || {};
+    const ap = adaptiveLivePlan(p);
+    const ss = liveStrikeSelection(p);
+    const highBurn = ap.thetaBurnPct > 10;
+
+    return `<tr>
+      <td>
+        <div class="sym-name">${p.sym} · ${p.code} ${p.t1Locked ? '<span class="tag Strict" style="font-size:9px">BE LOCKED</span>' : ''}</div>
+        <div class="sym-sub mono">${p.call !== false ? 'LONG CALL' : 'LONG PUT'} · Capital $${cap.toFixed(2)} (${((cap/(lsDraft.budget||500))*100).toFixed(0)}% of $500) · Peak $${peak.toFixed(2)}</div>
+        <div class="sym-sub mono">Added ${fmtTs(p.openedAt || p.id)} ${p.src ? `[${p.src}]` : ''}</div>
+      </td>
+      <td>
+        <div style="display:flex;gap:4px;align-items:center;justify-content:flex-end">
+          <input type="number" min="1" step="1" value="${p.qty}" title="Contracts" onchange="updateLiveStrikeField(${i},'qty',this.value)" style="width:52px">
+          <span class="mu">@</span>
+          <input type="number" min="0.01" step="0.01" value="${p.entry}" title="Entry Premium ($)" onchange="updateLiveStrikeField(${i},'entry',this.value)" style="width:72px">
+        </div>
+      </td>
+      <td>
+        <input type="number" min="0.01" step="0.01" value="${Number(p.live).toFixed(2)}" title="Live Premium ($)" onchange="updateLiveStrikeField(${i},'live',this.value)" style="width:78px;font-weight:700">
+      </td>
+      <td class="mono" style="text-align:left">
+        <div><span class="g"><b>T1 (+15%): $${ap.t1Price.toFixed(2)} (BE $${ap.beLockStop.toFixed(2)}) · TP: $${ap.finalPrice.toFixed(2)}</b></span></div>
+        <div class="mu" style="font-size:10px">Progress ${ap.progress.toFixed(0)}% · ${ap.dte.toFixed(1)} DTE · ${ap.mins}m to close</div>
+        <div><span class="r"><b>SL: $${p.slPrice.toFixed(2)}</b></span> · <span class="mu">Net at SL: $${slNetPL.toFixed(2)}</span></div>
+        <div><span style="color:var(--blue)"><b>Trail (-${p.trailPct}%): $${trailStopPx.toFixed(2)}</b></span></div>
+      </td>
+      <td class="mono ${netPL >= 0 ? 'g' : 'r'}" style="font-weight:700">
+        ${netPL >= 0 ? '+' : ''}$${netPL.toFixed(2)}<br>
+        <span style="font-size:11px">(${netPLPct >= 0 ? '+' : ''}${netPLPct.toFixed(2)}%)</span>
+      </td>
+      <td class="mono mu">
+        $${fee.toFixed(2)}<br>
+        <span style="font-size:10px">Drag ${cap > 0 ? ((fee/cap)*100).toFixed(1) : '0.0'}%</span>
+      </td>
+      <td style="text-align:left;max-width:350px;white-space:normal">
+        <div class="ls-signal-box ${t.tone || 'warn'}">${t.action || 'ANALYZING…'}</div>
+        <div style="font-size:11px;line-height:1.35;margin-bottom:4px">${escapeHtml(t.reason || '')}</div>
+        <div>
+          <span class="ls-ta-pill ${highBurn ? 'burn' : ''}">${highBurn ? '⚠ HIGH THETA BURN ' : 'Theta '}${ap.thetaBurnPct.toFixed(1)}%/d</span>
+          <span class="ls-ta-pill">Spot $${(t.lastUnderlying || 0).toFixed(2)}</span>
+          <span class="ls-ta-pill">VWAP $${(t.vwap || 0).toFixed(2)}</span>
+          <span class="ls-ta-pill">EMA 5/10/20: ${(t.e5 || 0).toFixed(2)} / ${(t.e10 || 0).toFixed(2)} / ${(t.e20 || 0).toFixed(2)}</span>
+          <span class="ls-ta-pill">RSI ${(t.rsi || 50).toFixed(0)}</span>
+          <span class="ls-ta-pill">${escapeHtml(t.pattern || '5m Pattern')}</span>
+        </div>
+        <div class="ls-selection-box">
+          <span class="ls-select-grade ${ss.grade}">$500 FIT ${ss.grade} · ${ss.score}/100</span> <b>${ss.verdict}</b>
+          <div>${escapeHtml(ss.alternative)}</div>
+          ${ss.risks.length ? `<div class="r">Watch: ${escapeHtml(ss.risks.join('; '))}</div>` : ''}
+        </div>
+      </td>
+      <td>
+        <div class="actions-cell">
+          <button type="button" class="btn sm" title="Open strike on Moomoo" onclick="openMoomooChart('${p.code}')">Moomoo ↗</button>
+          <button type="button" class="btn sm danger" title="Remove strike" onclick="cfg.livePos.splice(${i},1);save();render()">✕</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  const totNetPct = totCap > 0 ? (totNetPL / totCap) * 100 : 0;
+  const budget = Number(lsDraft.budget || 500);
+  const availCash = Math.max(0, budget - totCap);
+
+  const kpi = `
+  <div class="kpi-deck">
+    <div class="kpi-card">
+      <div class="kpi-label">Available Bankroll ($${budget} Budget)</div>
+      <div class="kpi-val ${availCash >= 100 ? 'g' : 'r'}">$${availCash.toFixed(2)} <span class="mu" style="font-size:12px">($${totCap.toFixed(0)} deployed)</span></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">LiveStrikes Net P&amp;L (After Fee)</div>
+      <div class="kpi-val ${totNetPL >= 0 ? 'g' : 'r'}">${totNetPL >= 0 ? '+' : ''}$${totNetPL.toFixed(2)} <span style="font-size:14px">(${totNetPct >= 0 ? '+' : ''}${totNetPct.toFixed(2)}%)</span></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Total Moomoo Roundtrip Fees</div>
+      <div class="kpi-val mu">$${totFees.toFixed(2)}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Intraday TA Advisor</div>
+      <div class="kpi-val"><span class="g">${keepCount} KEEP</span> · <span class="r">${sellCount} SELL</span> · <span class="mu">${holdCount} HOLD</span></div>
+    </div>
+  </div>`;
+
+  const monitor = `
+  <div class="paper-section-head">
+    <div class="paper-section-title">Active LiveStrikes Monitor (${(cfg.livePos || []).length})</div>
+    <div class="mu">$0.80–$2.20 Sweet-Spot Guard · Mandatory +15% T1 Breakeven Lock · Daily Theta Burn %</div>
+  </div>
+  <div class="wrap"><table>
+    <thead>
+      <tr>
+        <th>Contract &amp; Bankroll %</th>
+        <th>Qty @ Entry ($)</th>
+        <th>Live ($)</th>
+        <th>T1 BE Lock / TP / Stop / Trail</th>
+        <th>Net P&amp;L ($ &amp; %)</th>
+        <th>Moomoo Fee</th>
+        <th>TA Decision + Theta Burn + $500 Fit</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${rows || '<tr><td colspan="8" class="mu" style="text-align:center;padding:28px">No contracts in LiveStrikes yet. Pick a $0.80–$2.20 strike above and click <b>+ Add Strike to LiveStrikes Monitor</b>.</td></tr>'}
+    </tbody>
+  </table></div>`;
+
+  return { kpi, monitor: monitor + renderProOrderFlow() };
+}
+
+function rLive() {
+  const { kpi, monitor } = liveMonitorParts();
+  return `
+  <div class="paper-intro">
+    <div>
+      <h2>🎯 LiveStrikes · $500 Single-Leg Risk Engine &amp; TA Advisor</h2>
+      <div class="mu">Engineered for a <b>$500 single-leg budget</b>: enforces 40% ($200) max single-trade cap, $0.80–$2.20 fee-drag sweet spot, $25 dollar-capped stops, Daily Theta Burn alerts, and automatic +15% T1 Breakeven Lock.</div>
+    </div>
+    <div class="paper-toolbar">
+      <button type="button" class="btn" onclick="refresh();updateLiveStrikesTA()">↻ Sync Quotes &amp; 5m TA</button>
+    </div>
+  </div>
+
+  <div id="lsKpi">${kpi}</div>
+
+  <div class="ls-grid">
+    <div class="ls-card">
+      <h3>
+        <span>1. $500 Single-Leg Strike &amp; Risk Calculator</span>
+        <button type="button" class="btn sm" onclick="autoFitLsQty()">Auto-Fit Qty ($200 &amp; $25 Cap)</button>
+      </h3>
+      <div class="ls-presets">
+        <span class="mu" style="font-size:11px;align-self:center">Preset:</span>
+        <button type="button" class="btn sm ls-prof-btn ${lsDraft.profile === 'budget500' ? 'on' : ''}" data-prof="budget500" onclick="setLsProfile('budget500')">$500 Sweet-Spot (-18% / +30%)</button>
+        <button type="button" class="btn sm ls-prof-btn ${lsDraft.profile === 'intermediate' ? 'on' : ''}" data-prof="intermediate" onclick="setLsProfile('intermediate')">Intraday Trend (-20% / +40%)</button>
+        <button type="button" class="btn sm ls-prof-btn ${lsDraft.profile === 'advanced' ? 'on' : ''}" data-prof="advanced" onclick="setLsProfile('advanced')">0DTE Runner (-22% / +50%)</button>
+      </div>
+      <div class="ls-form-grid">
+        <div class="ls-form-field" style="grid-column: span 2">
+          <label>Contract (OCC code, Moomoo code, or text like SPY 11-13 595C)</label>
+          <input id="lsCode" value="${lsDraft.code}" placeholder="e.g. SPY 11-13 595C or SPY261113C00595000" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Entry Premium ($)</label>
+          <input id="lsEntry" type="number" min="0.01" step="0.01" value="${lsDraft.entry}" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Contracts (Qty)</label>
+          <input id="lsQty" type="number" min="1" step="1" value="${lsDraft.qty}" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Total Budget ($)</label>
+          <input id="lsBudget" type="number" min="50" step="50" value="${lsDraft.budget}" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Max Loss / Trade ($)</label>
+          <input id="lsMaxRisk" type="number" min="5" step="5" value="${lsDraft.maxRisk}" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Stop Loss (%)</label>
+          <input id="lsStopPct" type="number" min="1" max="90" step="1" value="${lsDraft.stopPct}" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Target (%)</label>
+          <input id="lsTgtPct" type="number" min="1" max="500" step="1" value="${lsDraft.tgtPct}" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Trailing Stop (%)</label>
+          <input id="lsTrailPct" type="number" min="1" max="80" step="1" value="${lsDraft.trailPct}" oninput="updateLsCalculatorPreview()">
+        </div>
+        <div class="ls-form-field">
+          <label>Stop-Limit Slippage (%)</label>
+          <input id="lsLimPct" type="number" min="0.5" max="20" step="0.5" value="${lsDraft.limitBufPct}" oninput="updateLsCalculatorPreview()">
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <span class="mu" style="font-size:11px">${LS_PROFILES[lsDraft.profile]?.desc || ''}</span>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="btn" onclick="buildLiveStrikeShortlist()">Auto-rank $500 Sweet-Spot</button>
+          <button type="button" class="btn pri" onclick="addLiveStrike()">+ Add Strike to LiveStrikes Monitor</button>
+        </div>
+      </div>
+      <div id="lsShortlist" class="ls-shortlist"></div>
+    </div>
+
+    <div class="ls-card">
+      <h3>
+        <span>2. Exact Moomoo Order Ticket &amp; $500 Guardrails</span>
+        <span class="tag Strict">MOOMOO READY</span>
+      </h3>
+      <div id="lsCalcPreview"></div>
+    </div>
+  </div>
+
+  <div id="lsMonitor">${monitor}</div>`;
+}
+
+function renderLiveMonitor() {
+  if (tab !== 'live') return;
+  const kpiEl = document.getElementById('lsKpi'), monEl = document.getElementById('lsMonitor');
+  if (!kpiEl || !monEl || monEl.contains(document.activeElement)) return;
+  const { kpi, monitor } = liveMonitorParts();
+  kpiEl.innerHTML = kpi;
+  monEl.innerHTML = monitor;
+  requestAnimationFrame(drawProOrderFlow);
+}
+
+// --- Settings Tab ---
+function rSet() {
+  return `<div class="set">
+    <h3 style="margin-top:0">Terminal &amp; Sniper 80%+ Configuration</h3>
+    <label>Local Bridge URL</label>
+    <input id="b" value="${cfg.bridge}">
+    <label>Watchlist Symbols (Comma separated)</label>
+    <input id="u" value="${cfg.uni}">
+    <label>Moomoo Fee per Contract ($/side)</label>
+    <input id="f" type="number" step="0.01" value="${cfg.fee}">
+
+    <div class="row" style="margin-top:12px;">
+      <div style="flex:1;min-width:140px"><label>Stop-Loss (%)</label><input id="slp" type="number" value="${cfg.stopPct}"></div>
+      <div style="flex:1;min-width:140px"><label>Strict R:R (1:X)</label><input id="srr" type="number" step="0.1" value="${cfg.strictRR}"></div>
+      <div style="flex:1;min-width:140px"><label>Min ADX (Sniper)</label><input id="qadx" type="number" value="${cfg.quantGuard.minAdx}"></div>
+      <div style="flex:1;min-width:140px"><label>Min RVOL (Sniper)</label><input id="qrvol" type="number" step="0.1" value="${cfg.quantGuard.minRvol}"></div>
+      <div style="flex:1;min-width:140px"><label>Max Spread (%)</label><input id="qss" type="number" step="0.5" value="${cfg.quantGuard.strictSpreadPct}"></div>
+    </div>
+    <label style="display:flex;gap:8px;align-items:center;cursor:pointer;">
+      <input id="rth" type="checkbox" style="width:auto" ${cfg.rthOnly !== false ? 'checked' : ''}> RTH-Only Entries &amp; Auto-Close Evaluation
+    </label>
+    <div style="margin-top:16px;display:flex;gap:8px;">
+      <button type="button" class="btn pri" onclick="sv()">Save Settings</button>
+      <button type="button" class="btn" onclick="dl()">Download Bridge (server.js)</button>
+    </div>
+
+    <h3 style="margin-top:24px;">Moomoo OpenD Gateway</h3>
+    <label>OpenD Host</label><input id="mh" value="127.0.0.1">
+    <label>OpenD WebSocket Port</label><input id="mp" value="33333">
+    <label>OpenD WebSocket Key</label><input id="mk" placeholder="Plain-text OpenD key">
+    <div style="margin-top:12px;">
+      <button type="button" class="btn" onclick="mm()">Connect Gateway</button>
+      <span id="mst" class="mu mono" style="margin-left:8px;"></span>
+    </div>
+  </div>`;
+}
+
+window.sv = function() {
+  cfg.bridge = $('#b').value.trim();
+  cfg.uni = $('#u').value;
+  cfg.fee = Math.max(0, +$('#f').value || 0);
+  cfg.stopPct = +$('#slp').value || 20;
+  cfg.strictRR = +$('#srr').value || 1.5;
+  cfg.quantGuard.minAdx = +$('#qadx').value || 25;
+  cfg.quantGuard.minRvol = +$('#qrvol').value || 1.5;
+  cfg.quantGuard.strictSpreadPct = +$('#qss').value || 5;
+  cfg.rthOnly = !!$('#rth')?.checked;
+  normalizeCfg();
+  save();
+  ping();
+  alert('Settings saved.');
+  render();
+};
+
+const BRIDGE_BUILD='3fafe5c11b9b';
+window.dl=function(auto=false){const a=document.createElement('a'),u=URL.createObjectURL(new Blob([$('#bridge').textContent.trim()+'\n'],{type:'text/javascript'}));a.href=u;a.download='server.js';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);if(auto)localStorage.setItem('bridgeBuild',BRIDGE_BUILD)};
+function autoBridge(){if(localStorage.getItem('bridgeBuild')!==BRIDGE_BUILD){dl(true);setTimeout(()=>alert('Updated Moomoo bridge downloaded as server.js. Replace the old server and restart: node server.js'),500)}}
+
+window.mm = async function() {
+  const out = $('#mst');
+  try {
+    await fetch(cfg.bridge + '/api/moomoo/config', {
+      method: 'POST',
+      body: JSON.stringify({ key: $('#mk').value, host: $('#mh').value, port: +$('#mp').value })
+    });
+    out.textContent = 'Connecting to OpenD...';
+    const s = await api('/api/moomoo/status');
+    out.textContent = s.connected ? '✔ Connected to OpenD' : (s.error || 'Waiting for OpenD login');
+    ping();
+  } catch (e) { out.textContent = 'Bridge offline.'; }
+};
+
+async function ping() {
+  try {
+    const st = await api('/api/moomoo/status');
+    $('#dot').classList.add('online');
+    $('#bs').textContent = 'BRIDGE ONLINE' + (st.connected ? ' · MOOMOO LINKED' : ' · YAHOO FALLBACK');
+    $('#bs').style.color = 'var(--green)';
+  } catch (e) {
+    $('#dot').classList.remove('online');
+    $('#bs').textContent = 'BRIDGE OFFLINE';
+    $('#bs').style.color = 'var(--red)';
+  }
+}
+
+// --- Resilient Main Render Function ---
+function render() {
+  const isPaperLike = tab === 'paper' || tab === 'stratPaper';
+  document.body.classList.toggle('paper-view', isPaperLike);
+
+  ['picks', 'paper', 'strat', 'stratPaper', 'live', 'set'].forEach(t => {
+    const el = document.getElementById('btn-' + t);
+    if (el) el.classList.toggle('on', tab === t);
+  });
+
+  const view = $('#v');
+  if (!view) return;
+
+  try {
+    view.innerHTML =
+      tab === 'picks'      ? rPicks() :
+      tab === 'paper'      ? rPaper() :
+      tab === 'strat'      ? rStrat() :
+      tab === 'stratPaper' ? rStratPaper() :
+      tab === 'live'       ? rLive() : rSet();
+  } catch (err) {
+    console.error('[AlphaPulse Render Error]', err);
+    view.innerHTML = `<div class="set" style="border-color:var(--red);">
+      <h3 class="r" style="margin-top:0">Render Recovery (${escapeHtml(tab)})</h3>
+      <p class="mono">${escapeHtml(err.message || String(err))}</p>
+      <button type="button" class="btn danger" onclick="localStorage.removeItem('opt');location.reload()">Reset Cached Storage &amp; Reload</button>
+    </div>`;
+    return;
+  }
+
+  if (isPaperLike) requestAnimationFrame(syncPaperView);
+  if (tab === 'live') requestAnimationFrame(() => { updateLsCalculatorPreview(); renderLsShortlist(); drawProOrderFlow(); });
+}
+
+// --- US Market Session Clock ---
+const ET_ZONE = 'America/New_York';
+const etPartsFmt = new Intl.DateTimeFormat('en-US', {timeZone:ET_ZONE, year:'numeric', month:'2-digit', day:'2-digit', weekday:'short', hour:'2-digit', minute:'2-digit', second:'2-digit', hourCycle:'h23'});
+function etParts(d = new Date()) {
+  const o = {};
+  etPartsFmt.formatToParts(d).forEach(x => { if (x.type !== 'literal') o[x.type] = x.value; });
+  return { y: +o.year, m: +o.month, d: +o.day, wd: o.weekday, h: +o.hour, min: +o.minute, s: +o.second };
+}
+function ymd(p) { return `${p.y}-${String(p.m).padStart(2,'0')}-${String(p.d).padStart(2,'0')}`; }
+function etWall(y, m, d, h, min) {
+  const want = Date.UTC(y, m - 1, d, h, min);
+  let t = want;
+  for (let i = 0; i < 3; i++) { const p = etParts(new Date(t)); t -= Date.UTC(p.y, p.m - 1, p.d, p.h, p.min) - want; }
+  return new Date(t);
+}
+function marketCalendar(y) {
+  const z = (m, d) => `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  return { closed: new Set([z(1,1), z(7,4), z(12,25)]), early: new Set([z(12,24)]) };
+}
+function marketPhase(date = new Date()) {
+  const p = etParts(date), key = ymd(p), cal = marketCalendar(p.y), mins = p.h * 60 + p.min;
+  if (p.wd === 'Sat' || p.wd === 'Sun' || cal.closed.has(key)) return { code: 'closed', label: 'US MARKET · CLOSED', detail: 'Weekend / Holiday' };
+  const close = cal.early.has(key) ? 780 : 960;
+  if (mins >= 570 && mins < close) return { code: 'open', label: 'US MARKET · OPEN', detail: 'Closes 4:00 PM ET' };
+  if (mins >= 240 && mins < 570) return { code: 'extended', label: 'US MARKET · PRE-MARKET', detail: 'Opens 9:30 AM ET' };
+  if (mins >= close && mins < 1200) return { code: 'extended', label: 'US MARKET · AFTER-HOURS', detail: 'Extended to 8:00 PM ET' };
+  return { code: 'closed', label: 'US MARKET · CLOSED', detail: 'Overnight' };
+}
+const localClockFmt = new Intl.DateTimeFormat(undefined, {weekday:'short', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit', timeZoneName:'short'});
+function updateMarketClock() {
+  const now = new Date(), phase = marketPhase(now);
+  const led = $('#market-led'), state = $('#market-state'), time = $('#market-time'), next = $('#market-next');
+  if (!led || !state || !time || !next) return;
+  led.className = 'market-led ' + phase.code;
+  state.textContent = phase.label;
+  state.style.color = phase.code === 'open' ? 'var(--green)' : phase.code === 'extended' ? 'var(--amber)' : 'var(--red)';
+  time.textContent = localClockFmt.format(now);
+  next.textContent = phase.detail;
+}
+
+// Event Listener Fallback for Navigation
+document.addEventListener('DOMContentLoaded', () => {
+  const navMap = {
+    'btn-picks': 'picks',
+    'btn-paper': 'paper',
+    'btn-strat': 'strat',
+    'btn-stratPaper': 'stratPaper',
+    'btn-live': 'live',
+    'btn-set': 'set'
+  };
+  Object.entries(navMap).forEach(([id, target]) => {
+    const btn = document.getElementById(id);
+    if (btn) btn.addEventListener('click', () => window.setTab(target));
+  });
+});
+
+// Boot Terminal
+render();
+ping();
+setTimeout(autoBridge,900);
+updateMarketClock();
+setInterval(updateMarketClock, 1000);
+setInterval(ping, 10000);
+setInterval(refresh, 3000);
+setInterval(updateLiveStrikesTA, 15000);
+setInterval(updateProOrderFlow, 5000);
+setTimeout(() => { if (scannerCanRun()) scan(); }, 2000);
+setInterval(() => { if (scannerCanRun()) scan(); }, AUTO_PICK_POLICY.scanMs);
+</script>
+</body>
+</html>
